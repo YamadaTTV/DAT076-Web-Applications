@@ -1,2 +1,2 @@
-# DAT076_LABS
- Labs for the course DAT076 Web Applications
+# DAT076 Web Applications
+ Repo for the course DAT076 Web Applications
