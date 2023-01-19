@@ -1,0 +1,70 @@
+
+.navbar {
+    position: absolute;
+    background-color: #202027;
+    height: 86px;
+    width: 100%;
+    flex-grow: 1;
+    margin: 0;
+    display: table;
+    position: fixed;
+}
+
+.navbar a{
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.login-link{
+    margin-top: 50px;
+    margin-right: 10px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.nav-item-spacing{
+    padding-right: 15px;
+}
+
+.line {
+    border-left: 2px solid white;
+    height: 40px;
+    top: -40px;
+    position: relative;
+    margin-left: -20px;
+}
+
+.backgroundpic{
+    width: 1903px;
+}
+
+.citation {
+position: absolute;
+width: 481px;
+height: 411px;
+left: 40px;
+top: 309px;
+
+font-family: Arial, Helvetica, sans-serif;
+font-style: normal;
+font-weight: 700;
+font-size: 40px;
+line-height: 48px;
+
+color: #FFFFFF;
+}
+
+.secondhand{
+    color: #64DC1B;
+}
+
+.footer {
+    height: 86px;
+}
+
+.footerText{
+    color: white;
+    padding-left: 20px;
+    padding-top: 5px;
+}
