@@ -41,20 +41,20 @@
         <br>
         - Nicole Lapin
     </p>
-    <div class="login-form">
+    <div class="login-div">
         <h1>Login  here!</h1>
-        <form oninput="submitBtn.disabled = !(username.value && password.value)" style="border-width: 6px">
+        <form oninput="submitBtn.disabled = !(username.value && password.value)" class="login-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username"><br><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password"><br><br>
-            <input style="width:100%" type="submit" value="Login" id="submitBtn" disabled>
+            <input class="width100" type="submit" value="Login" id="submitBtn" disabled>
             <div style="text-align: center;">
-                <hr style="float: left; width: 40%;">
+                <hr class="float-left width40">
                 <span style="background-color:white; margin: 10px 10px 10px 10px;">OR</span>
-                <hr style="float: right; width: 40%;">
+                <hr class="float-right width40">
             </div>
-            <button style="background-color: #4C7256; color: white; border-radius: 2px; border-width:1px; width:100%">Browse</button>
+            <button class="login-button">Browse</button>
         </form>
     </div>
 

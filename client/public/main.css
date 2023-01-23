@@ -61,10 +61,36 @@ line-height: 48px;
 color: #FFFFFF;
 }
 
-.login-form{
+.login-div{
     padding-top: 10%;
     padding-left: 5%;
 }
+
+.login-form{
+    border-width: 6px
+}
+
+.login-button{
+    background-color: #4C7256;
+    color: white;
+    border-radius: 2px;
+    border-width:1px;
+    width:100%
+}
+
+.float-left{
+    float: left
+}
+.float-right{
+    float: right
+}
+.width40{
+    width: 40%;
+}
+.width100{
+    width: 100%;
+}
+
 .secondhand{
     color: #64DC1B;
 }
