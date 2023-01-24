@@ -89,6 +89,10 @@ img.avatar {
     height: 200px;
 }
 
+.card-button{
+    width:100px;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
