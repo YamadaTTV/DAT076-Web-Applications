@@ -41,95 +41,6 @@
     margin-left: -20px;
 }
 
-.backgroundpic{
-    width: 70%;
-}
-
-.citation-div{
-    position: absolute;
-    left: 40px;
-    top: 250px;
-
-    font-family: Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 48px;
-
-    color: #ffffff;
-    width: 550px;
-    height: 411px;
-}
-
-.citation {
-    border-radius: 5px;
-    width: 625px;
-    height: 375px;
-    background-color: rgba(37, 40, 42, 0.7);
-    padding: 35px;
-}
-
-.login-div{
-    padding: 10% 5%;
-}
-
-.login-form{
-    border-width: 6px;
-    padding-top: 0%;
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-.login-button{
-    background-color: #5d9667;
-    color: white;
-    border-radius: 5px;
-    border-width:1px;
-    height: 50px;
-    width:100%
-}
-.login-form-input{
-    padding: 15px;
-    width:100%;
-    height: 50px;
-    border-radius: 5px;
-    border-width: 1px;
-
-    text-align: start;
-}
-
-.login-form-input:focus{
-    outline: none !important;
-    border: 2px solid #5d9667;
-}
-
-.float-left{
-    float: left
-}
-.float-right{
-    float: right
-}
-.width40{
-    width: 40%;
-}
-.width100{
-    width: 100%;
-}
-
-.height50{
-     height:50px;
- }
-
-.ORtext{
-    background-color:white;
-    margin: 10px 10px 10px 10px;
-}
-
-.secondhand{
-    color: #7dc78a;
-    opacity: 100%;
-}
-
 .footer {
     max-height: 10%;
     min-height: 55px;
@@ -152,57 +63,30 @@
     padding: 10px;
 }
 
-/* Full-width input fields */
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-/* Set a style for all buttons */
-button {
-    background-color: #04AA6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-}
-
 /* Center the image and position the close button */
 .imgcontainer {
-    text-align: center;
+    display: flex;
+    align-self: center;
     margin: 24px 0 12px 0;
     position: relative;
+    width: 100%;
 }
 
 img.avatar {
-    width: 40%;
-    border-radius: 50%;
+    margin: 5% 30% 0% 30%;
+    width: 300px;
+    border-radius: 10px;
 }
 
 .container {
     padding: 16px;
+    width:100%;
 }
-
-span.password {
-    float: right;
-    padding-top: 16px;
+.description_container {
+    background-color:#f1f1f1;
+    padding: 16px;
+    width:100%;
+    height: 200px;
 }
 
 /* The Modal (background) */
@@ -212,9 +96,8 @@ span.password {
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    width: 300px; /* Full width */
+    height: 450px   ; /* Full height */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     padding-top: 60px;
@@ -223,9 +106,10 @@ span.password {
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    margin: 0% auto 15% auto;
+    min-height: 75%;
+    max-width: 50%;/* Could be more or less, depending on screen size */
 }
 
 /* The Close Button (x) */
@@ -247,7 +131,7 @@ span.password {
 /* Add Zoom Animation */
 .animate {
     -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s
+    animation: animatezoom 0.6s;
 }
 
 @-webkit-keyframes animatezoom {
