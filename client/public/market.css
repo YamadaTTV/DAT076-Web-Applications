@@ -93,6 +93,10 @@ img.avatar {
     width:100px;
 }
 
+.card{
+    width: 18rem;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
