@@ -88,7 +88,20 @@
     padding-right: 5%;
 }
 
-.login-button{
+
+.btn-primary{
+    background-color: #888888;
+    color: white;
+    border-radius: 5px;
+    border-width:1px;
+    height: 50px;
+    width:100%
+}
+.btn-primary:enabled{
+    background-color: #5d9667;
+}
+
+.btn-secondary{
     background-color: #5d9667;
     color: white;
     border-radius: 5px;

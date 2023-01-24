@@ -53,20 +53,20 @@
       <h1>Welcome to Marketplace!</h1>
     </div>
   </div>
-  <form oninput="submitBtn.disabled = !(username.value && password.value)" class="login-form">
-    <div class="row">
+  <form oninput="submitBtn.disabled = !(username.value && password.value)" class="login-form" action="market.html">
+    <div class="row my-2">
       <div class="col-12">
         <input class="form-control" type="text" id="username" name="username" placeholder="Username">
       </div>
     </div>
-    <div class="row">
+    <div class="row my-3">
       <div class="col-12">
         <input class="form-control" type="password" id="password" name="password" placeholder="Password">
       </div>
     </div>
     <div class="row">
       <div class="col-12 text-center">
-        <input class="btn btn-primary" type="submit" value="Login" id="submitBtn" disabled>
+        <input class="btn-primary" type="submit" value="Login" id="submitBtn" disabled>
       </div>
     </div>
     <div class="row">
@@ -78,7 +78,7 @@
     </div>
     <div class="row">
       <div class="col-12 text-center">
-        <button class="btn btn-secondary">Browse</button>
+        <button class="btn-secondary">Browse</button>
       </div>
     </div>
   </form>
