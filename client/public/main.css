@@ -120,10 +120,6 @@
      height:50px;
  }
 
-.ORtext{
-    background-color:white;
-    margin: 10px 10px 10px 10px;
-}
 
 .secondhand{
     color: #7dc78a;
@@ -150,4 +146,8 @@
 .eller{
     text-align: center;
     padding: 10px;
+}
+
+.textSpan {
+    font-size: 32px;
 }
