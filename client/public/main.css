@@ -70,6 +70,7 @@
 }
 
 .citation {
+    text-align: left;
     border-radius: 5px;
     width: 625px;
     height: 375px;
