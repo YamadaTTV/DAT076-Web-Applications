@@ -141,3 +141,13 @@
     padding-right: 40%;
     padding-top: 5px;
 }
+
+.bakgrund{
+    display: flex;
+    width: 100%;
+}
+
+.eller{
+    text-align: center;
+    padding: 10px;
+}
