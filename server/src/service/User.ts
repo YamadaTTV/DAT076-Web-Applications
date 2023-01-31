@@ -10,18 +10,22 @@ export interface IUserService {
     //check if user exist, if it does return true.
     userExists(id: number) : Promise<boolean>;
 
+    //Delete the user, if successful return true.
+    deleteUser(username: string, password: string) : Promise<boolean>;
 }
 
 class UserService implements IUserService {
     users : Array<User> = [];
+    index = 0;
 
     async getUsers() : Promise<Array<User>>{
         return this.users;
     }
 
     async addUser(username: string, email: string, password: string) : Promise<User>{
-        const user = new User(this.users.length+1,username,email,password);
+        const user = new User(this.index+1,username,email,password);
         this.users.push(user);
+        this.index += 1;
         return user;
     }
     async userExists(id: number) : Promise<boolean>{
@@ -30,6 +34,20 @@ class UserService implements IUserService {
                 return true;
             }
         }
+        return false;
+    }
+
+    async deleteUser(username: string, password: string) : Promise<boolean>{
+        let index = this.users.findIndex(x => username == username);
+
+
+
+        //if(index != -1){
+            if(this.users[index].username == username && this.users[index].password == password){
+                this.users.splice(index, 1);
+                return true;
+            }
+        //}
         return false;
     }
 }
