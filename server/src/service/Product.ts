@@ -10,7 +10,7 @@ export interface IProductService {
 
     //buyProduct(productId: number) : Promise<Product>;
 
-    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number) : Promise<boolean>;
+    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, seller?: User) : Promise<boolean>;
 }
 
 class ProductService implements IProductService {
