@@ -9,7 +9,7 @@ export interface IProductService {
     addProduct(productId: number, productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
 
     //Updates an existing product with new information
-    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, seller?: User) : Promise<boolean>;
+    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>;
 
     //Add a buyer to a product and marking is as bought
     buyProduct(productId: number, buyerId: number) : Promise<Product|undefined>;

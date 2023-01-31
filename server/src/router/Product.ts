@@ -93,7 +93,7 @@ productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Res
             res.status(400).send(`Bad PUT call to ${req.originalUrl} --- No data to update the product with`);
             return;
         }
-        const completed = await productService.updateProduct(id, product.productName, product.productCategory, product.price, product.seller);
+        const completed = await productService.updateProduct(id, product.productName, product.productCategory, product.price, product.sellerId);
         if(!completed){
             res.status(400).send(`Bad PUT call to ${req.originalUrl} --- No product with id ${id}`);
             return;
