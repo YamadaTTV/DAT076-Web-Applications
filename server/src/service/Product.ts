@@ -9,6 +9,8 @@ export interface IProductService {
     addProduct(productId: number, productName: string, productCategory: string, price: number, seller : User) : Promise<Product>;
 
     //buyProduct(productId: number) : Promise<Product>;
+
+    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number) : Promise<boolean>;
 }
 
 class ProductService implements IProductService {
@@ -28,6 +30,24 @@ class ProductService implements IProductService {
     async buyProduct(productId : number){
 
     }*/
+
+    async updateProduct(productId: number, productName?: string, productCategory?: string, price?: number) : Promise<boolean>{
+        const product = this.products.find(p => p.productId === productId);
+        if(!product){
+            return false;
+        }
+        if(productName){
+            product.productName = productName;
+        }
+        if(productCategory){
+            product.productCategory = productCategory;
+        }
+        if(price){
+            product.price = price;
+        }
+        return true;
+    }
+
 }
 
 export function makeProductService() : IProductService {
