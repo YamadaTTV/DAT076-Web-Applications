@@ -8,6 +8,8 @@ export interface IProductService {
     //Add a new product to the system
     addProduct(productId: number, productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
 
+    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number) : Promise<boolean>;
+
     //Add a buyer to a product and marking is as bought
     buyProduct(productId: number, buyerId: number) : Promise<Product|undefined>;
 }
@@ -24,6 +26,27 @@ class ProductService implements IProductService {
         this.products.push(product);
         return product;
     }
+
+    async updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, seller?: User) : Promise<boolean>{
+        const product = this.products.find(p => p.productId === productId);
+        if(!product){
+            return false;
+        }
+        if(productName){
+            product.productName = productName;
+        }
+        if(productCategory){
+            product.productCategory = productCategory;
+        }
+        if(price){
+            product.price = price;
+        }
+        if(seller){
+            product.seller = seller;
+        }
+        return true;
+    }
+
 
 
     async buyProduct(productId : number, buyerId : number) : Promise<Product|undefined>{

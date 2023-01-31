@@ -36,7 +36,7 @@ productRouter.post("/", async (
             res.status(400).send(`Bad PUT call to ${req.originalUrl}`);
             return;
         }
-        //todo fix so that only userId is used
+
         if(!await userService.userExists(sellerId)){
             res.status(400).send(`User with sellerId ${sellerId} does not exist.`);
             return;
