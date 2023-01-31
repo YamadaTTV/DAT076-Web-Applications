@@ -24,9 +24,11 @@ class UserService implements IUserService {
         return user;
     }
     async userExists(id: number) : Promise<boolean>{
-        this.users.forEach((user)=>{
-            if(user.id==id) return true;
-        })
+        for(const user of this.users){
+            if(user.id == id){
+                return true;
+            }
+        }
         return false;
     }
 }

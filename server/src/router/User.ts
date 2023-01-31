@@ -2,8 +2,7 @@ import express, {query, Request, Response} from "express";
 import {makeUserService} from "../service/User";
 import {User} from "../model/User";
 
-const taskService = makeUserService();
-
+export const userService = makeUserService();
 export const userRouter = express.Router();
 
 userRouter.get("/", async (
@@ -11,7 +10,7 @@ userRouter.get("/", async (
     res: Response<Array<User> | String>
 ) => {
     try {
-        const tasks = await taskService.getUsers();
+        const tasks = await userService.getUsers();
         res.status(200).send(tasks);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -31,7 +30,7 @@ userRouter.post("/", async (
             res.status(400).send(`Bad PUT call to ${req.originalUrl} --- id has type ${typeof(id)}, username has type ${typeof(username)}, email has type ${typeof(email)} and password has type ${typeof(password)}`);
             return;
         }
-        const newUser = await taskService.addUser(id,username,email,password);
+        const newUser = await userService.addUser(id,username,email,password);
         res.status(201).send(newUser);
     } catch (e: any) {
         res.status(500).send(e.message);
