@@ -35,3 +35,24 @@ userRouter.post("/", async (
         res.status(500).send(e.message);
     }
 });
+
+userRouter.delete("/", async(
+    req: Request<{}, {}, {username : string, password : string}>,
+    res: Response<String>
+) => {
+    try{
+        let username = req.body.username;
+        let password = req.body.password;
+
+        if (typeof(username) !== "string" || typeof(password) !== "string" ) {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} ---username has type ${typeof(username)} and password has type ${typeof(password)}`);
+            return;
+        }
+        const deletedUser = await userService.deleteUser(username, password);
+        res.status(202).send("Successfully deleted user " + deletedUser.valueOf());
+
+    }catch (e: any) {
+        res.status(500).send(e.message);
+    }
+
+});
