@@ -1,5 +1,3 @@
-import {User} from "./User"
-
 export class Product{
     productId : number
     productName : string
@@ -15,10 +13,6 @@ export class Product{
         this.price = price
         this.sellerId = seller
         this.buyerId = undefined
-    }
-
-    changePrice(price : number){
-        this.price = price;
     }
 
     setBuyer(buyerId : number){

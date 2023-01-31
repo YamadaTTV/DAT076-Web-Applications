@@ -75,3 +75,30 @@ productRouter.put("/buy", async (
         res.status(500).send(e.message);
     }
 });
+
+productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Response<string>) => {
+    try{
+        if(!req.params.id){
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} --- Missing id param`);
+            return;
+        }
+        const id = parseInt(req.params.id, 10);
+        if(!id){
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} --- id must be a number`);
+            return;
+        }
+        const product: Product = req.body;
+        if(!product){
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} --- No data to update the product with`);
+            return;
+        }
+        const completed = await productService.updateProduct(id, product.productName, product.productCategory, product.price, product.sellerId);
+        if(!completed){
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} --- No product with id ${id}`);
+            return;
+        }
+        res.status(200).send("Product updated");
+    } catch(e: any){
+        res.status(500).send(e.message);
+    }
+})
