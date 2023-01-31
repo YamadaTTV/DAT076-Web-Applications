@@ -1,13 +1,17 @@
-import express from "express";
-import {Express, Request, Response} from "express";
+import { app } from "./start";
 
 
-const app : Express = express();
+/**
+ * App Variables
+ */
+const PORT : number = 8080;
 
-app.use(express.json());
 
-app.get("/",(req : Request, res: Response) => {
-    res.status(200).send("hello stupid world!")
-} );
+/**
+ * Server Activation
+ */
 
-app.listen(8080);
+
+app.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`);
+});

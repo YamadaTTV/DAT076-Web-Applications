@@ -10,4 +10,9 @@ export class User{
         this.email = email
         this.password = password
     }
+
+    getUsername(): string {
+        return this.username
+    }
+
 }
