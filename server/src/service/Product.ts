@@ -7,6 +7,8 @@ export interface IProductService {
 
     //Add a new product to the system
     addProduct(productId: number, productName: string, productCategory: string, price: number, seller : User) : Promise<Product>;
+
+    //buyProduct(productId: number) : Promise<Product>;
 }
 
 class ProductService implements IProductService {
@@ -21,6 +23,11 @@ class ProductService implements IProductService {
         this.products.push(product);
         return product;
     }
+
+    /*
+    async buyProduct(productId : number){
+
+    }*/
 }
 
 export function makeProductService() : IProductService {
