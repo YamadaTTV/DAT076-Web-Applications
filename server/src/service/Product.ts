@@ -8,10 +8,14 @@ export interface IProductService {
     //Add a new product to the system
     addProduct(productId: number, productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
 
+    //Updates an existing product with new information
     updateProduct(productId: number, productName?: string, productCategory?: string, price?: number) : Promise<boolean>;
 
     //Add a buyer to a product and marking is as bought
     buyProduct(productId: number, buyerId: number) : Promise<Product|undefined>;
+
+    //Check if a product exists, returns true if product exist
+    productExist(productId: number) : Promise<Boolean>;
 }
 
 class ProductService implements IProductService {
@@ -48,16 +52,19 @@ class ProductService implements IProductService {
         return true;
     }
 
-
-
     async buyProduct(productId : number, buyerId : number) : Promise<Product|undefined>{
         let prod = this.products.find(product => product.productId===productId);
         if(prod!=undefined){
-            if(await userService.userExists(buyerId)){
-                prod.setBuyer(buyerId);
-            }
+            prod.setBuyer(buyerId);
         }
         return prod;
+    }
+
+
+    async productExist(productId : number) : Promise<boolean> {
+        let prod = this.products.find(product => product.productId===productId);
+        if(prod==undefined) return false;
+        else return true
     }
 }
 

@@ -47,3 +47,33 @@ productRouter.post("/", async (
         res.status(500).send(e.message);
     }
 });
+
+productRouter.put("/buy", async (
+    req: Request<{}, {},{productId: number, buyerId : number}>,
+    res: Response<Product | string>
+) => {
+    try {
+        let productId = req.body.productId;
+        let buyerId = req.body.buyerId;
+
+        if (typeof (productId) !== "number" || typeof (buyerId) !== "number") {
+            res.status(400).send(`Bad PUT call.`);
+            return;
+        }
+
+        if (!await productService.productExist(productId)) {
+            res.status(400).send("Product does not exit");
+            return
+        }
+        if (!await userService.userExists(buyerId)) {
+            res.status(400).send("User does not exit");
+            return;
+        }
+
+        let product =await productService.buyProduct(productId, buyerId);
+        res.status(200).send(product)
+
+    }catch(e: any){
+        res.status(500).send(e.message);
+    }
+});

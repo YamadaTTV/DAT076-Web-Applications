@@ -24,6 +24,7 @@ class UserService implements IUserService {
         this.users.push(user);
         return user;
     }
+
     async userExists(id: number) : Promise<boolean>{
         for(const user of this.users){
             if(user.id == id){
