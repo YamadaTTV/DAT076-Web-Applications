@@ -1,6 +1,6 @@
 import {User} from "../model/User";
 
-export interface IUSerService {
+export interface IUserService {
     //Get all users in system
     getUsers() : Promise<Array<User>>;
 
@@ -8,7 +8,7 @@ export interface IUSerService {
     addUser(id: number, username: string, email: string, password: string) : Promise<User>;
 }
 
-class UserService implements IUSerService {
+class UserService implements IUserService {
     users : Array<User> = [];
 
     async getUsers() : Promise<Array<User>>{
@@ -22,7 +22,7 @@ class UserService implements IUSerService {
     }
 }
 
-export function makeUserService() : IUSerService {
+export function makeUserService() : IUserService {
     return new UserService();
 }
 
