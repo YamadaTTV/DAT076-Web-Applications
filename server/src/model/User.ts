@@ -11,8 +11,4 @@ export class User{
         this.password = password
     }
 
-    getUsername(): string {
-        return this.username
-    }
-
 }

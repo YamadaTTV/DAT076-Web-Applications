@@ -5,10 +5,11 @@ export interface IUserService {
     getUsers() : Promise<Array<User>>;
 
     //Add a new user to the system
-    addUser(id: number, username: string, email: string, password: string) : Promise<User>;
+    addUser(username: string, email: string, password: string) : Promise<User>;
 
     //check if user exist, if it does return true.
     userExists(id: number) : Promise<boolean>;
+
 }
 
 class UserService implements IUserService {
@@ -18,8 +19,8 @@ class UserService implements IUserService {
         return this.users;
     }
 
-    async addUser(id: number, username: string, email: string, password: string) : Promise<User>{
-        const user = new User(id,username,email,password);
+    async addUser(username: string, email: string, password: string) : Promise<User>{
+        const user = new User(this.users.length+1,username,email,password);
         this.users.push(user);
         return user;
     }

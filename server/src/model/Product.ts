@@ -5,24 +5,24 @@ export class Product{
     productName : string
     productCategory: string
     price : number
-    seller : User
-    buyer : User | undefined
+    sellerId : number
+    buyerId : number | undefined
 
-    constructor(productId: number, productName: string, productCategory: string, price: number, seller : User) {
+    constructor(productId: number, productName: string, productCategory: string, price: number, seller : number) {
         this.productId = productId
         this.productName = productName
         this.productCategory = productCategory
         this.price = price
-        this.seller = seller
-        this.buyer = undefined
+        this.sellerId = seller
+        this.buyerId = undefined
     }
 
     changePrice(price : number){
         this.price = price;
     }
 
-    setBuyer(buyer : User){
-        this.buyer = buyer
+    setBuyer(buyerId : number){
+        this.buyerId = buyerId;
     }
 
 

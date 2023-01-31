@@ -22,7 +22,7 @@ productRouter.get("/", async (
 });
 
 productRouter.post("/", async (
-    req: Request<{}, {},{productId: number, productName: string, productCategory: string, price: number, seller : User}>,
+    req: Request<{}, {},{productId: number, productName: string, productCategory: string, price: number, sellerId : number}>,
     res: Response<Product | string>
 ) => {
     try {
@@ -30,17 +30,18 @@ productRouter.post("/", async (
         let productName = req.body.productName;
         let productCategory = req.body.productCategory;
         let price = req.body.price;
-        const seller = req.body.seller;
+        let sellerId = req.body.sellerId;
 
-        if (typeof(productId) !== "number" || typeof(productName) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(seller) !== "object") {
+        if (typeof(productId) !== "number" || typeof(productName) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
             res.status(400).send(`Bad PUT call to ${req.originalUrl}`);
             return;
         }
-        if(!await userService.userExists(seller.id)){
-            res.status(400).send(`User with sellerId ${seller.id} does not exist.`);
+        //todo fix so that only userId is used
+        if(!await userService.userExists(sellerId)){
+            res.status(400).send(`User with sellerId ${sellerId} does not exist.`);
             return;
         }
-        const newProduct = await productService.addProduct(productId,productName,productCategory,price,seller);
+        const newProduct = await productService.addProduct(productId,productName,productCategory,price,sellerId);
         res.status(201).send(newProduct);
     } catch (e: any) {
         res.status(500).send(e.message);
