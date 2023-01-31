@@ -1,9 +1,11 @@
 import express, {query, Request, Response} from "express";
 import {makeProductService} from "../service/Product";
+import {makeUserService} from "../service/User";
 import {Product} from "../model/Product";
 import {User} from "../model/User";
 
 const taskService = makeProductService();
+const userService = makeUserService();
 
 export const productRouter = express.Router();
 
@@ -32,6 +34,10 @@ productRouter.post("/", async (
 
         if (typeof(productId) !== "number" || typeof(productName) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(seller) !== "object") {
             res.status(400).send(`Bad PUT call to ${req.originalUrl}`);
+            return;
+        }
+        if(await userService.userExists(seller.id)){
+            res.status(400).send(`User with sellerId ${seller.id} does not exist`);
             return;
         }
         const newProduct = await taskService.addProduct(productId,productName,productCategory,price,seller);

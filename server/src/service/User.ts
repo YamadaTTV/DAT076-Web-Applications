@@ -6,6 +6,9 @@ export interface IUserService {
 
     //Add a new user to the system
     addUser(id: number, username: string, email: string, password: string) : Promise<User>;
+
+    //check if user exist, if it does return true.
+    userExists(id: number) : Promise<boolean>;
 }
 
 class UserService implements IUserService {
@@ -19,6 +22,12 @@ class UserService implements IUserService {
         const user = new User(id,username,email,password);
         this.users.push(user);
         return user;
+    }
+    async userExists(id: number) : Promise<boolean>{
+        this.users.forEach((user)=>{
+            if(user.id==id) return true;
+        })
+        return false;
     }
 }
 
