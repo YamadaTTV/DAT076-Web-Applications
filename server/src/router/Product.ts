@@ -5,9 +5,9 @@ import {User} from "../model/User";
 
 const taskService = makeProductService();
 
-export const ProductRouter = express.Router();
+export const productRouter = express.Router();
 
-ProductRouter.get("/", async (
+productRouter.get("/", async (
     req: Request<{}, {}, {}>,
     res: Response<Array<Product> | String>
 ) => {
@@ -19,7 +19,7 @@ ProductRouter.get("/", async (
     }
 });
 
-ProductRouter.post("/", async (
+productRouter.post("/", async (
     req: Request<{}, {},{productId: number, productName: string, productCategory: string, price: number, seller : User}>,
     res: Response<Product | string>
 ) => {
