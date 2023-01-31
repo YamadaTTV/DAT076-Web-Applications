@@ -27,7 +27,7 @@ class ProductService implements IProductService {
         return product;
     }
 
-    async updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, seller?: User) : Promise<boolean>{
+    async updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>{
         const product = this.products.find(p => p.productId === productId);
         if(!product){
             return false;
@@ -41,8 +41,9 @@ class ProductService implements IProductService {
         if(price){
             product.price = price;
         }
-        if(seller){
-            product.seller = seller;
+        if(sellerId){
+
+            product.sellerId = sellerId;
         }
         return true;
     }
