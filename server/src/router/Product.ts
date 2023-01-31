@@ -1,8 +1,7 @@
-import express, {query, Request, Response} from "express";
+import express, {Request, Response} from "express";
 import {makeProductService} from "../service/Product";
-import {userService} from "../router/User";
+import {userService} from "./User";
 import {Product} from "../model/Product";
-import {User} from "../model/User";
 
 const productService = makeProductService();
 
