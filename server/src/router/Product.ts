@@ -21,18 +21,17 @@ productRouter.get("/", async (
 });
 
 productRouter.post("/", async (
-    req: Request<{}, {},{productId: number, productName: string, productCategory: string, price: number, sellerId : number}>,
+    req: Request<{}, {},{productName: string, productCategory: string, price: number, sellerId : number}>,
     res: Response<Product | string>
 ) => {
     try {
-        let productId = req.body.productId;
         let productName = req.body.productName;
         let productCategory = req.body.productCategory;
         let price = req.body.price;
         let sellerId = req.body.sellerId;
 
-        if (typeof(productId) !== "number" || typeof(productName) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl}`);
+        if (typeof(productName) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productname has type ${typeof(productName)}, category has type ${typeof(productCategory)}, price has type ${typeof(price)},sellid has type ${typeof(sellerId)},  `);
             return;
         }
 
@@ -40,7 +39,7 @@ productRouter.post("/", async (
             res.status(400).send(`User with sellerId ${sellerId} does not exist.`);
             return;
         }
-        const newProduct = await productService.addProduct(productId,productName,productCategory,price,sellerId);
+        const newProduct = await productService.addProduct(productName,productCategory,price,sellerId);
         res.status(201).send(newProduct);
     } catch (e: any) {
         res.status(500).send(e.message);

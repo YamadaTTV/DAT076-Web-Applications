@@ -6,7 +6,7 @@ export interface IProductService {
     getProducts() : Promise<Array<Product>>;
 
     //Add a new product to the system
-    addProduct(productId: number, productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
+    addProduct(productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
 
     //Updates an existing product with new information
     updateProduct(productId: number, productName?: string, productCategory?: string, price?: number) : Promise<boolean>;
@@ -20,14 +20,16 @@ export interface IProductService {
 
 class ProductService implements IProductService {
     products : Array<Product> = [];
+    productIndex = 0;
 
     async getProducts() : Promise<Array<Product>>{
         return this.products;
     }
 
-    async addProduct(productId: number, productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>{
-        const product = new Product(productId,productName,productCategory,price,sellerId);
+    async addProduct(productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>{
+        const product = new Product(this.productIndex+1,productName,productCategory,price,sellerId);
         this.products.push(product);
+        this.productIndex += 1;
         return product;
     }
 

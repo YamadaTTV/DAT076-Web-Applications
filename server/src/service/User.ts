@@ -16,16 +16,16 @@ export interface IUserService {
 
 class UserService implements IUserService {
     users : Array<User> = [];
-    index = 0;
+    userIndex = 0;
 
     async getUsers() : Promise<Array<User>>{
         return this.users;
     }
 
     async addUser(username: string, email: string, password: string) : Promise<User>{
-        const user = new User(this.index+1,username,email,password);
+        const user = new User(this.userIndex+1,username,email,password);
         this.users.push(user);
-        this.index += 1;
+        this.userIndex += 1;
         return user;
     }
 
@@ -41,14 +41,10 @@ class UserService implements IUserService {
     async deleteUser(username: string, password: string) : Promise<boolean>{
         let index = this.users.findIndex(x => username == username);
 
-
-
-        //if(index != -1){
-            if(this.users[index].username == username && this.users[index].password == password){
-                this.users.splice(index, 1);
-                return true;
-            }
-        //}
+        if(this.users[index].username == username && this.users[index].password == password){
+            this.users.splice(index, 1);
+            return true;
+        }
         return false;
     }
 }
