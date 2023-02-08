@@ -1,5 +1,4 @@
-import { makeProductService } from "./Product";
-import { Product } from "../model/Product";
+import { makeProductService } from "../../src/service/Product";
 
 test("Adding a product",async () => {
    const productName = "Test product";
