@@ -1,6 +1,6 @@
 import * as SuperTest from "supertest";
-import { app } from "./start";
-import exp from "constants";
+import { app } from "../src/start";
+
 
 const request = SuperTest.default(app);
 
