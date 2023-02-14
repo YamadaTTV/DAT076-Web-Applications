@@ -89,6 +89,8 @@ test("Test deleteUser", async () => {
             }
         ]
         await userService.deleteUser(testUsers[0].username,testUsers[0].password)
+        await userService.addUser(testUsers[0].username,testUsers[0].email,testUsers[0].password)
+        await userService.deleteUser(testUsers[0].username,testUsers[0].password)
         const users = await userService.getUsers()
         expect(users).toEqual(expected)
     }
