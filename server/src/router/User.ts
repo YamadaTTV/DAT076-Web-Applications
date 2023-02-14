@@ -56,7 +56,7 @@ userRouter.delete("/", async(
     }
 });
 
-userRouter.post("/user/login", async(
+userRouter.post("/login", async(
     req: Request<{}, {}, {username : string, password : string}>,
     res: Response<String>
 ) => {
