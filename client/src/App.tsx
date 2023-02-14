@@ -21,7 +21,10 @@ function App() {
     const handleLoginClick = () => {
         setloggedIn(!loggedIn);
     }
+    if(loggedIn){
+        return <Header loggedIn={loggedIn}/>
 
+    }
     if(!formOpen){
         return <LoginForm handleLoginClick={handleLoginClick} handleRegisterClick={handleRegisterClick} />
     } else {
@@ -55,7 +58,7 @@ function Product ({productName,productCategory,price,seller} : IProduct){
   );
 }
 
-function header(){
+function Header(props:{loggedIn:Boolean}){
   const logo = require("./murrayPog.png");
   return(
     <Navbar collapseOnSelect expand="lg" className="top">
@@ -84,12 +87,11 @@ function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : 
                     async e => {
                         e.preventDefault();
                         let response = await axios.post("http://localhost:8080/user/login",{ username:username1,password:password1})
-                        if(response.status == 404){
-                            //Skicka mig till market.
-                            console.log("LOGGED IN!")
+                        if(response.status == 400){
 
                         } else if (response.status == 202){
                             console.log("Success")
+                            props.handleLoginClick()
                         }
                     }
                 }>
