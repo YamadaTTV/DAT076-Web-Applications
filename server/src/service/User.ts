@@ -39,8 +39,12 @@ class UserService implements IUserService {
     }
 
     async deleteUser(username: string, password: string) : Promise<boolean>{
-        let index = this.users.findIndex(x => username == username);
 
+        let index = 0
+        for(const user of this.users){
+            if(user.username==username){ break }
+            index += 1
+        }
         if(this.users[index].username == username && this.users[index].password == password){
             this.users.splice(index, 1);
             return true;
