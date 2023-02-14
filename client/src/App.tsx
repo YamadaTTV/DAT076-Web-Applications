@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Card, Button,Row,Col} from 'react-bootstrap'
-import {render} from "react-dom";
+import axios from "axios";
+
 
 function App() {
     const soffa: IProduct = {productId:1,productName:"soffa",productCategory:"möbel",price:123,seller:1}
@@ -40,63 +41,82 @@ function Product ({productId,productName,productCategory,price,seller} : IProduc
   );
 }
 
-function LoginForm (handleClick : () => void, formOpen : boolean){
-  if(!formOpen){
-      return (
-          <div>
-              <h1>Welcome to Marketplace!</h1>
-              <form>
-                  <div>
-                      <input type="text" id="username" name="username"
-                             placeholder="Username">
-                      </input>
-                  </div>
-                  <div>
-                      <input type="password" id="password" name="password"
-                             placeholder="Password">
-                      </input>
-                  </div>
-                  <div>
-                      <input type="submit" value="Login" id="submitBtn"></input>
-                  </div>
-                  <div>
-                      <hr></hr>
-                      <span>OR</span>
-                      <hr></hr>
-                  </div>
-                  <div>
-                      <button type="button" onClick={handleClick} >Register</button>
-                  </div>
-              </form>
-          </div>
-      );
-  }
-  else{
-      return (
-          RegisterForm()
-      );
-  }
-
+function LoginForm (handleClick : () => void, formOpen : boolean) {
+    if (!formOpen) {
+        return (
+            <div>
+                <h1>Welcome to Marketplace!</h1>
+                <form>
+                    <div>
+                        <input type="text" id="username" name="username"
+                               placeholder="Username">
+                        </input>
+                    </div>
+                    <div>
+                        <input type="password" id="password" name="password"
+                               placeholder="Password">
+                        </input>
+                    </div>
+                    <div>
+                        <input type="submit" value="Login" id="submitBtn"></input>
+                    </div>
+                    <div>
+                        <hr></hr>
+                        <span>OR</span>
+                        <hr></hr>
+                    </div>
+                    <div>
+                        <button type="button" onClick={handleClick}>Register</button>
+                        {formOpen && <div>{RegisterForm()}</div>}
+                    </div>
+                </form>
+            </div>
+        );
+    } else {
+        return (
+            RegisterForm()
+        );
+    }
 }
 
 function RegisterForm(){
+    const[username, setusername] = useState("");
+    const[email, setemail] = useState("");
+    const[password, setpassword] = useState("");
     return(
         <div>
             <h1>Register!</h1>
-            <form>
+            <form
+                onSubmit={async e => {
+                    e.preventDefault();
+                    await axios.post("http://localhost:8080/user",
+                        { username:username,password:password, email:email}
+                    )}}>
                 <div>
                     <input type="text" id="username" name="username"
-                           placeholder="Username">
+                           placeholder="Username" onChange={e => {
+                        setusername(e.target.value);
+                    }}>
+                    </input>
+                </div>
+                <div>
+                    <input type="text" id="email" name="email"
+                           placeholder="Email" onChange={e => {
+                        setemail(e.target.value);
+                    }}>
                     </input>
                 </div>
                 <div>
                     <input type="password" id="password" name="password"
-                           placeholder="Password">
+                           placeholder="Password" onChange={e => {
+                        setpassword(e.target.value);
+                    }}>
                     </input>
                 </div>
                 <div>
-                    <input type="submit" value="Register" id="submitBtn"></input>
+                    <input type="submit" value="Login" id="submitBtn"></input>
                 </div>
+
             </form>
         </div>
     );
