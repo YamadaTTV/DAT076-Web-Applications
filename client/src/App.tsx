@@ -1,8 +1,13 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Card, Button,Row,Col} from 'react-bootstrap'
+import {Card, Button,Row,Col, NavbarBrand} from 'react-bootstrap'
 import axios from "axios";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+
 
 
 function App() {
@@ -12,7 +17,9 @@ function App() {
         setformOpen(!formOpen);
     }
     return (
-        RegisterForm()
+        //RegisterForm()
+        //LoginForm(handleClick, formOpen),
+        header()
     );
 }
 interface IProduct {
@@ -38,6 +45,25 @@ function Product ({productId,productName,productCategory,price,seller} : IProduc
           <Button variant="primary">Go somewhere</Button>
         </Card.Body>
       </Card>
+  );
+}
+
+function header(){
+  const logo = require("./murrayPog.png");
+  return(
+    <Navbar collapseOnSelect expand="lg" bg="success" variant="light">
+        <img src={logo}/>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#about_us">About Us</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link eventKey={2} href="#loginpage">Login</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+    </Navbar>
   );
 }
 
