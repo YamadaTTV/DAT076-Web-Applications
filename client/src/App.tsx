@@ -12,7 +12,7 @@ function App() {
         setformOpen(!formOpen);
     }
     return (
-        LoginForm(handleClick, formOpen)
+        RegisterForm()
     );
 }
 interface IProduct {
@@ -87,11 +87,12 @@ function RegisterForm(){
         <div>
             <h1>Register!</h1>
             <form
-                onSubmit={async e => {
-                    e.preventDefault();
-                    await axios.post("http://localhost:8080/user",
-                        { username:username,password:password, email:email}
-                    )}}>
+                onSubmit={
+                    async e => {
+                        e.preventDefault();
+                        await axios.post("http://localhost:8080/user",{ username:username,password:password, email:email})
+                    }
+                }>
                 <div>
                     <input type="text" id="username" name="username"
                            placeholder="Username" onChange={e => {
