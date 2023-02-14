@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Card, Button,Row,Col} from 'react-bootstrap'
 import axios from "axios";
+import {render} from "@testing-library/react";
 
 
 
@@ -11,19 +12,11 @@ function App() {
     const handleClick = () => {
         setformOpen(!formOpen);
     }
-    useEffect(() => {
-        LoadPage(formOpen, handleClick)
-    },[formOpen])
-
-    return LoadPage(formOpen,handleClick)
-}
-
-function LoadPage (formOpen: Boolean, handleClick : () => void){
 
     if(!formOpen){
-        return LoginForm(handleClick, formOpen)
+        return <LoginForm handleClick={handleClick} />
     } else {
-        return RegisterForm()
+        return <RegisterForm/>
     }
 }
 
@@ -53,7 +46,7 @@ function Product ({productName,productCategory,price,seller} : IProduct){
   );
 }
 
-function LoginForm (handleClick : () => void, formOpen : boolean) {
+function LoginForm (props: {handleClick : () => void}) {
         return (
             <div>
                 <h1>Welcome to Marketplace!</h1>
@@ -81,7 +74,7 @@ function LoginForm (handleClick : () => void, formOpen : boolean) {
                         <hr></hr>
                     </div>
                     <div>
-                        <button type="button" onClick={handleClick}>Register</button>
+                        <button type="button" onClick={props.handleClick}>Register</button>
                     </div>
                 </form>
             </div>
