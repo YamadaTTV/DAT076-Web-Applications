@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Added unit test for user. Also moved earlier test into test folder.">
-      <change afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/App.test.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/react-app-env.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/reportWebVitals.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/setupTests.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_mockup/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Did initial setup from Project setup in lab 3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/About-us.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/About-us.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/market.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/market.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/market.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/market.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/murrayPog.png" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/murrayPog.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/wallpaperflare.com_wallpaper.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client_mockup/public/wallpaperflare.com_wallpaper.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/start.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/start.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +146,8 @@
       <workItem from="1675682225525" duration="4398000" />
       <workItem from="1675860275456" duration="6001000" />
       <workItem from="1675956235311" duration="961000" />
-      <workItem from="1676289269402" duration="1081000" />
+      <workItem from="1676289269402" duration="2482000" />
+      <workItem from="1676362313610" duration="774000" />
     </task>
     <task id="LOCAL−00001" summary="Initialized node, express and so on in the server folder">
       <created>1675152156356</created>
@@ -276,7 +245,13 @@
       <option name="presentableId" value="LOCAL−00016" />
       <updated>1675868216824</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL−00017" summary="Did initial setup from Project setup in lab 3">
+      <created>1676290530567</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1676290530567</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +297,8 @@
     <MESSAGE value="Fixed router for buyProduct" />
     <MESSAGE value="minor fix" />
     <MESSAGE value="Added unit test for user. Also moved earlier test into test folder." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added unit test for user. Also moved earlier test into test folder." />
+    <MESSAGE value="Did initial setup from Project setup in lab 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Did initial setup from Project setup in lab 3" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
