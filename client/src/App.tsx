@@ -75,32 +75,34 @@ function header(){
 }
 
 function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : () => void}) {
-    const[username, setusername] = useState("");
-    const[password, setpassword] = useState("");
+    const[username1, setusername1] = useState("");
+    const[password1, setpassword1] = useState("");
         return (
             <div>
                 <h1>Welcome to Marketplace!</h1>
                 <form onSubmit={
                     async e => {
                         e.preventDefault();
-                        const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
+                        let response = await axios.post("http://localhost:8080/user/login",{ username:username1,password:password1})
                         if(response.status == 404){
                             //Skicka mig till market.
                             console.log("LOGGED IN!")
 
+                        } else if (response.status == 202){
+                            console.log("Success")
                         }
                     }
                 }>
                     <div>
                         <input type="text" id="username" name="username"
                                placeholder="Username" onChange={e => {
-                            setusername(e.target.value);
+                            setusername1(e.target.value);
                         }}></input>
                     </div>
                     <div>
                         <input type="password" id="password" name="password"
                                placeholder="Password" onChange={e => {
-                            setpassword(e.target.value);
+                            setpassword1(e.target.value);
                         }}></input>
                     </div>
                     <div>
@@ -133,6 +135,7 @@ function RegisterForm(props: {handleRegisterClick : () => void}){
                     async e => {
                         e.preventDefault();
                         await axios.post("http://localhost:8080/user",{ username:username,password:password, email:email})
+                        props.handleRegisterClick()
                     }
                 }>
                 <div>
@@ -157,9 +160,8 @@ function RegisterForm(props: {handleRegisterClick : () => void}){
                     </input>
                 </div>
                 <div>
-                    <input type="submit" value="Register" id="submitBtn" onClick={props.handleRegisterClick}></input>
+                    <input type="submit" value="Register" id="submitBtn"></input>
                 </div>
-
             </form>
         </div>
     );
