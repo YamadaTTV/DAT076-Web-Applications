@@ -11,7 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 
 function App() {
-    /*const[formOpen, setformOpen] = useState(false);
+    const[formOpen, setformOpen] = useState(false);
     const[loggedIn, setloggedIn] = useState(false);
 
     const handleRegisterClick = () => {
@@ -21,6 +21,7 @@ function App() {
     const handleLoginClick = () => {
         setloggedIn(!loggedIn);
     }
+    /*
     if(loggedIn){
         return <Header loggedIn={loggedIn}/>
 
@@ -32,7 +33,7 @@ function App() {
     }
     */
    return(
-    header()
+    <Header loggedIn={loggedIn}></Header>
    );
 }
 
