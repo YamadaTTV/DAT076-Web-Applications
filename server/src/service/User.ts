@@ -1,4 +1,5 @@
 import {User} from "../model/User";
+import {promises} from "dns";
 
 export interface IUserService {
     //Get all users in system
@@ -12,6 +13,9 @@ export interface IUserService {
 
     //Delete the user, if successful return true.
     deleteUser(username: string, password: string) : Promise<boolean>;
+
+    //Login the user, if sucessful return true.
+    loginUser(username: string, password: string) : Promise<boolean>;
 }
 
 class UserService implements IUserService {
@@ -39,7 +43,6 @@ class UserService implements IUserService {
     }
 
     async deleteUser(username: string, password: string) : Promise<boolean>{
-
         let index = 0
         for(const user of this.users){
             if(user.username==username){ break }
@@ -47,6 +50,18 @@ class UserService implements IUserService {
         }
         if(this.users[index].username == username && this.users[index].password == password){
             this.users.splice(index, 1);
+            return true;
+        }
+        return false;
+    }
+
+    async loginUser(username: string, password: string) : Promise<boolean>{
+        let index = 0
+        for(const user of this.users){
+            if(user.username==username){ break }
+            index += 1
+        }
+        if(this.users[index].username == username && this.users[index].password == password){
             return true;
         }
         return false;
