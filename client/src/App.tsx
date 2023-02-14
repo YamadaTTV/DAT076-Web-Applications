@@ -11,8 +11,7 @@ function App() {
         setformOpen(!formOpen);
     }
     return (
-
-        RegisterUser(handleClick, formOpen)
+        LoginForm(handleClick, formOpen)
     );
 }
 interface IProduct {
@@ -41,10 +40,11 @@ function Product ({productId,productName,productCategory,price,seller} : IProduc
   );
 }
 
-function RegisterUser (handleClick : () => void, formOpen : boolean){
-  return (
-      <div>
-          <h1>Welcome to Marketplace!</h1>
+function LoginForm (handleClick : () => void, formOpen : boolean){
+  if(!formOpen){
+      return (
+          <div>
+              <h1>Welcome to Marketplace!</h1>
               <form>
                   <div>
                       <input type="text" id="username" name="username"
@@ -66,14 +66,20 @@ function RegisterUser (handleClick : () => void, formOpen : boolean){
                   </div>
                   <div>
                       <button type="button" onClick={handleClick} >Register</button>
-                      {formOpen && <div>{registerForm()}</div>}
                   </div>
               </form>
-      </div>
-  );
+          </div>
+      );
+  }
+  else{
+      return (
+          RegisterForm()
+      );
+  }
+
 }
 
-function registerForm(){
+function RegisterForm(){
     return(
         <div>
             <h1>Register!</h1>
