@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.top{
+  background-color: #5d9667;
+}
+
+.loginText{
+  border-left: 2px solid white;
+}

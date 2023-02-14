@@ -9,10 +9,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 
-
-
 function App() {
-    const[formOpen, setformOpen] = useState(false);
+    /*const[formOpen, setformOpen] = useState(false);
     const handleClick = () => {
         setformOpen(!formOpen);
     }
@@ -21,6 +19,10 @@ function App() {
     },[formOpen])
 
     return LoadPage(formOpen,handleClick)
+    */
+   return(
+    header()
+   );
 }
 
 function LoadPage (formOpen: Boolean, handleClick : () => void){
@@ -61,7 +63,7 @@ function Product ({productName,productCategory,price,seller} : IProduct){
 function header(){
   const logo = require("./murrayPog.png");
   return(
-    <Navbar collapseOnSelect expand="lg" bg="success" variant="light">
+    <Navbar collapseOnSelect expand="lg" className="top">
         <img src={logo}/>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -70,7 +72,7 @@ function header(){
             <Nav.Link href="#about_us">About Us</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link eventKey={2} href="#loginpage">Login</Nav.Link>
+            <Nav.Link className="loginText" eventKey={2} href="#loginpage">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>
