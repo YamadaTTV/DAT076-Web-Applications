@@ -69,6 +69,7 @@ function header(){
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#about_us">About Us</Nav.Link>
+            <Nav.Link href="#browsw">Browse</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link className="loginText" eventKey={2} href="#loginpage">Login</Nav.Link>
