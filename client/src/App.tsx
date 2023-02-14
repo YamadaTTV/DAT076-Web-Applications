@@ -11,7 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 
 function App() {
-    const[formOpen, setformOpen] = useState(false);
+    /*const[formOpen, setformOpen] = useState(false);
     const[loggedIn, setloggedIn] = useState(false);
 
     const handleRegisterClick = () => {
@@ -27,6 +27,10 @@ function App() {
     } else {
         return <RegisterForm handleRegisterClick={handleRegisterClick}/>
     }
+    */
+   return(
+    header()
+   );
 }
 
 interface IProduct {
@@ -59,7 +63,7 @@ function header(){
   const logo = require("./murrayPog.png");
   return(
     <Navbar collapseOnSelect expand="lg" className="top">
-        <img src={logo}/>
+        <img src={logo} width="4%"/>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
