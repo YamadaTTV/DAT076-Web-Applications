@@ -12,14 +12,20 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function App() {
     const[formOpen, setformOpen] = useState(false);
-    const handleClick = () => {
+    const[loggedIn, setloggedIn] = useState(false);
+
+    const handleRegisterClick = () => {
         setformOpen(!formOpen);
     }
 
+    const handleLoginClick = () => {
+        setloggedIn(!loggedIn);
+    }
+
     if(!formOpen){
-        return <LoginForm handleClick={handleClick} />
+        return <LoginForm handleLoginClick={handleLoginClick} handleRegisterClick={handleRegisterClick} />
     } else {
-        return <RegisterForm/>
+        return <RegisterForm handleRegisterClick={handleRegisterClick}/>
     }
 }
 
@@ -68,24 +74,34 @@ function header(){
   );
 }
 
-function LoginForm(props: {handleClick : () => void}) {
+function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : () => void}) {
+    const[username, setusername] = useState("");
+    const[password, setpassword] = useState("");
         return (
             <div>
                 <h1>Welcome to Marketplace!</h1>
                 <form onSubmit={
                     async e => {
                         e.preventDefault();
+                        const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
+                        if(response.status == 404){
+                            //Skicka mig till market.
+                            console.log("LOGGED IN!")
+
+                        }
                     }
                 }>
                     <div>
                         <input type="text" id="username" name="username"
-                               placeholder="Username">
-                        </input>
+                               placeholder="Username" onChange={e => {
+                            setusername(e.target.value);
+                        }}></input>
                     </div>
                     <div>
                         <input type="password" id="password" name="password"
-                               placeholder="Password">
-                        </input>
+                               placeholder="Password" onChange={e => {
+                            setpassword(e.target.value);
+                        }}></input>
                     </div>
                     <div>
                         <input type="submit" value="Login" id="submitBtn"></input>
@@ -96,15 +112,14 @@ function LoginForm(props: {handleClick : () => void}) {
                         <hr></hr>
                     </div>
                     <div>
-                        <button type="button" onClick={props.handleClick}>Register</button>
+                        <button type="button" onClick={props.handleRegisterClick}>Register</button>
                     </div>
                 </form>
             </div>
         );
-
 }
 
-function RegisterForm(){
+function RegisterForm(props: {handleRegisterClick : () => void}){
     const[username, setusername] = useState("");
     const[email, setemail] = useState("");
     const[password, setpassword] = useState("");
@@ -142,7 +157,7 @@ function RegisterForm(){
                     </input>
                 </div>
                 <div>
-                    <input type="submit" value="Login" id="submitBtn"></input>
+                    <input type="submit" value="Register" id="submitBtn" onClick={props.handleRegisterClick}></input>
                 </div>
 
             </form>
