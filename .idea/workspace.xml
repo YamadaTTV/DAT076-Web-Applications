@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Did initial setup from Project setup in lab 3">
+    <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -147,7 +145,7 @@
       <workItem from="1675860275456" duration="6001000" />
       <workItem from="1675956235311" duration="961000" />
       <workItem from="1676289269402" duration="2482000" />
-      <workItem from="1676362313610" duration="774000" />
+      <workItem from="1676362313610" duration="3758000" />
     </task>
     <task id="LOCAL−00001" summary="Initialized node, express and so on in the server folder">
       <created>1675152156356</created>
@@ -251,7 +249,13 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1676290530567</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="Installed bootstrap">
+      <created>1676363278516</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1676363278516</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +302,8 @@
     <MESSAGE value="minor fix" />
     <MESSAGE value="Added unit test for user. Also moved earlier test into test folder." />
     <MESSAGE value="Did initial setup from Project setup in lab 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Did initial setup from Project setup in lab 3" />
+    <MESSAGE value="Installed bootstrap" />
+    <option name="LAST_COMMIT_MESSAGE" value="Installed bootstrap" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
