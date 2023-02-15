@@ -13,7 +13,8 @@ import Navbar from 'react-bootstrap/Navbar';
 function App() {
     const[formOpen, setformOpen] = useState(false);
     const[loggedIn, setloggedIn] = useState(false);
-    const soffa: IProduct = {productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
+    const soffa: IProduct = {productId: 1, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
+    const [products, setproducts]= useState<IProduct[]>([])
 
     const handleRegisterClick = () => {
         setformOpen(!formOpen);
@@ -22,6 +23,7 @@ function App() {
     const handleLoginClick = () => {
         setloggedIn(!loggedIn);
     }
+
     /*
     if(loggedIn){
         return <Header loggedIn={loggedIn}/>
@@ -52,6 +54,7 @@ function App() {
 * Interface for describing what data a product is expected to have
 */
 interface IProduct {
+    productId: number,
     productName: string,
     productDescription: string,
     productCategory: string,
@@ -62,7 +65,16 @@ interface IProduct {
 }
 
 
-/**Aesthetics of product, used to visualize data of a product
+/** Used to get all the products from the server and display them.
+ *
+ */
+function ProductPage(props:{}){
+
+}
+
+
+
+/**Product component, used to visualize data of a product
  * Take data of IProd as parameter and returns a component card.
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
@@ -70,7 +82,7 @@ interface IProduct {
 function Product (props: {prod : IProduct}){
     //const icon = require();
     return (
-      <Card style={{ width: '18rem'}}>
+      <Card style={{ width: '18rem'}} key={props.prod.productId}>
           <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
           <Card.Body>
               <Card.Title>{props.prod.productName}</Card.Title>
