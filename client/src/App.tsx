@@ -13,6 +13,7 @@ import Navbar from 'react-bootstrap/Navbar';
 function App() {
     const[formOpen, setformOpen] = useState(false);
     const[loggedIn, setloggedIn] = useState(false);
+    const soffa: IProduct = {productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
 
     const handleRegisterClick = () => {
         setformOpen(!formOpen);
@@ -33,32 +34,62 @@ function App() {
     }
     */
    return(
-    <Header loggedIn={loggedIn}></Header>
+    <div>
+        <Header loggedIn={loggedIn}/>
+        <Row>
+            <Col xs={4}>
+                <Product prod={soffa}/>
+            </Col>
+            <Col xs={4}>
+                <Product prod={soffa}/>
+            </Col>
+        </Row>
+    </div>
    );
 }
 
+/**
+* Interface for describing what data a product is expected to have
+*/
 interface IProduct {
-  productName: string,
-  productCategory: string,
-  price: number,
-  seller : number,
-  buyer ?: number
-  //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
+    productName: string,
+    productDescription: string,
+    productCategory: string,
+    price: number,
+    seller : number,
+    buyer ?: number
+    //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
 }
 
 
-function Product ({productName,productCategory,price,seller} : IProduct){
-  return (
+/**Aesthetics of product, used to visualize data of a product
+ * Take data of IProd as parameter and returns a component card.
+ * @param props A props containing product information with all data of IProduct
+ * @return Card With layout of a product.
+ */
+function Product (props: {prod : IProduct}){
+    //const icon = require();
+    return (
       <Card style={{ width: '18rem'}}>
-        <Card.Img variant="top" src="client/src/murrayPog.png" />
-        <Card.Body>
-          <Card.Title>{productName}</Card.Title>
-          <Card.Text>
-            [Some quick example text to build on the card title and make up the
-            bulk of the card's content.]
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
+          <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
+          <Card.Body>
+              <Card.Title>{props.prod.productName}</Card.Title>
+              <Card.Text>
+                  {props.prod.productDescription}
+                  <br/>
+                  <b>
+                    {props.prod.price} KR
+                  </b>
+              </Card.Text>
+              <Row>
+                  <Col xs={4}>
+                      <Button variant="primary">Buy</Button>
+                  </Col>
+                  <Col xs={8}>
+                      <Button variant="primary">Contact seller</Button>
+                  </Col>
+              </Row>
+          </Card.Body>
       </Card>
   );
 }
@@ -84,15 +115,15 @@ function Header(props:{loggedIn:Boolean}){
 }
 
 function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : () => void}) {
-    const[username1, setusername1] = useState("");
-    const[password1, setpassword1] = useState("");
+    const[username, setusername] = useState("");
+    const[password, setpassword] = useState("");
         return (
             <div>
                 <h1>Welcome to Marketplace!</h1>
                 <form onSubmit={
                     async e => {
                         e.preventDefault();
-                        let response = await axios.post("http://localhost:8080/user/login",{ username:username1,password:password1})
+                        let response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
                         if(response.status == 400){
 
                         } else if (response.status == 202){
@@ -104,13 +135,13 @@ function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : 
                     <div>
                         <input type="text" id="username" name="username"
                                placeholder="Username" onChange={e => {
-                            setusername1(e.target.value);
+                            setusername(e.target.value);
                         }}></input>
                     </div>
                     <div>
                         <input type="password" id="password" name="password"
                                placeholder="Password" onChange={e => {
-                            setpassword1(e.target.value);
+                            setpassword(e.target.value);
                         }}></input>
                     </div>
                     <div>
@@ -128,6 +159,8 @@ function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : 
             </div>
         );
 }
+
+
 
 function RegisterForm(props: {handleRegisterClick : () => void}){
     const[username, setusername] = useState("");
