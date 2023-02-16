@@ -57,18 +57,7 @@ function App() {
             <div>
                 <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick}/>
 
-                {/*Renders all the sold products to the page*/}
-                <div>
-                    <h1>To Do</h1>
-                    <Row>
-                        {products.map((product) =>
-                            <Col xs={4}>
-                                <Product prod={product} key={product.key}>
-                                </Product>
-                            </Col>)
-                        }
-                    </Row>
-                </div>
+                <ProductPage products={products}/>
             </div>
         );
     }
@@ -99,6 +88,7 @@ interface IProduct {
     price: number,
     seller : number,
     buyer ?: number
+    children? : React.ReactNode
     //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
 }
 
@@ -106,8 +96,21 @@ interface IProduct {
 /** Used to get all the products from the server and display them.
  *
  */
-function ProductPage(props:{}){
+function ProductPage(props:{products:IProduct[]}){
+    return(
+        <div>
+            <h1>To Do</h1>
+            <Row>
+                {props.products.map((product) =>
+                    <Col xs={4}>
+                    <Product prod={product} key={product.key}>
+                    </Product>
+                    </Col>)
+                }
+            </Row>
+        </div>
 
+    );
 }
 
 
