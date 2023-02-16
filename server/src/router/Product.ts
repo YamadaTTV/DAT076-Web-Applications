@@ -32,7 +32,7 @@ productRouter.post("/", async (
         let sellerId = req.body.sellerId;
 
         if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productname has type ${typeof(productName)}, category has type ${typeof(productCategory)}, price has type ${typeof(price)},sellid has type ${typeof(sellerId)},  `);
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof(productName)}, productDescription has type ${typeof(productDescription)}, productCategory has type ${typeof(productCategory)}, price has type ${typeof(price)},sellid has type ${typeof(sellerId)},  `);
             return;
         }
 
