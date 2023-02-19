@@ -27,7 +27,7 @@ class ProductService implements IProductService {
     }
 
     async addProduct(productName: string, productDescription: string, productCategory: string, price: number, sellerId : number) : Promise<Product>{
-        const product = new Product(this.productIndex+1,productDescription,productName,productCategory,price,sellerId);
+        const product = new Product(this.productIndex+1,productName,productDescription,productCategory,price,sellerId);
         this.products.push(product);
         this.productIndex += 1;
         return product;

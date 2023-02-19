@@ -18,7 +18,12 @@ function App() {
     const[loggedIn, setloggedIn] = useState(false);
     const[sellAction, setsellAction] = useState(false);
     const soffa: IProduct = {key: 1, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
-    const [products, setproducts]= useState<IProduct[]>([])
+    const [products, setproducts]= useState<IProduct[]>([]);
+    const [category, setcategory] = useState<Category[]>([
+        {id: 1, category: "Furniture", marked: false},
+        {id: 2, category: "Electronic", marked: false},
+        {id: 3, category: "Clothes", marked: false}
+    ]);
 
     const handleRegisterClick = () => {
         setformOpen(!formOpen);
@@ -54,8 +59,7 @@ function App() {
             //Change to return the marketplace.
             <div>
                 <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick}/>
-                <ProductPage products={products}/>
-                <Footer/>
+                <ProductPage products={products} categories={category}/>
             </div>
         );
     }
@@ -88,21 +92,67 @@ interface IProduct {
     //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
 }
 
+interface Category{
+    id: number;
+    category: string;
+    marked: boolean;
+}
+
+interface CategoryProps{
+    key: number;
+    marked: boolean;
+    children? : React.ReactNode;
+    onMarked : () => Promise<void>;
+}
+
+function CategoryItem({marked, children, onMarked} : CategoryProps){
+    return (
+        <ul className={"category-item"}>
+            <input type={"checkbox"} checked={marked}
+                onChange = {async e => {
+                    onMarked();
+                }}
+            />
+            {children}
+        </ul>
+    )
+}
 
 /** Used to get all the products from the server and display them.
  *
  */
-function ProductPage(props:{products:IProduct[]}){
+function ProductPage(props:{products:IProduct[], categories:Category[]}){
     return(
-        <div>
-            <h1>To Do</h1>
-            <Row>
-                {props.products.map((product) =>
-                    <Col xs={4}>
-                    <Product prod={product} key={product.key}>
-                    </Product>
-                    </Col>)
-                }
+        <div style={{marginTop: "10px", marginLeft: "10px"}}>
+            <Row xs={12}>
+                <Col xs={2}>
+                    <div className={"category-div"}>
+                        <h3 className={"login-text"}>Filter</h3>
+                        {props.categories.map((category) =>
+                        <CategoryItem
+                            key={category.id}
+                            marked={category.marked}
+                            onMarked={async () => {
+                                await axios.post(`http://localhost:8080/task/${category.id}`,
+                                   {marked : true}
+                                );
+                            }}>
+                            &emsp;{category.category}
+                        </CategoryItem>)}
+                    </div>
+
+                </Col>
+                <Col xs={10}>
+                    <h3>Browse items</h3>
+                    <Row>
+                        {props.products.map((product) =>
+                            <Col xs={4}>
+                                <Product prod={product} key={product.key}>
+                                </Product>
+                            </Col>)
+                        }
+                    </Row>
+                </Col>
             </Row>
         </div>
 
@@ -119,7 +169,7 @@ function ProductPage(props:{products:IProduct[]}){
 function Product (props:  {children : object, prod : IProduct}){
     //const icon = require();
     return (
-      <Card style={{ width: '18rem'}} key={props.prod.key}>
+      <Card style={{ width: '30rem', margin: "10px"}} key={props.prod.key}>
           <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
           <Card.Body>
               <Card.Title>{props.prod.productName}</Card.Title>
@@ -132,10 +182,10 @@ function Product (props:  {children : object, prod : IProduct}){
               </Card.Text>
               <Row>
                   <Col xs={4}>
-                      <Button variant="btn-primary">Buy</Button>
+                      <Button className="btn-primary">Buy</Button>
                   </Col>
                   <Col xs={8}>
-                      <Button variant="btn-primary">Contact seller</Button>
+                      <Button className={"btn-primary"}>Contact seller</Button>
                   </Col>
               </Row>
           </Card.Body>
