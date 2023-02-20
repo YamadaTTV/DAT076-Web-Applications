@@ -2,14 +2,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Card, Button,Row,Col, NavbarBrand} from 'react-bootstrap'
+import {Card, Button, Row, Col, NavbarBrand, Modal} from 'react-bootstrap'
 import axios from "axios";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {getByText} from "@testing-library/react";
-import {isNumberObject} from "util/types";
-import {isNumber} from "util";
 
 
 
@@ -50,7 +47,12 @@ function App() {
 
     if(sellAction){
         return(
-            <SellForm handleSellClick={handleSellClick}></SellForm>
+            <div>
+                <SellForm handleSellClick={handleSellClick}></SellForm>
+                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick}/>
+                <ProductPage products={products} categories={category}/>
+            </div>
+
         );
     }
 
@@ -123,7 +125,7 @@ function CategoryItem({marked, children, onMarked} : CategoryProps){
  */
 function ProductPage(props:{products:IProduct[], categories:Category[]}){
     return(
-        <div style={{marginTop: "10px", marginLeft: "10px"}}>
+        <div style={{marginTop: "25px", marginLeft: "10px"}}>
             <Row xs={12}>
                 <Col xs={2}>
                     <div className={"category-div"}>
@@ -143,15 +145,20 @@ function ProductPage(props:{products:IProduct[], categories:Category[]}){
 
                 </Col>
                 <Col xs={10}>
-                    <h3>Browse items</h3>
-                    <Row>
-                        {props.products.map((product) =>
-                            <Col xs={4}>
-                                <Product prod={product} key={product.key}>
-                                </Product>
-                            </Col>)
-                        }
-                    </Row>
+                    <div style={{marginRight: "10px"}}>
+                        <h3>Browse items</h3>
+                        <div style={{marginRight:"25px"}}>
+                            <Row>
+                                {props.products.map((product) =>
+                                    <Col xs={4}>
+                                        <Product prod={product} key={product.key}>
+                                        </Product>
+                                    </Col>)
+                                }
+                            </Row>
+                        </div>
+                    </div>
+
                 </Col>
             </Row>
         </div>
@@ -169,7 +176,7 @@ function ProductPage(props:{products:IProduct[], categories:Category[]}){
 function Product (props:  {children : object, prod : IProduct}){
     //const icon = require();
     return (
-      <Card style={{ width: '30rem', margin: "10px"}} key={props.prod.key}>
+      <Card style={{ width: '100%', margin: "10px"}} key={props.prod.key}>
           <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
           <Card.Body>
               <Card.Title>{props.prod.productName}</Card.Title>
@@ -371,50 +378,72 @@ function SellForm(props: {handleSellClick : () => void}){
     const[productCategory, setproductCategory] = useState("");
     const[price, setprice] = useState("")
     const[sellerId, setsellerId] = useState(1); //Change to automatically take the logged in users id.
+
+    const [show, setShow] = useState(true);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return(
         <div>
-            <h1>Register!</h1>
-
-            <form
-                onSubmit={
-                    async e => {
-                        e.preventDefault();
-                        await axios.post("http://localhost:8080/product",{ productName:productName, productDescription:productDescription, productCategory:productCategory, price:Number(price), sellerId:sellerId})
-                        props.handleSellClick()
-                    }
-                }>
-                <div>
-                    <input type="text" id="productName" name="productName"
-                           placeholder="Title" onChange={e => {
-                        setproductName(e.target.value);
-                    }}>
-                    </input>
-                </div>
-                <div>
-                    <input type="text" id="description" name="email"
-                           placeholder="Description" onChange={e => {
-                        setproductDescription(e.target.value);
-                    }}>
-                    </input>
-                </div>
-                <div>
-                    <input type="text" id="category" name="category"
-                           placeholder="Category" onChange={e => {
-                        setproductCategory(e.target.value);
-                    }}>
-                    </input>
-                </div>
-                <div>
-                    <input type="text" id="price" name="price"
-                           placeholder="Price" onChange={e => {
-                        setprice(e.target.value);
-                    }}>
-                    </input>
-                </div>
-                <div>
-                    <input type="submit" value="Sell" id="submitBtn"></input>
-                </div>
-            </form>
+            <Modal
+                show={show}
+                onHide={props.handleSellClick}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header style={{backgroundColor: "#5d9667"}} closeButton>
+                    <Modal.Title className={"login-text"}>Sell item</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form
+                        onSubmit={
+                            async e => {
+                                e.preventDefault();
+                                await axios.post("http://localhost:8080/product",{ productName:productName, productDescription:productDescription, productCategory:productCategory, price:Number(price), sellerId:sellerId})
+                                props.handleSellClick()
+                            }
+                        }>
+                        <div className={"login-div"}>
+                            <input className={"login-form-input"} type="text" id="productName" name="productName"
+                                   placeholder="Title" onChange={e => {
+                                setproductName(e.target.value);
+                            }}>
+                            </input>
+                        </div>
+                        <div className={"login-div"}>
+                            <input className={"login-form-input"} type="text" id="description" name="email"
+                                   placeholder="Description" onChange={e => {
+                                setproductDescription(e.target.value);
+                            }}>
+                            </input>
+                        </div>
+                        <div className={"login-div"}>
+                            <input className={"login-form-input"} type="text" id="category" name="category"
+                                   placeholder="Category" onChange={e => {
+                                setproductCategory(e.target.value);
+                            }}>
+                            </input>
+                        </div>
+                        <div className={"login-div"}>
+                            <input className={"login-form-input"} type="text" id="price" name="price"
+                                   placeholder="Price" onChange={e => {
+                                setprice(e.target.value);
+                            }}>
+                            </input>
+                        </div>
+                        <div>
+                            <input className={"btn-primary"} type="submit" value="Sell" id="submitBtn"></input>
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className={"btn-primary"}
+                        onClick={handleClose}
+                    >
+                        Close
+                    </button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }
@@ -461,7 +490,6 @@ function IndexPage(props: {handleLoginClick : () => void, handleRegisterClick : 
         </div>
     )
 }
-
 
 
 export default App;
