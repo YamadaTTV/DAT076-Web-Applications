@@ -109,6 +109,16 @@ function ProductPage(props:{products:IProduct[]}){
     );
 }
 
+function buyProduct(){
+    const [buyerId, setBuyerId] = useState<number>(0);
+
+    const handleBuyProduct = async (productId: number) => {
+        if(buyerId == null){
+            alert("Please enter buyerId");
+            return;
+        }
+    }
+}
 
 
 /**Product component, used to visualize data of a product
