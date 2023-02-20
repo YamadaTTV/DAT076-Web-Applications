@@ -205,3 +205,9 @@ code {
 ul {
   list-style-type: none;
 }
+
+.btn-close-white{
+  backgroundColor: "#5d9667";
+  color: #fff;
+  opacity: 1;
+}

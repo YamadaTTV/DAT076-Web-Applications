@@ -4,7 +4,7 @@
     <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +147,7 @@
       <workItem from="1675956235311" duration="961000" />
       <workItem from="1676289269402" duration="2482000" />
       <workItem from="1676362313610" duration="3758000" />
-      <workItem from="1676917077226" duration="5458000" />
+      <workItem from="1676917077226" duration="6412000" />
     </task>
     <task id="LOCAL−00001" summary="Initialized node, express and so on in the server folder">
       <created>1675152156356</created>

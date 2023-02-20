@@ -381,8 +381,11 @@ function SellForm(props: {handleSellClick : () => void}){
 
     const [show, setShow] = useState(true);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        props.handleSellClick()
+    };
+
     return(
         <div>
             <Modal
@@ -391,8 +394,9 @@ function SellForm(props: {handleSellClick : () => void}){
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header style={{backgroundColor: "#5d9667"}} closeButton>
+                <Modal.Header style={{backgroundColor: "#5d9667"}}>
                     <Modal.Title className={"login-text"}>Sell item</Modal.Title>
+                    <button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={handleClose}></button>
                 </Modal.Header>
                 <Modal.Body>
                     <form
@@ -436,13 +440,6 @@ function SellForm(props: {handleSellClick : () => void}){
                         </div>
                     </form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <button className={"btn-primary"}
-                        onClick={handleClose}
-                    >
-                        Close
-                    </button>
-                </Modal.Footer>
             </Modal>
         </div>
     );
