@@ -1,36 +1,35 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {Card, Button,Row,Col, NavbarBrand} from 'react-bootstrap'
 import axios from "axios";
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {getByText} from "@testing-library/react";
-import {isNumberObject} from "util/types";
-import {isNumber} from "util";
-
-
 
 function App() {
     const[formOpen, setformOpen] = useState(false);
     const[loggedIn, setloggedIn] = useState(false);
     const[sellAction, setsellAction] = useState(false);
+    const[cartItems, setCartItems] = useState<IProduct[]>([
+        {key: 1, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1},
+        {key: 2, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
+    ])
     const soffa: IProduct = {key: 1, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
     const [products, setproducts]= useState<IProduct[]>([])
-
     const handleRegisterClick = () => {
         setformOpen(!formOpen);
     }
-
     const handleLoginClick = () => {
         setloggedIn(!loggedIn);
     }
-
     const handleSellClick = () => {
         setsellAction(!sellAction);
         updateProducts();
+    }
+    const addToCart = (product : IProduct) => {
+        let tempCart = cartItems;
+        tempCart.push(product);
+        setCartItems(tempCart);
     }
 
     async function updateProducts() {
@@ -48,12 +47,11 @@ function App() {
             <SellForm handleSellClick={handleSellClick}></SellForm>
         );
     }
-
     if(loggedIn){
         return (
             //Change to return the marketplace.
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick}/>
+                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems}/>
                 <ProductPage products={products}/>
                 <Footer/>
             </div>
@@ -62,7 +60,7 @@ function App() {
     else{
         return(
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick}/>
+                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems}/>
                 <IndexPage handleLoginClick = {handleLoginClick} handleRegisterClick={handleRegisterClick} handleSellClick={handleSellClick} loggedIn={loggedIn} formOpen={formOpen}></IndexPage>
                 <Footer></Footer>
             </div>
@@ -72,7 +70,6 @@ function App() {
 
 
 }
-
 /**
 * Interface for describing what data a product is expected to have
 */
@@ -87,8 +84,18 @@ interface IProduct {
     children? : React.ReactNode
     //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
 }
+function BuyProduct(props: { products: IProduct[]; updateProducts: () => void}){
+    const handleBuy = async (productId: number) => {
+        const response = await axios.post("http://localhost:8080/product/${productId}/buy");
+        props.updateProducts();
+    };
 
-
+    return(
+        <div>
+            <h1>Test</h1>
+        </div>
+    )
+}
 /** Used to get all the products from the server and display them.
  *
  */
@@ -108,19 +115,6 @@ function ProductPage(props:{products:IProduct[]}){
 
     );
 }
-
-function buyProduct(){
-    const [buyerId, setBuyerId] = useState<number>(0);
-
-    const handleBuyProduct = async (productId: number) => {
-        if(buyerId == null){
-            alert("Please enter buyerId");
-            return;
-        }
-    }
-}
-
-
 /**Product component, used to visualize data of a product
  * Take data of IProd as parameter and returns a component card.
  * @param props A props containing product information with all data of IProduct
@@ -152,7 +146,6 @@ function Product (props:  {children : object, prod : IProduct}){
       </Card>
   );
 }
-
 /**
  * Header component, used to show the header.
  * @param   loogedIn - Used to check if user is logged in or not. If true, makes it possible to log out and sell stuff.
@@ -160,10 +153,33 @@ function Product (props:  {children : object, prod : IProduct}){
  *          handleSellClick - The handler to show the sell form.
  * @return Header with different possible actions.
  */
-function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void}){
+function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[]}){
     const logo = require("./murrayPog.png");
 
     if(props.loggedIn){
+        // If added to cart
+        if(props.cartItems.length == 0){
+            return(
+                <Navbar collapseOnSelect expand="lg" className="top">
+                    <img src={logo} width="4%"/>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="#about_us">About Us</Nav.Link>
+                            <Nav.Link href="#browse">Browse</Nav.Link>
+                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
+                            <Nav.Link href="#cart">Cart</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+        );
+        } else {
+        // Else
         return(
                 <Navbar collapseOnSelect expand="lg" className="top">
                     <img src={logo} width="4%"/>
@@ -182,8 +198,8 @@ function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSe
                     </Navbar.Collapse>
                 </Navbar>
         );
-    }
-    else{
+        }
+    } else {
         return(
             <Navbar collapseOnSelect expand="lg" className="top">
                 <img src={logo} width="4%"/>
@@ -202,7 +218,6 @@ function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSe
         );
     }
 }
-
 function Footer(){
     return(
         <nav className="navbar navbar-expand-xl footer fixed-bottom">
@@ -212,7 +227,6 @@ function Footer(){
         </nav>
         )
 }
-
 /**
  * The component for the LoginForm, shows a login menu
  * @param handleLoginClick - handler for when login button is pressed.
@@ -266,7 +280,6 @@ function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : 
             </div>
         );
 }
-
 /**
  * The component for the RegisterForm, shows a register menu
  * @param
@@ -378,7 +391,6 @@ function SellForm(props: {handleSellClick : () => void}){
         </div>
     );
 }
-
 function IndexPage(props: {handleLoginClick : () => void, handleRegisterClick : () => void, handleSellClick : () => void, loggedIn : Boolean, formOpen : Boolean}){
     const wallpaper = require("./wallpaperflare.com_wallpaper.jpg");
     return(
@@ -421,7 +433,4 @@ function IndexPage(props: {handleLoginClick : () => void, handleRegisterClick : 
         </div>
     )
 }
-
-
-
 export default App;
