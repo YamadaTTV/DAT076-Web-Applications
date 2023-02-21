@@ -35,7 +35,7 @@ function App() {
     const toCartPage = () => {
         setCartState(!cartState);
     }
-
+    
     async function addToCart(product : IProduct){
         let tempCart = cartItems;
         tempCart.push(product);
@@ -66,7 +66,7 @@ function App() {
     if(cartState){
         return (
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
+                <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
                 <CartPage handleCart={handleCart} products={cartItems} removeCart={removeCart}></CartPage>
                 <Footer></Footer>
             </div>
@@ -76,7 +76,7 @@ function App() {
         return (
             //Change to return the marketplace.
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
+                <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
                 <ProductPage products={products} handleCart={handleCart}/>
                 <Footer/>
             </div>
@@ -85,7 +85,7 @@ function App() {
     else{
         return(
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
+                <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
                 <IndexPage handleLoginClick = {handleLoginClick} handleRegisterClick={handleRegisterClick} handleSellClick={handleSellClick} loggedIn={loggedIn} formOpen={formOpen}></IndexPage>
                 <Footer></Footer>
             </div>
@@ -263,12 +263,33 @@ function AddedProduct(props: {children: object, prod: IProduct, handleCart: (pro
  *          handleSellClick - The handler to show the sell form.
  * @return Header with different possible actions.
  */
-function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[], toCartPage: () => void}){
+function Header(props:{loggedIn:Boolean, inCartPage : Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[], toCartPage: () => void}){
     const logo = require("./murrayPog.png");
 
     if(props.loggedIn){
+        if(props.inCartPage){
+            return(
+                <Navbar collapseOnSelect expand="lg" className="top">
+                    <img src={logo} width="4%"/>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home" onClick={props.toCartPage}>Home</Nav.Link>
+                            <Nav.Link href="#about_us">About Us</Nav.Link>
+                            <Nav.Link href="#browse">Browse</Nav.Link>
+                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
+                            <Nav.Link href="#cart">Cart</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+        );
+        }
         // If added to cart
-        if(props.cartItems.length > 0){
+        else if(props.cartItems.length > 0){
             return(
                 <Navbar collapseOnSelect expand="lg" className="top">
                     <img src={logo} width="4%"/>
@@ -288,8 +309,8 @@ function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSe
                     </Navbar.Collapse>
                 </Navbar>
         );
-        } else {
-        // Else
+        } 
+        else {
         return(
                 <Navbar collapseOnSelect expand="lg" className="top">
                     <img src={logo} width="4%"/>
@@ -309,7 +330,8 @@ function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSe
                 </Navbar>
         );
         }
-    } else {
+    }
+    else {
         return(
             <Navbar collapseOnSelect expand="lg" className="top">
                 <img src={logo} width="4%"/>
