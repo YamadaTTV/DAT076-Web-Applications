@@ -10,10 +10,9 @@ function App() {
     const[formOpen, setformOpen] = useState(false);
     const[loggedIn, setloggedIn] = useState(false);
     const[sellAction, setsellAction] = useState(false);
-    const[cartItems, setCartItems] = useState<IProduct[]>([
-        {key: 1, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1},
-        {key: 2, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
-    ])
+    const[cartItems, setCartItems] = useState<IProduct[]>([]);
+    const[cartItem, setcartItem] = useState<IProduct>();
+    const[cartState, setCartState] = useState(false);
     const soffa: IProduct = {key: 1, productName:"soffa",productDescription:"En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",productCategory:"möbel",price:123,seller:1}
     const [products, setproducts]= useState<IProduct[]>([])
     const handleRegisterClick = () => {
@@ -26,7 +25,16 @@ function App() {
         setsellAction(!sellAction);
         updateProducts();
     }
-    const addToCart = (product : IProduct) => {
+    const handleCart = (product :  IProduct) => {
+        addToCart(product);
+        console.log("handleCart iahsdiashdjksas");
+    }
+
+    const toCartPage = () => {
+        setCartState(!cartState);
+    }
+
+    async function addToCart(product : IProduct){
         let tempCart = cartItems;
         tempCart.push(product);
         setCartItems(tempCart);
@@ -47,12 +55,21 @@ function App() {
             <SellForm handleSellClick={handleSellClick}></SellForm>
         );
     }
+    if(cartState){
+        return (
+            <div>
+                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
+                <CartPage></CartPage>
+                <Footer></Footer>
+            </div>
+        );
+    }
     if(loggedIn){
         return (
             //Change to return the marketplace.
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems}/>
-                <ProductPage products={products}/>
+                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
+                <ProductPage products={products} handleCart={handleCart}/>
                 <Footer/>
             </div>
         );
@@ -60,7 +77,7 @@ function App() {
     else{
         return(
             <div>
-                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems}/>
+                <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
                 <IndexPage handleLoginClick = {handleLoginClick} handleRegisterClick={handleRegisterClick} handleSellClick={handleSellClick} loggedIn={loggedIn} formOpen={formOpen}></IndexPage>
                 <Footer></Footer>
             </div>
@@ -84,29 +101,17 @@ interface IProduct {
     children? : React.ReactNode
     //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
 }
-function BuyProduct(props: { products: IProduct[]; updateProducts: () => void}){
-    const handleBuy = async (productId: number) => {
-        const response = await axios.post("http://localhost:8080/product/${productId}/buy");
-        props.updateProducts();
-    };
-
-    return(
-        <div>
-            <h1>Test</h1>
-        </div>
-    )
-}
 /** Used to get all the products from the server and display them.
  *
  */
-function ProductPage(props:{products:IProduct[]}){
+function ProductPage(props:{products:IProduct[], handleCart: (product : IProduct) => void}){
     return(
         <div>
             <h1>To Do</h1>
             <Row>
                 {props.products.map((product) =>
                     <Col xs={4}>
-                    <Product prod={product} key={product.key}>
+                    <Product prod={product} key={product.key} handleCart={props.handleCart}>
                     </Product>
                     </Col>)
                 }
@@ -115,12 +120,29 @@ function ProductPage(props:{products:IProduct[]}){
 
     );
 }
+
+function CartPage(){
+    return(
+        <div>
+            <h1>Your Cart</h1>
+            <Row>
+            {props.products.map((product) =>
+                    <Col xs={4}>
+                    <Product prod={product} key={product.key} handleCart={props.handleCart}>
+                    </Product>
+                    </Col>)
+                }
+            </Row>
+        </div>
+    );
+}
+
 /**Product component, used to visualize data of a product
  * Take data of IProd as parameter and returns a component card.
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
  */
-function Product (props:  {children : object, prod : IProduct}){
+function Product (props:  {children : object, prod : IProduct, handleCart: (product : IProduct) => void}){
     //const icon = require();
     return (
       <Card style={{ width: '18rem'}} key={props.prod.key}>
@@ -136,7 +158,7 @@ function Product (props:  {children : object, prod : IProduct}){
               </Card.Text>
               <Row>
                   <Col xs={4}>
-                      <Button variant="btn-primary">Buy</Button>
+                      <Button variant="btn-primary" onClick={() => props.handleCart(props.prod)}>Add to Cart</Button>
                   </Col>
                   <Col xs={8}>
                       <Button variant="btn-primary">Contact seller</Button>
@@ -153,12 +175,12 @@ function Product (props:  {children : object, prod : IProduct}){
  *          handleSellClick - The handler to show the sell form.
  * @return Header with different possible actions.
  */
-function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[]}){
+function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[], toCartPage: () => void}){
     const logo = require("./murrayPog.png");
 
     if(props.loggedIn){
         // If added to cart
-        if(props.cartItems.length == 0){
+        if(props.cartItems.length > 0){
             return(
                 <Navbar collapseOnSelect expand="lg" className="top">
                     <img src={logo} width="4%"/>
@@ -169,7 +191,7 @@ function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSe
                             <Nav.Link href="#about_us">About Us</Nav.Link>
                             <Nav.Link href="#browse">Browse</Nav.Link>
                             <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                            <Nav.Link href="#cart">Cart</Nav.Link>
+                            <Nav.Link href="#cart" onClick={props.toCartPage}>Cart</Nav.Link>
                         </Nav>
                         <Nav>
                             <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
