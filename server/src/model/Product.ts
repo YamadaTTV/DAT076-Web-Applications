@@ -1,5 +1,5 @@
 export class Product{
-    productId : number
+    key : number
     productName : string
     productDescription : string
     productCategory: string
@@ -7,8 +7,8 @@ export class Product{
     sellerId : number
     buyerId : number | undefined
 
-    constructor(productId: number, productName: string, productDescription: string,  productCategory: string, price: number, seller : number) {
-        this.productId = productId
+    constructor(key: number, productName: string, productDescription: string,  productCategory: string, price: number, seller : number) {
+        this.key = key
         this.productName = productName
         this.productDescription = productDescription
         this.productCategory = productCategory

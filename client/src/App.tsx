@@ -130,36 +130,28 @@ function ProductPage(props:{products:IProduct[], handleCart: (product : IProduct
 }
 
 function CartPage(props:{products: IProduct[], handleCart: (product: IProduct) => void, removeCart: (product: IProduct) => void}){
-    /*return(
-        <div>
-            <h1>Your Cart</h1>
-            <Row>
-
-            </Row>
-            <Row>
-                <Col xs={1}>
-                <Button>Buy</Button>
-                </Col>
-            </Row>
-        </div>
-    );
-    */
-   /*
-   const [cart, setCart] = useState<Set<number>>(new Set());
-
-   const addToCart = (product: IProduct) => {
-    props.handleCart(product);
-    setCart((prevCart) => {
-        const newCart = new Set(prevCart);
-        newCart.add(product.key);
-        return newCart;
-    });
-   }; */
-
-   //const cartProducts = props.products.filter((product) => cart.has(product.key));
+    const [buying, setBuying] = useState(false);
    const addToCart = (product: IProduct) => {
     
     };
+
+    const buyProducts = async () => {
+        setBuying(true);
+    
+
+        props.products.forEach(async product => {
+            console.log("HEJHEJHEJ PRODUCT:");
+            console.log(product);
+            let response = await axios.put("http://localhost:8080/product/buy", {key : product.key, buyerId: 1})
+            if(response.status == 400){
+                console.log("Buying failed");
+            } else if(response.status == 200){
+                console.log("Buying succeeded");
+            }
+        });
+        
+    };
+
    return(
     <div>
         <h1>Your Cart</h1>
@@ -172,29 +164,11 @@ function CartPage(props:{products: IProduct[], handleCart: (product: IProduct) =
         </Row>
         <Row>
             <Col xs={1}>
-                <Button>Buy</Button>
+                <Button onClick={buyProducts} disabled={buying}>Buy</Button>
             </Col>
         </Row>
     </div>
    )
-   /*
-   return(
-    <div>
-        <h1>Your Cart</h1>
-        <Row>
-            {cartProducts.map((product) => (
-                <Col xs={4}>
-                    <Product prod={product} key={product.key} handleCart={addToCart}>{}</Product>
-                </Col>
-            ))}
-        </Row>
-        <Row>
-            <Col xs={1}>
-                <Button>Buy</Button>
-            </Col>
-        </Row>
-    </div>
-   ); */
 }
 
 /**Product component, used to visualize data of a product

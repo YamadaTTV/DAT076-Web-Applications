@@ -48,28 +48,28 @@ productRouter.post("/", async (
 });
 
 productRouter.put("/buy", async (
-    req: Request<{}, {},{productId: number, buyerId : number}>,
+    req: Request<{}, {},{key: number, buyerId : number}>,
     res: Response<Product | string>
 ) => {
     try {
-        let productId = req.body.productId;
+        let key = req.body.key;
         let buyerId = req.body.buyerId;
 
-        if (typeof (productId) !== "number" || typeof (buyerId) !== "number") {
-            res.status(400).send(`Bad PUT call.`);
+        if (typeof (key) !== "number" || typeof (buyerId) !== "number") {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- key has type ${typeof(key)}, buyerId has type ${typeof(buyerId)}`);
             return;
         }
 
-        if (!await productService.productExist(productId)) {
-            res.status(400).send("Product does not exit");
+        if (!await productService.productExist(key)) {
+            res.status(401).send("Product does not exit");
             return
         }
         if (!await userService.userExists(buyerId)) {
-            res.status(400).send("User does not exit");
+            res.status(402).send("User does not exit");
             return;
         }
 
-        let product =await productService.buyProduct(productId, buyerId);
+        let product =await productService.buyProduct(key, buyerId);
         res.status(200).send(product)
 
     }catch(e: any){
