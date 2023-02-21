@@ -6,7 +6,7 @@ import {RegisterForm} from '../components/RegisterForm';
 export function IndexPage(props: {handleLoginClick : () => void, handleRegisterClick : () => void, handleSellClick : () => void, loggedIn : Boolean, formOpen : Boolean}){
     const wallpaper = require("../img/wallpaperflare.com_wallpaper.jpg");
     return(
-        <div>
+        <div data-testid="indexPage">
             <Row>
                 <Col lg={9} xs={0}>
                     <div className={"img-container"}>

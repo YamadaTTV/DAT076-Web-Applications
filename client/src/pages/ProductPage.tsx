@@ -29,16 +29,12 @@ function CategoryItem({marked, children, onMarked} : CategoryProps){
     )
 }
 
-
-
-
-
 /** Used to get all the products from the server and display them.
  *
  */
 export function ProductPage(props:{products:IProduct[], categories:Category[]}){
     return(
-        <div style={{marginTop: "25px", marginLeft: "10px"}}>
+        <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="productPage">
             <Row xs={12}>
                 <Col xs={2}>
                     <div className={"category-div"}>
@@ -55,7 +51,6 @@ export function ProductPage(props:{products:IProduct[], categories:Category[]}){
                                 &emsp;{category.category}
                             </CategoryItem>)}
                     </div>
-
                 </Col>
                 <Col xs={10}>
                     <div style={{marginRight: "10px"}}>
@@ -75,6 +70,5 @@ export function ProductPage(props:{products:IProduct[], categories:Category[]}){
                 </Col>
             </Row>
         </div>
-
     );
 }

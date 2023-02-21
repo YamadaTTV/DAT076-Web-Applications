@@ -9,8 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {IndexPage} from './pages/IndexPage';
 import {ProductPage, Category} from './pages/ProductPage';
-import {Product, IProduct} from "./components/Product";
-import {LoginForm} from './components/LoginForm';
+import {IProduct} from "./components/Product";
 import {SellForm} from './components/SellForm';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
@@ -59,7 +58,6 @@ function App() {
                 <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick}/>
                 <ProductPage products={products} categories={category}/>
             </div>
-
         );
     }
 
@@ -81,8 +79,6 @@ function App() {
             </div>
         )
     }
-
-
-
 }
+
 export default App;
