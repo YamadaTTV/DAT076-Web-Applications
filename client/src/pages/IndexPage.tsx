@@ -4,7 +4,7 @@ import {LoginForm} from '../components/LoginForm';
 import {RegisterForm} from '../components/RegisterForm';
 
 export function IndexPage(props: {handleLoginClick : () => void, handleRegisterClick : () => void, handleSellClick : () => void, loggedIn : Boolean, formOpen : Boolean}){
-    const wallpaper = require("./wallpaperflare.com_wallpaper.jpg");
+    const wallpaper = require("../img/wallpaperflare.com_wallpaper.jpg");
     return(
         <div>
             <Row>

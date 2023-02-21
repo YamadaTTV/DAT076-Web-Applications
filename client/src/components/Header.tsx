@@ -10,7 +10,7 @@ import React from "react";
  * @return Header with different possible actions.
  */
 export function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void}){
-    const logo = require("./murrayPog.png");
+    const logo = require("../img/murrayPog.png");
 
     if(props.loggedIn){
         return(

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
+import logo from './img/logo.svg';
 import './App.css';
 import {Card, Button, Row, Col, NavbarBrand, Modal} from 'react-bootstrap'
 import axios from "axios";
@@ -8,7 +8,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {IndexPage} from './pages/IndexPage';
-import {ProductPage, IProduct, Category} from './pages/ProductPage';
+import {ProductPage, Category} from './pages/ProductPage';
+import {Product, IProduct} from "./components/Product";
 import {LoginForm} from './components/LoginForm';
 import {SellForm} from './components/SellForm';
 import {Header} from './components/Header';
