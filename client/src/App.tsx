@@ -29,7 +29,9 @@ function App() {
         addToCart(product);
         console.log("handleCart iahsdiashdjksas");
     }
-
+    const removeFromCart = (product: IProduct) => {
+        removeFromCart(product);
+    }
     const toCartPage = () => {
         setCartState(!cartState);
     }
@@ -37,6 +39,12 @@ function App() {
     async function addToCart(product : IProduct){
         let tempCart = cartItems;
         tempCart.push(product);
+        setCartItems(tempCart);
+    }
+
+    async function removeCart(product: IProduct){
+        let tempCart = cartItems;
+        tempCart.pop();
         setCartItems(tempCart);
     }
 
@@ -59,7 +67,7 @@ function App() {
         return (
             <div>
                 <Header loggedIn={loggedIn} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
-                <CartPage></CartPage>
+                <CartPage handleCart={handleCart} products={cartItems} removeCart={removeCart}></CartPage>
                 <Footer></Footer>
             </div>
         );
@@ -121,20 +129,72 @@ function ProductPage(props:{products:IProduct[], handleCart: (product : IProduct
     );
 }
 
-function CartPage(){
-    return(
+function CartPage(props:{products: IProduct[], handleCart: (product: IProduct) => void, removeCart: (product: IProduct) => void}){
+    /*return(
         <div>
             <h1>Your Cart</h1>
             <Row>
-            {props.products.map((product) =>
-                    <Col xs={4}>
-                    <Product prod={product} key={product.key} handleCart={props.handleCart}>
-                    </Product>
-                    </Col>)
-                }
+
+            </Row>
+            <Row>
+                <Col xs={1}>
+                <Button>Buy</Button>
+                </Col>
             </Row>
         </div>
     );
+    */
+   /*
+   const [cart, setCart] = useState<Set<number>>(new Set());
+
+   const addToCart = (product: IProduct) => {
+    props.handleCart(product);
+    setCart((prevCart) => {
+        const newCart = new Set(prevCart);
+        newCart.add(product.key);
+        return newCart;
+    });
+   }; */
+
+   //const cartProducts = props.products.filter((product) => cart.has(product.key));
+   const addToCart = (product: IProduct) => {
+    
+    };
+   return(
+    <div>
+        <h1>Your Cart</h1>
+        <Row>
+            {props.products.map((product) => (
+                <Col xs={4}>
+                    <AddedProduct prod={product} key={product.key} handleCart={(addToCart)} removeCart={props.removeCart}>{}</AddedProduct>
+                </Col>
+            ))}
+        </Row>
+        <Row>
+            <Col xs={1}>
+                <Button>Buy</Button>
+            </Col>
+        </Row>
+    </div>
+   )
+   /*
+   return(
+    <div>
+        <h1>Your Cart</h1>
+        <Row>
+            {cartProducts.map((product) => (
+                <Col xs={4}>
+                    <Product prod={product} key={product.key} handleCart={addToCart}>{}</Product>
+                </Col>
+            ))}
+        </Row>
+        <Row>
+            <Col xs={1}>
+                <Button>Buy</Button>
+            </Col>
+        </Row>
+    </div>
+   ); */
 }
 
 /**Product component, used to visualize data of a product
@@ -168,6 +228,34 @@ function Product (props:  {children : object, prod : IProduct, handleCart: (prod
       </Card>
   );
 }
+
+function AddedProduct(props: {children: object, prod: IProduct, handleCart: (product: IProduct) => void, removeCart: (product: IProduct) => void}){
+    return(
+        <Card style={{width: "18rem"}} key={props.prod.key}>
+            <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
+            <Card.Body>
+                <Card.Title>{props.prod.productName}</Card.Title>
+                <Card.Text>
+                    {props.prod.productDescription}
+                    <br/>
+                    <b>
+                        {props.prod.price} KR
+                    </b>
+                </Card.Text>
+                <Row>
+                    <Col xs={4}>
+                        <Button variant="btn-primary">Contact seller</Button>
+                    </Col>
+                    <Col xs={8}>
+                        <Button variant="btn-primary" onClick={() => props.removeCart(props.prod)}>Remove</Button>
+                    </Col>
+                </Row>
+            </Card.Body>
+        </Card>
+    );
+}
+
+
 /**
  * Header component, used to show the header.
  * @param   loogedIn - Used to check if user is logged in or not. If true, makes it possible to log out and sell stuff.
