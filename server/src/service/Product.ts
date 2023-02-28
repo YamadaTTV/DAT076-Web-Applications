@@ -4,6 +4,9 @@ import {userService} from "../router/User";
 export interface IProductService {
     //Get all products in system
     getProducts() : Promise<Array<Product>>;
+    
+    //Get all available products in system
+    getAvailableProducts() : Promise<Array<Product>>;
 
     //Add a new product to the system
     addProduct(productName: string, productDescription: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
@@ -24,6 +27,12 @@ class ProductService implements IProductService {
 
     async getProducts() : Promise<Array<Product>>{
         return this.products;
+    }
+
+    async getAvailableProducts() : Promise<Array<Product>>{
+        //TODO
+        // Filtrera så det visas endast products som inte har en buyerID
+        return this.products.filter(product => !product.buyerId);
     }
 
     async addProduct(productName: string, productDescription: string, productCategory: string, price: number, sellerId : number) : Promise<Product>{

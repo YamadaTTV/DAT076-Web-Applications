@@ -29,11 +29,17 @@ function App() {
         addToCart(product);
         console.log("handleCart iahsdiashdjksas");
     }
+    const handleBuy = () => {
+        setCartItems([]);
+        updateProducts();
+        setCartState(false);
+    }
     const removeFromCart = (product: IProduct) => {
         removeFromCart(product);
     }
     const toCartPage = () => {
         setCartState(!cartState);
+        updateProducts();
     }
     
     async function addToCart(product : IProduct){
@@ -48,9 +54,11 @@ function App() {
         setCartItems(tempCart);
     }
 
+
+
     async function updateProducts() {
         // TODO Make it possible to change URL
-        const response = await axios.get<IProduct[]>("http://localhost:8080/product");
+        const response = await axios.get<IProduct[]>("http://localhost:8080/product/available"); //change http to http://localhost:8080/product/available
         setproducts(response.data);
     }
 
@@ -67,7 +75,7 @@ function App() {
         return (
             <div>
                 <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick} handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
-                <CartPage handleCart={handleCart} products={cartItems} removeCart={removeCart}></CartPage>
+                <CartPage handleBuy={handleBuy} products={cartItems} removeCart={removeCart}></CartPage>
                 <Footer></Footer>
             </div>
         );
@@ -129,11 +137,9 @@ function ProductPage(props:{products:IProduct[], handleCart: (product : IProduct
     );
 }
 
-function CartPage(props:{products: IProduct[], handleCart: (product: IProduct) => void, removeCart: (product: IProduct) => void}){
-    const [buying, setBuying] = useState(false);
-   const addToCart = (product: IProduct) => {
-    
-    };
+function CartPage(props:{products: IProduct[],removeCart: (product: IProduct) => void, handleBuy: () => void}){
+   const [buying, setBuying] = useState(false);
+   
 
     const buyProducts = async () => {
         setBuying(true);
@@ -147,6 +153,7 @@ function CartPage(props:{products: IProduct[], handleCart: (product: IProduct) =
                 console.log("Buying failed");
             } else if(response.status == 200){
                 console.log("Buying succeeded");
+                props.handleBuy();
             }
         });
         
@@ -158,7 +165,7 @@ function CartPage(props:{products: IProduct[], handleCart: (product: IProduct) =
         <Row>
             {props.products.map((product) => (
                 <Col xs={4}>
-                    <AddedProduct prod={product} key={product.key} handleCart={(addToCart)} removeCart={props.removeCart}>{}</AddedProduct>
+                    <AddedProduct prod={product} key={product.key} removeCart={props.removeCart}>{}</AddedProduct>
                 </Col>
             ))}
         </Row>
@@ -203,7 +210,7 @@ function Product (props:  {children : object, prod : IProduct, handleCart: (prod
   );
 }
 
-function AddedProduct(props: {children: object, prod: IProduct, handleCart: (product: IProduct) => void, removeCart: (product: IProduct) => void}){
+function AddedProduct(props: {children: object, prod: IProduct, removeCart: (product: IProduct) => void}){
     return(
         <Card style={{width: "18rem"}} key={props.prod.key}>
             <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>

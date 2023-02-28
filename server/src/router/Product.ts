@@ -20,6 +20,18 @@ productRouter.get("/", async (
     }
 });
 
+productRouter.get("/available/", async (
+    req: Request<{}, {}, {}>,
+    res: Response<Array<Product> | String>
+) => {
+    try {
+        const tasks = await productService.getAvailableProducts();
+        res.status(200).send(tasks);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
 productRouter.post("/", async (
     req: Request<{}, {},{productName: string, productDescription: string, productCategory: string, price: number, sellerId : number}>,
     res: Response<Product | string>
