@@ -45,7 +45,7 @@ userRouter.delete("/", async(
         let password = req.body.password;
 
         if (typeof(username) !== "string" || typeof(password) !== "string" ) {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} ---username has type ${typeof(username)} and password has type ${typeof(password)}`);
+            res.status(403).send(`Bad PUT call to ${req.originalUrl} ---username has type ${typeof(username)} and password has type ${typeof(password)}`);
             return;
         }
         const deletedUser = await userService.deleteUser(username, password);
@@ -54,5 +54,30 @@ userRouter.delete("/", async(
     }catch (e: any) {
         res.status(500).send(e.message);
     }
-
 });
+
+userRouter.post("/login", async(
+    req: Request<{}, {}, {username : string, password : string}>,
+    res: Response<String>
+) => {
+    try{
+        let username = req.body.username;
+        let password = req.body.password;
+
+        if (typeof(username) !== "string" || typeof(password) !== "string" ) {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} ---username has type ${typeof(username)} and password has type ${typeof(password)}`);
+            return;
+        }
+        const loginUser = await userService.loginUser(username, password);
+        if(loginUser){
+            res.status(202).send("Successfully logged in " + loginUser.valueOf());
+        }
+        else{
+            res.status(400).send("Wrong username or password for user:" + loginUser.valueOf());
+        }
+
+    }catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+

@@ -21,17 +21,18 @@ productRouter.get("/", async (
 });
 
 productRouter.post("/", async (
-    req: Request<{}, {},{productName: string, productCategory: string, price: number, sellerId : number}>,
+    req: Request<{}, {},{productName: string, productDescription: string, productCategory: string, price: number, sellerId : number}>,
     res: Response<Product | string>
 ) => {
     try {
         let productName = req.body.productName;
+        let productDescription = req.body.productDescription;
         let productCategory = req.body.productCategory;
         let price = req.body.price;
         let sellerId = req.body.sellerId;
 
-        if (typeof(productName) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productname has type ${typeof(productName)}, category has type ${typeof(productCategory)}, price has type ${typeof(price)},sellid has type ${typeof(sellerId)},  `);
+        if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof(productName)}, productDescription has type ${typeof(productDescription)}, productCategory has type ${typeof(productCategory)}, price has type ${typeof(price)},sellid has type ${typeof(sellerId)},  `);
             return;
         }
 
@@ -39,7 +40,7 @@ productRouter.post("/", async (
             res.status(400).send(`User with sellerId ${sellerId} does not exist.`);
             return;
         }
-        const newProduct = await productService.addProduct(productName,productCategory,price,sellerId);
+        const newProduct = await productService.addProduct(productName,productDescription,productCategory,price,sellerId);
         res.status(201).send(newProduct);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -92,7 +93,7 @@ productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Res
             res.status(400).send(`Bad PUT call to ${req.originalUrl} --- No data to update the product with`);
             return;
         }
-        const completed = await productService.updateProduct(id, product.productName, product.productCategory, product.price, product.sellerId);
+        const completed = await productService.updateProduct(id, product.productName, product.productDescription, product.productCategory, product.price, product.sellerId);
         if(!completed){
             res.status(400).send(`Bad PUT call to ${req.originalUrl} --- No product with id ${id}`);
             return;

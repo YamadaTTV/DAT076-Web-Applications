@@ -6,10 +6,10 @@ export interface IProductService {
     getProducts() : Promise<Array<Product>>;
 
     //Add a new product to the system
-    addProduct(productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
+    addProduct(productName: string, productDescription: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
 
     //Updates an existing product with new information
-    updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>;
+    updateProduct(productId: number, productName?: string, productDescription?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>;
 
     //Add a buyer to a product and marking is as bought
     buyProduct(productId: number, buyerId: number) : Promise<Product|undefined>;
@@ -26,20 +26,23 @@ class ProductService implements IProductService {
         return this.products;
     }
 
-    async addProduct(productName: string, productCategory: string, price: number, sellerId : number) : Promise<Product>{
-        const product = new Product(this.productIndex+1,productName,productCategory,price,sellerId);
+    async addProduct(productName: string, productDescription: string, productCategory: string, price: number, sellerId : number) : Promise<Product>{
+        const product = new Product(this.productIndex+1,productName,productDescription,productCategory,price,sellerId);
         this.products.push(product);
         this.productIndex += 1;
         return product;
     }
 
-    async updateProduct(productId: number, productName?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>{
+    async updateProduct(productId: number, productName?: string, productDescription?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>{
         const product = this.products.find(p => p.productId === productId);
         if(!product){
             return false;
         }
         if(productName){
             product.productName = productName;
+        }
+        if(productDescription){
+            product.productDescription = productDescription;
         }
         if(productCategory){
             product.productCategory = productCategory;
@@ -48,7 +51,6 @@ class ProductService implements IProductService {
             product.price = price;
         }
         if(sellerId){
-
             product.sellerId = sellerId;
         }
         return true;

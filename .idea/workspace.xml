@@ -1,41 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="">
+    <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/market.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/market.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/market.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/market.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="YamadaTTV" />
+        <option name="repository" value="DAT076-Web-Applications" />
+      </RepoCoordinatesHolder>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2KjMv375padJI1bcR6oaQmgL6F9" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/marcu/Documents/Git/DAT076-Web-Applications&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs.jest.jest_package": "C:/Users/marcu/Documents/Git/DAT076-Web-Applications/client/node_modules/react-scripts",
+    "ts.external.directory.path": "C:\\Users\\marcu\\Documents\\Git\\DAT076-Web-Applications\\server\\node_modules\\typescript\\lib"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\rasmu\Documents\Datateknik_Chalmers\DAT076-Web-Applications\server\test\service" />
+      <recent name="C:\Users\rasmu\Documents\Datateknik_Chalmers\DAT076-Web-Applications\server\test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Jest.Test if login function works">
+    <configuration name="Check if there is a login form" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" />
+      <test-names>
+        <test-name value="Check if there is a login form" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="IntegrationUser.test.ts (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/server/test/IntegrationUser.test.ts" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Product.test.ts (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/server/test/service/Product.test.ts" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test if login function works" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" />
+      <test-names>
+        <test-name value="Test if login function works" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="User.test.ts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/server" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/server/test/service/User.test.ts" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.Test if login function works" />
+        <item itemvalue="Jest.Check if there is a login form" />
+        <item itemvalue="Jest.IntegrationUser.test.ts (1)" />
+        <item itemvalue="Jest.User.test.ts" />
+        <item itemvalue="Jest.Product.test.ts (1)" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -49,7 +147,125 @@
       <workItem from="1674484077462" duration="87000" />
       <workItem from="1674484167168" duration="12740000" />
       <workItem from="1674549566051" duration="1814000" />
+      <workItem from="1674639502720" duration="3118000" />
+      <workItem from="1674723764533" duration="614000" />
+      <workItem from="1675150645423" duration="26088000" />
+      <workItem from="1675682225525" duration="4398000" />
+      <workItem from="1675860275456" duration="6001000" />
+      <workItem from="1675956235311" duration="961000" />
+      <workItem from="1676289269402" duration="2482000" />
+      <workItem from="1676362313610" duration="3758000" />
+      <workItem from="1676917077226" duration="6412000" />
     </task>
+    <task id="LOCAL−00001" summary="Initialized node, express and so on in the server folder">
+      <created>1675152156356</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1675152156356</updated>
+    </task>
+    <task id="LOCAL−00002" summary="Added simple http get function">
+      <created>1675153764262</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1675153764262</updated>
+    </task>
+    <task id="LOCAL−00003" summary="Added user class to model">
+      <created>1675154397349</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1675154397349</updated>
+    </task>
+    <task id="LOCAL−00004" summary="Created router, service and model for User and model for Product">
+      <created>1675161250776</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1675161250776</updated>
+    </task>
+    <task id="LOCAL−00005" summary="Created service for Product">
+      <created>1675161917092</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1675161917092</updated>
+    </task>
+    <task id="LOCAL−00006" summary="Created router for Product">
+      <created>1675162848769</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1675162848769</updated>
+    </task>
+    <task id="LOCAL−00007" summary="bugfix">
+      <created>1675163296200</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1675163296200</updated>
+    </task>
+    <task id="LOCAL−00008" summary="bugfix">
+      <created>1675164863273</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1675164863273</updated>
+    </task>
+    <task id="LOCAL−00009" summary="bugfix so that user control for product work">
+      <created>1675168192003</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1675168192003</updated>
+    </task>
+    <task id="LOCAL−00010" summary="minor updates">
+      <created>1675171437234</created>
+      <option name="number" value="LOCAL−00010" />
+      <option name="presentableId" value="LOCAL−00010" />
+      <updated>1675171437234</updated>
+    </task>
+    <task id="LOCAL−00011" summary="Added buyProduct">
+      <created>1675174097085</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1675174097085</updated>
+    </task>
+    <task id="LOCAL−00012" summary="minor fixes">
+      <created>1675174456871</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1675174456871</updated>
+    </task>
+    <task id="LOCAL−00013" summary="Fixed router for buyProduct">
+      <created>1675176165813</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1675176165813</updated>
+    </task>
+    <task id="LOCAL−00014" summary="minor fix">
+      <created>1675177458550</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1675177458550</updated>
+    </task>
+    <task id="LOCAL−00015" summary="minor fix">
+      <created>1675177517272</created>
+      <option name="number" value="LOCAL−00015" />
+      <option name="presentableId" value="LOCAL−00015" />
+      <updated>1675177517272</updated>
+    </task>
+    <task id="LOCAL−00016" summary="Added unit test for user. Also moved earlier test into test folder.">
+      <created>1675868216824</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1675868216824</updated>
+    </task>
+    <task id="LOCAL−00017" summary="Did initial setup from Project setup in lab 3">
+      <created>1676290530567</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1676290530567</updated>
+    </task>
+    <task id="LOCAL−00018" summary="Installed bootstrap">
+      <created>1676363278516</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1676363278516</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -60,11 +276,43 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Frontend_React" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Initialized node, express and so on in the server folder" />
+    <MESSAGE value="Added simple http get function" />
+    <MESSAGE value="Added user class to model" />
+    <MESSAGE value="Created router, service and model for User and model for Product" />
+    <MESSAGE value="Created service for Product" />
+    <MESSAGE value="Created router for Product" />
+    <MESSAGE value="bugfix" />
+    <MESSAGE value="bugfix so that user control for product work" />
+    <MESSAGE value="minor updates" />
+    <MESSAGE value="Added buyProduct" />
+    <MESSAGE value="minor fixes" />
+    <MESSAGE value="Fixed router for buyProduct" />
+    <MESSAGE value="minor fix" />
+    <MESSAGE value="Added unit test for user. Also moved earlier test into test folder." />
+    <MESSAGE value="Did initial setup from Project setup in lab 3" />
+    <MESSAGE value="Installed bootstrap" />
+    <option name="LAST_COMMIT_MESSAGE" value="Installed bootstrap" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
