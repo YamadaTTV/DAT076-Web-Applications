@@ -4,7 +4,8 @@
     <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +57,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
+    "nodejs.jest.jest_package": "C:/Users/marcu/Documents/Git/DAT076-Web-Applications/client/node_modules/react-scripts",
     "ts.external.directory.path": "C:\\Users\\marcu\\Documents\\Git\\DAT076-Web-Applications\\server\\node_modules\\typescript\\lib"
   }
 }]]></component>
@@ -65,7 +67,20 @@
       <recent name="C:\Users\rasmu\Documents\Datateknik_Chalmers\DAT076-Web-Applications\server\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.IntegrationUser.test.ts (1)">
+  <component name="RunManager" selected="Jest.Test if login function works">
+    <configuration name="Check if there is a login form" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" />
+      <test-names>
+        <test-name value="Check if there is a login form" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="IntegrationUser.test.ts (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -74,16 +89,6 @@
       <envs />
       <scope-kind value="TEST_FILE" />
       <test-file value="$PROJECT_DIR$/server/test/IntegrationUser.test.ts" />
-      <method v="2" />
-    </configuration>
-    <configuration name="IntegrationUser.test.ts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/server/src/IntegrationUser.test.ts" />
       <method v="2" />
     </configuration>
     <configuration name="Product.test.ts (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
@@ -96,14 +101,17 @@
       <test-file value="$PROJECT_DIR$/server/test/service/Product.test.ts" />
       <method v="2" />
     </configuration>
-    <configuration name="Product.test.ts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="Test if login function works" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
       <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/server/src/service/Product.test.ts" />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" />
+      <test-names>
+        <test-name value="Test if login function works" />
+      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="User.test.ts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
@@ -118,11 +126,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.Test if login function works" />
+        <item itemvalue="Jest.Check if there is a login form" />
         <item itemvalue="Jest.IntegrationUser.test.ts (1)" />
         <item itemvalue="Jest.User.test.ts" />
         <item itemvalue="Jest.Product.test.ts (1)" />
-        <item itemvalue="Jest.Product.test.ts" />
-        <item itemvalue="Jest.IntegrationUser.test.ts" />
       </list>
     </recent_temporary>
   </component>

@@ -18,6 +18,7 @@ export function LoginForm(props: {handleLoginClick : () => void, handleRegisterC
                     async e => {
                         e.preventDefault();
                         let response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
+                        console.log(response);
                         if(response !== undefined){
                             if(response.status == 202){
                                 console.log("Success");

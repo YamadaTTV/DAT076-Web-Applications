@@ -44,6 +44,7 @@ function App() {
     async function updateProducts() {
         // TODO Make it possible to change URL
         const response = await axios.get<IProduct[]>("http://localhost:8080/product");
+        console.log(response);
         setproducts(response.data);
     }
 
