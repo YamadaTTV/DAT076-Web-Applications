@@ -1,38 +1,84 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import React from "react";
+import {IProduct} from "./Product";
 
 /**
  * Header component, used to show the header.
- * @param   loogedIn - Used to check if user is logged in or not. If true, makes it possible to log out and sell stuff.
  *          handleLoginClick - The handler for the login/logout functionality.
  *          handleSellClick - The handler to show the sell form.
  * @return Header with different possible actions.
+ * @param props
  */
-export function Header(props:{loggedIn:Boolean, handleLoginClick : () => void, handleSellClick : () => void}){
+export function Header(props:{loggedIn:Boolean, inCartPage : Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[], toCartPage: () => void}){
     const logo = require("../img/murrayPog.png");
 
     if(props.loggedIn){
-        return(
-            <Navbar collapseOnSelect expand="lg" className="top">
-                <img src={logo} width="4%"/>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#about_us">About Us</Nav.Link>
-                        <Nav.Link href="#browse">Browse</Nav.Link>
-                        <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                    </Nav>
-                    <Nav>
-                        <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                        </Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        );
+        if(props.inCartPage){
+            return(
+                <Navbar collapseOnSelect expand="lg" className="top">
+                    <img src={logo} width="4%"/>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home" onClick={props.toCartPage}>Home</Nav.Link>
+                            <Nav.Link href="#about_us">About Us</Nav.Link>
+                            <Nav.Link href="#browse">Browse</Nav.Link>
+                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
+                            <Nav.Link href="#cart">Cart</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            );
+        }
+        // If added to cart
+        else if(props.cartItems.length > 0){
+            return(
+                <Navbar collapseOnSelect expand="lg" className="top">
+                    <img src={logo} width="4%"/>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="#about_us">About Us</Nav.Link>
+                            <Nav.Link href="#browse">Browse</Nav.Link>
+                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
+                            <Nav.Link href="#cart" onClick={props.toCartPage}>Cart</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            );
+        }
+        else {
+            return(
+                <Navbar collapseOnSelect expand="lg" className="top">
+                    <img src={logo} width="4%"/>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="#about_us">About Us</Nav.Link>
+                            <Nav.Link href="#browse">Browse</Nav.Link>
+                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            );
+        }
     }
-    else{
+    else {
         return(
             <Navbar collapseOnSelect expand="lg" className="top">
                 <img src={logo} width="4%"/>

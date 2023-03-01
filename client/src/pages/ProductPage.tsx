@@ -32,7 +32,7 @@ function CategoryItem({marked, children, onMarked} : CategoryProps){
 /** Used to get all the products from the server and display them.
  *
  */
-export function ProductPage(props:{products:IProduct[], categories:Category[]}){
+export function ProductPage(props:{products:IProduct[], categories:Category[], handleCart: (product : IProduct) => void}){
     return(
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="productPage">
             <Row xs={12}>
@@ -59,7 +59,7 @@ export function ProductPage(props:{products:IProduct[], categories:Category[]}){
                             <Row>
                                 {props.products.map((product) =>
                                     <Col xs={4}>
-                                        <Product prod={product} key={product.key}>
+                                        <Product prod={product} key={product.key} handleCart={props.handleCart}>
                                         </Product>
                                     </Col>)
                                 }

@@ -135,13 +135,15 @@ code {
   background-color: #888888;
   color: white;
   border-radius: 5px;
-  border-width:1px;
+  border-width: 10px;
+  border-color: #5d9667;
   height: 50px;
-  width:100%
+  width:100%;
 }
 
 .btn-primary:enabled{
   background-color: #5d9667;
+  border-width: 0px;
 }
 
 .btn-secondary{

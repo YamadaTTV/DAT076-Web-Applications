@@ -9,7 +9,7 @@ test("Adding a product",async () => {
    const productService = makeProductService();
    await productService.addProduct(productName, productDescription, productCategory, price, sellerId);
    const products = await productService.getProducts();
-   expect(products.find((product) => product.productId)?.productName).toEqual(productName);
+   expect(products.find((product) => product.key)?.productName).toEqual(productName);
 });
 
 test("If a product is added to the list then it should be in the list", async() => {
@@ -35,11 +35,11 @@ test("If a product is updated, then its values should be updated", async() => {
     const sellerId = 1;
     const addProduct = await productService.addProduct(productName, productDescription, productCategory, price, sellerId);
     const updateProductName = "Updated Product 1";
-    const updateResult = await productService.updateProduct(addProduct.productId, updateProductName);
+    const updateResult = await productService.updateProduct(addProduct.key, updateProductName);
     expect(updateResult).toBeTruthy();
     
     const products = await productService.getProducts();
-    const updateProduct = products.find((product) => product.productId === addProduct.productId);
+    const updateProduct = products.find((product) => product.key === addProduct.key);
     if(updateProduct){
         expect(updateProduct.productName).toEqual(updateProductName);
     }
@@ -51,7 +51,7 @@ test("Buying a product", async() => {
     const productService = makeProductService();
     await productService.buyProduct(productId, buyerId);
     const products = await productService.getProducts();
-    const product = products.find((product) => product.productId === productId);
+    const product = products.find((product) => product.key === productId);
     if(product){
         expect(product.buyerId).toEqual(buyerId);
     }

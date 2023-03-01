@@ -6,10 +6,10 @@ import React from "react";
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
  */
-export function Product (props:  {children : object, prod : IProduct}){
+export function Product (props:  {children : object, prod : IProduct, handleCart: (product : IProduct) => void}){
     //const icon = require();
     return (
-        <Card style={{ width: '100%', margin: "10px"}} key={props.prod.key}>
+        <Card style={{ width: '18rem'}} key={props.prod.key}>
             <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
             <Card.Body>
                 <Card.Title>{props.prod.productName}</Card.Title>
@@ -21,11 +21,12 @@ export function Product (props:  {children : object, prod : IProduct}){
                     </b>
                 </Card.Text>
                 <Row>
-                    <Col xs={4}>
-                        <Button className="btn-primary">Buy</Button>
+                    <Col xs={12}>
+                        <button className="btn-primary" onClick={() => props.handleCart(props.prod)}>Add to Cart</button>
                     </Col>
-                    <Col xs={8}>
-                        <Button className={"btn-primary"}>Contact seller</Button>
+
+                    <Col xs={12}>
+                        <button className="btn-primary" style={{marginTop: "5px"}}>Contact seller</button>
                     </Col>
                 </Row>
             </Card.Body>
