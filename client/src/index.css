@@ -126,6 +126,10 @@ code {
   padding-right: 5%;
 }
 
+.login-text{
+  color: #f1f1f1;
+}
+
 
 .btn-primary{
   background-color: #888888;
@@ -200,4 +204,10 @@ code {
 }
 ul {
   list-style-type: none;
+}
+
+.btn-close-white{
+  backgroundColor: "#5d9667";
+  color: #fff;
+  opacity: 1;
 }
