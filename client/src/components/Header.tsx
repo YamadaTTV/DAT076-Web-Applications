@@ -2,6 +2,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import React from "react";
 import {IProduct} from "./Product";
+import {handleRequest} from "msw";
 
 /**
  * Header component, used to show the header.
@@ -10,11 +11,28 @@ import {IProduct} from "./Product";
  * @return Header with different possible actions.
  * @param props
  */
-export function Header(props:{loggedIn:Boolean, inCartPage : Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[], toCartPage: () => void}){
+export function Header(props:{handleHomeClick:() => void, handleAboutClick: () => void}){
     const logo = require("../img/murrayPog.png");
 
-    if(props.loggedIn){
-        if(props.inCartPage){
+    return(
+        <Navbar collapseOnSelect expand="lg" className="top">
+            <img src={logo} width="4%"/>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                    <Nav.Link href="#home" onClick={props.handleHomeClick}>Home</Nav.Link>
+                    <Nav.Link href="#about_us" onClick={props.handleAboutClick}>About Us</Nav.Link>
+                    <Nav.Link href="#browse">Browse</Nav.Link>
+                </Nav>
+                <Nav>
+                    <Nav.Link className="loginText" eventKey={2} href="#loginpage">Login</Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+    );
+    /*
+    if(loggedIn){
+        if(inCartPage){
             return(
                 <Navbar collapseOnSelect expand="lg" className="top">
                     <img src={logo} width="4%"/>
@@ -96,4 +114,6 @@ export function Header(props:{loggedIn:Boolean, inCartPage : Boolean, handleLogi
             </Navbar>
         );
     }
+
+     */
 }
