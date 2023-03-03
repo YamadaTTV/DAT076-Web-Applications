@@ -16,6 +16,8 @@ export interface IUserService {
 
     //Login the user, if sucessful return true.
     loginUser(username: string, password: string) : Promise<boolean>;
+
+    getLoggedInUser(username: string, password: string) : Promise<User | undefined>;
 }
 
 class UserService implements IUserService {
@@ -65,6 +67,16 @@ class UserService implements IUserService {
             return true;
         }
         return false;
+    }
+
+    async getLoggedInUser(username: string, password: string) : Promise<User | undefined>{
+        let user = undefined
+        for(const searchUser of this.users){
+            if(searchUser.username == username && searchUser.password == password){
+                user = searchUser
+            }
+        }
+        return user
     }
 }
 

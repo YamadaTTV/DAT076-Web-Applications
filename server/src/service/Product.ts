@@ -1,5 +1,6 @@
 import {Product} from "../model/Product";
 import {userService} from "../router/User";
+import {User} from "../model/User";
 
 export interface IProductService {
     //Get all products in system
@@ -19,6 +20,8 @@ export interface IProductService {
 
     //Check if a product exists, returns true if product exist
     productExist(key: number) : Promise<Boolean>;
+
+    getUserListings(user: User) : Promise<Product[] | undefined>;
 }
 
 class ProductService implements IProductService {
@@ -77,6 +80,10 @@ class ProductService implements IProductService {
         let prod = this.products.find(product => product.key===key);
         if(prod==undefined) return false;
         else return true
+    }
+
+    async getUserListings(user: User) : Promise<Product[] | undefined> {
+        return this.products.filter(product => product.sellerId == user.id)
     }
 }
 

@@ -2,6 +2,8 @@ import express, {Request, Response} from "express";
 import {makeProductService} from "../service/Product";
 import {userService} from "./User";
 import {Product} from "../model/Product";
+import * as requestTypes from "../requestTypes"
+import * as responseTypes from "../responseTypes"
 
 const productService = makeProductService();
 
@@ -113,5 +115,21 @@ productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Res
         res.status(200).send("Product updated");
     } catch(e: any){
         res.status(500).send(e.message);
+    }
+})
+
+productRouter.get("/sellerListings", async (
+    req: requestTypes.get,
+    res: Response<Product[] | string>
+) => {
+    try{
+        if(req.session.user == null){
+            res.status(400).send("User not logged in")
+            return
+        }
+        const products = await productService.getUserListings(req.session.user)
+        res.status(200).send(products);
+    } catch(e: any) {
+        res.status(500).send(e.message)
     }
 })

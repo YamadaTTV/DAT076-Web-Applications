@@ -1,6 +1,9 @@
 import express, {query, Request, Response} from "express";
 import {makeUserService} from "../service/User";
 import {User} from "../model/User";
+import * as requestTypes from "../requestTypes"
+import * as responseTypes from "../responseTypes"
+import session from "express-session";
 
 export const userService = makeUserService();
 export const userRouter = express.Router();
@@ -18,7 +21,7 @@ userRouter.get("/", async (
 });
 
 userRouter.post("/", async (
-    req: Request<{}, {},{username: string, email: string, password: string}>,
+    req: requestTypes.userRegisterRequest,
     res: Response<User | string>
 ) => {
     try {
@@ -57,8 +60,8 @@ userRouter.delete("/", async(
 });
 
 userRouter.post("/login", async(
-    req: Request<{}, {}, {username : string, password : string}>,
-    res: Response<String>
+    req: requestTypes.userLoginRequest,
+    res: responseTypes.defaultResponse
 ) => {
     try{
         let username = req.body.username;
@@ -70,6 +73,8 @@ userRouter.post("/login", async(
         }
         const loginUser = await userService.loginUser(username, password);
         if(loginUser){
+            req.session.user = await userService.getLoggedInUser(username, password)
+            console.log(req.session.user)
             res.status(202).send("Successfully logged in " + loginUser.valueOf());
         }
         else{

@@ -1,16 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import axios from "axios";
+
 import {IndexPage} from './pages/IndexPage';
-import {ProductPage, Category} from './pages/ProductPage';
-import {IProduct} from "./components/Product";
-import {SellForm} from './components/SellForm';
-import {Header} from './components/Header';
-import {Footer} from './components/Footer';
-import {CartPage} from "./pages/CartPage";
 import {RegisterPage} from "./pages/RegisterPage";
 import {AboutUsPage} from "./pages/AboutUsPage";
+import {ProductPage} from "./pages/ProductPage";
+
+
+
 
 enum Pages {
     INDEX,
@@ -40,7 +38,7 @@ function App() {
                 handleAboutClick={handleAboutClick}
             />
         case Pages.PRODUCT:
-            return <p> Product page</p>
+            return <ProductPage/>
         case Pages.ABOUT:
             return <AboutUsPage handleHomeClick={handleHomeClick} handleAboutClick={handleAboutClick} handleBrowseClick={handleBrowseClick}/>
     }

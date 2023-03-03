@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-
+axios.defaults.withCredentials = true;
 /**
  * The component for the LoginForm, shows a login menu
  * @param handleLoginClick - handler for when login button is pressed.
@@ -17,19 +17,20 @@ export function LoginForm(props: {handleLoginClick : () => void, handleRegisterC
                 <form className={"login-form"} onSubmit={
                     async e => {
                         e.preventDefault();
-                        let response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
-                        console.log(response);
-                        if(response !== undefined){
-                            if(response.status == 202){
-                                console.log("Success");
-                                props.handleLoginClick();
-                            } else if(response.status == 403){
-                                console.log("FAIL");
+
+                            const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
+                            if(response !== undefined){
+                                    if(response.status == 202){
+                                        console.log("Success");
+                                        props.handleLoginClick();
+                                    } else if(response.status == 403){
+                                        console.log("FAIL");
+                                    }
+                                    console.log(response);
                             }
-                        }
-                        else{
-                            console.log("No response received");
-                        }
+                            else{
+                                console.log("No response received");
+                            }
                     }
                 }>
                     <div className={"login-div"}>
