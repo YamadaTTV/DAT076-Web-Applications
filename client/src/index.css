@@ -163,6 +163,15 @@ code {
 
   text-align: start;
 }
+.sell-form-category-input{
+  padding-left: 15px;
+  width:100%;
+  height: 50px;
+  border-radius: 5px;
+  border-width: 1px;
+
+  text-align: start;
+}
 
 .login-form-input:focus{
   outline: none !important;

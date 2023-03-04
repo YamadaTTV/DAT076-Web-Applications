@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
-      <change afterPath="$PROJECT_DIR$/client/src/components/AddedProduct.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CartPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CartPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SellForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SellForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/ProductPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ProductPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/router/Product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/router/Product.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/service/Product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/service/Product.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +62,8 @@
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/marcu/Documents/Git/DAT076-Web-Applications/client/src/components",
     "nodejs.jest.jest_package": "C:/Users/marcu/Documents/Git/DAT076-Web-Applications/client/node_modules/react-scripts",
-    "ts.external.directory.path": "C:\\Users\\marcu\\Documents\\Git\\DAT076-Web-Applications\\server\\node_modules\\typescript\\lib"
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Users\\marcu\\Documents\\Git\\DAT076-Web-Applications\\client\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
