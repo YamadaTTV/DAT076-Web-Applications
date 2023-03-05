@@ -4,7 +4,7 @@ import axios, {AxiosResponse, AxiosStatic} from "axios";
 import {IndexPage} from "../pages/IndexPage";
 import App from "../App";
 import {IProduct} from "./Product";
-import {response} from "msw";
+
 
 /** Create the mocked version of Axios */
 jest.mock('axios');
