@@ -4,18 +4,17 @@ import {LoginForm} from '../components/LoginForm';
 import {RegisterForm} from '../components/RegisterForm';
 import {Header} from "../components/Header";
 import {Footer} from "../components/Footer";
+import {Pages} from "../App";
 
 export function IndexPage(props: {
-    handleLoginClick : () => void,
-    handleRegisterClick : () => void,
-    handleAboutClick: () => void,
-    handleHomeClick : () => void
+    page : Pages,
+    handlePages : (page : Pages) => void
 })
 {
     const wallpaper = require("../img/wallpaperflare.com_wallpaper.jpg");
     return(
         <div>
-            <Header handleHomeClick={props.handleHomeClick} handleAboutClick={props.handleAboutClick}/>
+            <Header handlePages={props.handlePages} page={props.page}/>
             <div data-testid="indexPage">
                 <Row>
                     <Col lg={9} xs={0}>
@@ -41,7 +40,7 @@ export function IndexPage(props: {
                     </Col>
                     <Col className={"login-container"} lg={3} xs={12}>
                         <div>
-                            <LoginForm handleLoginClick={props.handleLoginClick} handleRegisterClick={props.handleRegisterClick}/>
+                            <LoginForm handlePages={props.handlePages} page={props.page}/>
                         </div>
                     </Col>
                 </Row>

@@ -54,6 +54,8 @@ export function ProductPage(props:{}){
     useEffect(() =>{
         updateSellerListings();
     }, []);
+
+
     return(
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="productPage">
             <Row xs={12}>

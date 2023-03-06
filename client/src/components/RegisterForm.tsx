@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {Pages} from "../App";
 axios.defaults.withCredentials = true;
 
 /**
@@ -8,7 +9,7 @@ axios.defaults.withCredentials = true;
  *          handleRegisterClick - handler for when register button is pressed.
  * @return A register menu.
  */
-export function RegisterForm(props: {handleRegisterClick : () => void}){
+export function RegisterForm(props: {handlePages : (page: Pages) => void, page: Pages}){
     const[username, setusername] = useState("");
     const[email, setemail] = useState("");
     const[password, setpassword] = useState("");
@@ -23,7 +24,7 @@ export function RegisterForm(props: {handleRegisterClick : () => void}){
                           async e => {
                               e.preventDefault();
                               await axios.post("http://localhost:8080/user",{ username:username,password:password, email:email})
-                              props.handleRegisterClick()
+                              props.handlePages(Pages.INDEX)
                           }
                       }>
                     <div className={"login-div"}>

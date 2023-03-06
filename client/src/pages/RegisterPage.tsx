@@ -4,17 +4,17 @@ import {LoginForm} from '../components/LoginForm';
 import {RegisterForm} from '../components/RegisterForm';
 import {Footer} from "../components/Footer";
 import {Header} from "../components/Header";
+import {Pages} from "../App";
 
 export function RegisterPage(props:{
-    handleRegisterClick: () => void,
-    handleAboutClick: () => void,
-    handleHomeClick: () => void
+    page : Pages,
+    handlePages : (page : Pages) => void
 })
 {
     const wallpaper = require("../img/wallpaperflare.com_wallpaper.jpg");
     return (
         <div>
-            <Header handleHomeClick={props.handleHomeClick} handleAboutClick={props.handleAboutClick}/>
+            <Header handlePages={props.handlePages} page={props.page}/>
             <div data-testid="registerPage">
                 <Row>
                     <Col lg={9} xs={0}>
@@ -40,7 +40,7 @@ export function RegisterPage(props:{
                     </Col>
                     <Col className={"login-container"} lg={3} xs={12}>
                         <div>
-                            <RegisterForm handleRegisterClick={props.handleRegisterClick}/>
+                            <RegisterForm handlePages={props.handlePages} page={props.page}/>
                         </div>
                     </Col>
                 </Row>

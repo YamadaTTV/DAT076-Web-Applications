@@ -1,8 +1,7 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import React from "react";
-import {IProduct} from "./Product";
-import {handleRequest} from "msw";
+import {Pages} from "../App";
 
 /**
  * Header component, used to show the header.
@@ -11,7 +10,7 @@ import {handleRequest} from "msw";
  * @return Header with different possible actions.
  * @param props
  */
-export function Header(props:{handleHomeClick:() => void, handleAboutClick: () => void}){
+export function Header(props:{handlePages: (page: Pages)=>void, page: Pages}){
     const logo = require("../img/murrayPog.png");
 
     return(
@@ -20,8 +19,8 @@ export function Header(props:{handleHomeClick:() => void, handleAboutClick: () =
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home" onClick={props.handleHomeClick}>Home</Nav.Link>
-                    <Nav.Link href="#about_us" onClick={props.handleAboutClick}>About Us</Nav.Link>
+                    <Nav.Link href="#home" onClick={() => props.handlePages(Pages.INDEX)}>Home</Nav.Link>
+                    <Nav.Link href="#about_us" onClick={() => props.handlePages(Pages.ABOUT)}>About Us</Nav.Link>
                     <Nav.Link href="#browse">Browse</Nav.Link>
                 </Nav>
                 <Nav>
@@ -30,6 +29,8 @@ export function Header(props:{handleHomeClick:() => void, handleAboutClick: () =
             </Navbar.Collapse>
         </Navbar>
     );
+
+
     /*
     if(loggedIn){
         if(inCartPage){

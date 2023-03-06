@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {Pages} from "../App";
 axios.defaults.withCredentials = true;
 /**
  * The component for the LoginForm, shows a login menu
@@ -7,7 +8,7 @@ axios.defaults.withCredentials = true;
  *          handleRegisterClick - handler for when register button is pressed.
  * @return A login menu.
  */
-export function LoginForm(props: {handleLoginClick : () => void, handleRegisterClick : () => void}) {
+export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}) {
     const[username, setusername] = useState("");
     const[password, setpassword] = useState("");
     return (
@@ -22,7 +23,7 @@ export function LoginForm(props: {handleLoginClick : () => void, handleRegisterC
                             if(response !== undefined){
                                     if(response.status == 202){
                                         console.log("Success");
-                                        props.handleLoginClick();
+                                        props.handlePages(Pages.PRODUCT);
                                     } else if(response.status == 403){
                                         console.log("FAIL");
                                     }
@@ -54,7 +55,7 @@ export function LoginForm(props: {handleLoginClick : () => void, handleRegisterC
                         <hr></hr>
                     </div>
                     <div>
-                        <button className={"btn-primary"} type="button" onClick={props.handleRegisterClick}>Register</button>
+                        <button className={"btn-primary"} type="button" onClick={() => props.handlePages(Pages.REGISTER)}>Register</button>
                     </div>
                 </form>
             </div>

@@ -10,7 +10,7 @@ import {ProductPage} from "./pages/ProductPage";
 
 
 
-enum Pages {
+export enum Pages {
     INDEX,
     REGISTER,
     PRODUCT,
@@ -26,44 +26,26 @@ function App() {
     switch (page) {
         case Pages.INDEX:
             return <IndexPage
-                handleLoginClick={handleLoginClick}
-                handleRegisterClick={handleRegisterClick}
-                handleHomeClick={handleHomeClick}
-                handleAboutClick={handleAboutClick}
+                handlePages = {handlePages}
+                page = {page}
             />
         case Pages.REGISTER:
             return <RegisterPage
-                handleRegisterClick={handleRegisterClick}
-                handleHomeClick={handleHomeClick}
-                handleAboutClick={handleAboutClick}
+                handlePages = {handlePages}
+                page = {page}
             />
         case Pages.PRODUCT:
             return <ProductPage/>
         case Pages.ABOUT:
-            return <AboutUsPage handleHomeClick={handleHomeClick} handleAboutClick={handleAboutClick} handleBrowseClick={handleBrowseClick}/>
-    }
-
-    async function handleLoginClick() {
-        setPage(Pages.PRODUCT)
-    }
-
-    async function handleRegisterClick(){
-        if(page == Pages.REGISTER) setPage(Pages.INDEX)
-        else setPage(Pages.REGISTER)
+            return <AboutUsPage
+                handlePages = {handlePages}
+                page = {page}
+            />
     }
 
 
-    async function handleHomeClick(){
-        if(page == Pages.REGISTER || page == Pages.INDEX) setPage(Pages.INDEX)
-        else setPage(Pages.PRODUCT)
-    }
-
-    async function handleAboutClick(){
-        setPage(Pages.ABOUT)
-    }
-
-    async function handleBrowseClick(){
-        console.log("Browse clicked")
+    async function handlePages(page: Pages){
+        setPage(page)
     }
 
     return <p>Error occurred</p>
