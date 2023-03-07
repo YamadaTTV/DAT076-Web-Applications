@@ -18,6 +18,7 @@ export function SellForm(props: {handleSellClick : () => void}){
 
     const [isCategorySelected, setIsCategorySelected] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
+    const [isPriceValid, setIsPriceValid] = useState(true);
 
     const handleClose = () => {
         setShow(false);
@@ -44,9 +45,12 @@ export function SellForm(props: {handleSellClick : () => void}){
             return;
         }
 
-        if(!price.trim()){
+        if(!price.trim() || isNaN(Number(price))){
             setprice("");
+            setIsPriceValid(false);
             return;
+        } else {
+            setIsPriceValid(true);
         }
 
         await axios.post("http://localhost:8080/product", {
