@@ -1,7 +1,11 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Pages} from "../App";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
+
 
 /**
  * Header component, used to show the header.
@@ -13,108 +17,52 @@ import {Pages} from "../App";
 export function Header(props:{handlePages: (page: Pages)=>void, page: Pages}){
     const logo = require("../img/murrayPog.png");
 
+    const [loggedIn, setLoggedIn] = useState<boolean>(true)
+
+    const checkLoggedIn = async () => {
+        if(props.page != Pages.INDEX && props.page != Pages.REGISTER){
+            setLoggedIn(true)
+        } else {
+            setLoggedIn(false)
+        }
+    }
+
+    useEffect( () => {
+        checkLoggedIn()
+    },[])
+
+
     return(
         <Navbar collapseOnSelect expand="lg" className="top">
             <img src={logo} width="4%"/>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home" onClick={() => props.handlePages(Pages.INDEX)}>Home</Nav.Link>
-                    <Nav.Link href="#about_us" onClick={() => props.handlePages(Pages.ABOUT)}>About Us</Nav.Link>
+                    <Nav.Link href="#home" onClick={() => {
+                        if(loggedIn) props.handlePages(Pages.PRODUCT)
+                        else props.handlePages(Pages.INDEX)
+                    }}>Home</Nav.Link>
+                    <Nav.Link href="#about_us" onClick={
+                        () => props.handlePages(Pages.ABOUT)
+                    }>About Us</Nav.Link>
                     <Nav.Link href="#browse">Browse</Nav.Link>
+                    <Nav.Link href="#sell" onClick={
+                        () => props.handlePages(Pages.SELL)
+                    } hidden={!loggedIn || props.page != Pages.PRODUCT}>Sell</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link className="loginText" eventKey={2} href="#loginpage">Login</Nav.Link>
+                    <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
+                        () => props.handlePages(Pages.INDEX)
+                    }> Login </Nav.Link>
+                    <Nav.Link href="#cart" hidden={true} >Cart</Nav.Link>
+                    <Nav.Link href="#profile" hidden={!loggedIn} onClick={
+                        () => props.handlePages(Pages.PROFILE)
+                    }> Profile </Nav.Link>
+                    <Nav.Link className="loginText" href="#loginpage" hidden={!loggedIn} onClick={
+                        () => props.handlePages(Pages.INDEX)
+                    }> Log out </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
     );
-
-
-    /*
-    if(loggedIn){
-        if(inCartPage){
-            return(
-                <Navbar collapseOnSelect expand="lg" className="top">
-                    <img src={logo} width="4%"/>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home" onClick={props.toCartPage}>Home</Nav.Link>
-                            <Nav.Link href="#about_us">About Us</Nav.Link>
-                            <Nav.Link href="#browse">Browse</Nav.Link>
-                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                            <Nav.Link href="#cart">Cart</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            );
-        }
-        // If added to cart
-        else if(props.cartItems.length > 0){
-            return(
-                <Navbar collapseOnSelect expand="lg" className="top">
-                    <img src={logo} width="4%"/>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#about_us">About Us</Nav.Link>
-                            <Nav.Link href="#browse">Browse</Nav.Link>
-                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                            <Nav.Link href="#cart" onClick={props.toCartPage}>Cart</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            );
-        }
-        else {
-            return(
-                <Navbar collapseOnSelect expand="lg" className="top">
-                    <img src={logo} width="4%"/>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#about_us">About Us</Nav.Link>
-                            <Nav.Link href="#browse">Browse</Nav.Link>
-                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            );
-        }
-    }
-    else {
-        return(
-            <Navbar collapseOnSelect expand="lg" className="top">
-                <img src={logo} width="4%"/>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#about_us">About Us</Nav.Link>
-                        <Nav.Link href="#browse">Browse</Nav.Link>
-                    </Nav>
-                    <Nav>
-                        <Nav.Link className="loginText" eventKey={2} href="#loginpage">Login</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        );
-    }
-
-     */
 }

@@ -1,13 +1,17 @@
 import React, {useState} from "react";
 import {Modal} from "react-bootstrap";
 import axios from "axios";
+import {Pages} from "../App";
 
 /**
  * The component for the SellForm, shows a sell menu
  * @param handleSellClick - handler for when sell button is pressed.
  * @return A sell menu.
  */
-export function SellForm(props: {handleSellClick : () => void}){
+export function SellForm(props: {
+    handlePage : (page: Pages) => void
+    page: Pages
+}){
     const[productName, setproductName] = useState("");
     const[productDescription, setproductDescription] = useState("");
     const[productCategory, setproductCategory] = useState("");
@@ -18,14 +22,14 @@ export function SellForm(props: {handleSellClick : () => void}){
 
     const handleClose = () => {
         setShow(false);
-        props.handleSellClick()
+        props.handlePage(Pages.PRODUCT)
     };
 
     return(
         <div>
             <Modal
                 show={show}
-                onHide={props.handleSellClick}
+                onHide={() => props.handlePage(Pages.PRODUCT)}
                 backdrop="static"
                 keyboard={false}
             >
@@ -39,7 +43,7 @@ export function SellForm(props: {handleSellClick : () => void}){
                             async e => {
                                 e.preventDefault();
                                 await axios.post("http://localhost:8080/product",{ productName:productName, productDescription:productDescription, productCategory:productCategory, price:Number(price), sellerId:sellerId})
-                                props.handleSellClick()
+                                props.handlePage(Pages.PRODUCT)
                             }
                         }>
                         <div className={"login-div"}>
