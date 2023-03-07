@@ -8,6 +8,7 @@ import {AboutUsPage} from "./pages/AboutUsPage";
 import {ProductPage} from "./pages/ProductPage";
 import axios from "axios";
 import {SellPage} from "./pages/SellPage";
+import {ProfilePage} from "./pages/ProfilePage";
 
 
 
@@ -18,7 +19,8 @@ export enum Pages {
     PRODUCT,
     SELL,
     PROFILE,
-    ABOUT
+    ABOUT,
+    ERROR
 }
 
 
@@ -40,16 +42,23 @@ function App() {
             return <ProductPage
                 handlePages = {handlePages}
                 page = {page}/>
-        case Pages.ABOUT:
-            return <AboutUsPage
-                handlePages = {handlePages}
-                page = {page}
-            />
         case Pages.SELL:
             return <SellPage
                 handlePages = {handlePages}
                 page = {page}
             />
+        case Pages.PROFILE:
+            return <ProfilePage
+                handlePages = {handlePages}
+                page = {page}
+            />
+        case Pages.ABOUT:
+            return <AboutUsPage
+                handlePages = {handlePages}
+                page = {page}
+            />
+        case Pages.ERROR:
+            return <h1>An error has occurred</h1>
     }
 
 

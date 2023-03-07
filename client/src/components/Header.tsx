@@ -14,7 +14,10 @@ axios.defaults.withCredentials = true;
  * @return Header with different possible actions.
  * @param props
  */
-export function Header(props:{handlePages: (page: Pages)=>void, page: Pages}){
+export function Header(props:{
+    handlePages: (page: Pages)=>void,
+    page: Pages
+}){
     const logo = require("../img/murrayPog.png");
 
     const [loggedIn, setLoggedIn] = useState<boolean>(true)
