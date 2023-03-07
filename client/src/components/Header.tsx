@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Pages} from "../App";
 import axios from "axios";
 import {response} from "msw";
+import {IProduct} from "./Product";
 
 axios.defaults.withCredentials = true;
 
@@ -21,7 +22,8 @@ export function Header(props:{
 }){
     const logo = require("../img/murrayPog.png");
 
-    const [loggedIn, setLoggedIn] = useState<boolean>(true)
+    const [loggedIn, setLoggedIn] = useState<boolean>(false)
+    const [cart, setCart] = useState<IProduct[]>([])
 
     const checkLoggedIn = async () => {
         if(props.page != Pages.INDEX && props.page != Pages.REGISTER){
@@ -31,8 +33,14 @@ export function Header(props:{
         }
     }
 
+    const checkCart = async () => {
+        //TODO Setup cart in server and call server here to see if there are any products in cart.
+        setCart([])
+    }
+
     useEffect( () => {
         checkLoggedIn()
+        checkCart()
     },[])
 
 
