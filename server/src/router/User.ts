@@ -73,7 +73,7 @@ userRouter.post("/login", async(
             res.status(202).send("Successfully logged in " + loginUser.valueOf());
         }
         else{
-            res.status(400).send("Wrong username or password for user:" + loginUser.valueOf());
+            res.status(203).send("Wrong username or password for user:" + loginUser.valueOf());
         }
 
     }catch (e: any) {
