@@ -21,7 +21,8 @@ function CategoryItem({marked, children, onMarked} : CategoryProps){
         <ul className={"category-item"}>
             <input type={"checkbox"} checked={marked}
                    onChange = {async e => {
-                       onMarked();
+                       await onMarked();
+                       marked = true;
                    }}
             />
             {children}
@@ -32,7 +33,7 @@ function CategoryItem({marked, children, onMarked} : CategoryProps){
 /** Used to get all the products from the server and display them.
  *
  */
-export function ProductPage(props:{products:IProduct[], categories:Category[], handleCart: (product : IProduct) => void}){
+export function ProductPage(props:{products:IProduct[], categories:Category[], handleCart: (product : IProduct) => void, handleCategory: (categoryId : number) => void}){
     return(
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="productPage">
             <Row xs={12}>
@@ -44,9 +45,7 @@ export function ProductPage(props:{products:IProduct[], categories:Category[], h
                                 key={category.id}
                                 marked={category.marked}
                                 onMarked={async () => {
-                                    await axios.post(`http://localhost:8080/task/${category.id}`,
-                                        {marked : true}
-                                    );
+                                    props.handleCategory(category.id);
                                 }}>
                                 &emsp;{category.category}
                             </CategoryItem>)}

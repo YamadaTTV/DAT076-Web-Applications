@@ -19,11 +19,18 @@ export interface IProductService {
 
     //Check if a product exists, returns true if product exist
     productExist(key: number) : Promise<Boolean>;
+
+    getFilteredProducts() : Promise<Array<Product>>;
+
+    addCategoryMarked(category: string): Promise<string[]>;
+
+    removeCategoryMarked(category: string): Promise<string[]>;
 }
 
 class ProductService implements IProductService {
     products : Array<Product> = [];
     productIndex = 0;
+    categoryMarked : string[] = [];
 
     async getProducts() : Promise<Array<Product>>{
         return this.products;
@@ -78,7 +85,43 @@ class ProductService implements IProductService {
         if(prod==undefined) return false;
         else return true
     }
+
+    async addCategoryMarked(category :string){
+        if(!this.categoryMarked.includes(category)){
+            this.categoryMarked.push(category);
+            return this.categoryMarked;
+        }
+        else{
+            return this.categoryMarked;
+        }
+    }
+
+    async removeCategoryMarked(category :string){
+        let index = this.categoryMarked.indexOf(category);
+        if(this.categoryMarked[index] == category ){
+            this.categoryMarked.splice(index, 1);
+            return this.categoryMarked;
+        }
+        return this.categoryMarked;
+    }
+
+    async getFilteredProducts() : Promise<Array<Product>>{
+        let allProducts : Array<Product> = await this.getAvailableProducts();
+        let tempArray : Array<Product> = [];
+        let filteredProducts : Array<Product> = [];
+        if(this.categoryMarked.length == 0){
+            return allProducts;
+        }
+        else{
+            for(let i = 0; i < this.categoryMarked.length; i++){
+                tempArray = allProducts.filter(product => product.productCategory === this.categoryMarked[i]);
+                filteredProducts = filteredProducts.concat(tempArray);
+            }
+            return filteredProducts;
+        }
+    }
 }
+
 
 export function makeProductService() : IProductService {
     return new ProductService();

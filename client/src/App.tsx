@@ -27,9 +27,9 @@ function App() {
     }
     const [products, setproducts] = useState<IProduct[]>([]);
     const [category, setcategory] = useState<Category[]>([
-        {id: 1, category: "Furniture", marked: false},
-        {id: 2, category: "Electronic", marked: false},
-        {id: 3, category: "Clothes", marked: false}
+        {id: 0, category: "Furniture", marked: false},
+        {id: 1, category: "Electronic", marked: false},
+        {id: 2, category: "Clothes", marked: false}
     ]);
     const handleRegisterClick = () => {
         setformOpen(!formOpen);
@@ -43,7 +43,6 @@ function App() {
     }
     const handleCart = (product: IProduct) => {
         addToCart(product);
-        console.log("handleCart iahsdiashdjksas");
     }
     const handleBuy = () => {
         setCartItems([]);
@@ -58,6 +57,20 @@ function App() {
         updateProducts();
     }
 
+    const handleCategory = (categoryId : number) => {
+        const nextCategory = category.map((category,i) => {
+            if(i === categoryId){
+                category.marked = !category.marked;
+                return category;
+            }
+            else{
+                return category;
+            }
+        });
+        setcategory(nextCategory);
+        updateCategoryProducts(categoryId);
+    }
+
     async function addToCart(product: IProduct) {
         let tempCart = cartItems;
         tempCart.push(product);
@@ -70,16 +83,26 @@ function App() {
         setCartItems(tempCart);
     }
 
+    async function updateCategoryProducts(index : number){
+        if(category[index].marked){
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/addCat`, {category: category[index].category});
+        }
+        else{
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/removeCat`, {category: category[index].category});
+        }
+        const response  = await axios.get<IProduct[]>(`http://localhost:8080/product/filterProducts/`);
+        setproducts(response.data);
+    }
 
     async function updateProducts() {
         // TODO Make it possible to change URL
-        const response = await axios.get<IProduct[]>("http://localhost:8080/product/available"); //change http to http://localhost:8080/product/available
+        const response = await axios.get<IProduct[]>("http://localhost:8080/product/filterProducts/");
         setproducts(response.data);
     }
 
     useEffect(() => {
         updateProducts();
-    }, [products]);
+    }, [category, products]);
 
     if (sellAction) {
         return (
@@ -87,7 +110,7 @@ function App() {
                 <SellForm handleSellClick={handleSellClick}></SellForm>
                 <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick}
                         handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
-                <ProductPage products={products} categories={category} handleCart={handleCart}/>
+                <ProductPage products={products} categories={category} handleCart={handleCart} handleCategory={handleCategory}/>
             </div>
         );
     }
@@ -107,7 +130,7 @@ function App() {
             <div>
                 <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick}
                         handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
-                <ProductPage products={products} categories={category} handleCart={handleCart}/>
+                <ProductPage products={products} categories={category} handleCart={handleCart} handleCategory={handleCategory}/>
                 <Footer/>
             </div>
         );

@@ -115,3 +115,60 @@ productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Res
         res.status(500).send(e.message);
     }
 })
+
+productRouter.get("/filterProducts/", async (
+    req: Request<{categoriesArray:string[]}, {}, {}>,
+    res: Response<Array<Product> | String>
+) => {
+    try {
+        const products = await productService.getFilteredProducts();
+        res.status(200).send(products);
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+productRouter.put("/filterProducts/addCat", async (
+    req: Request<{}, {}, {category:string}>,
+    res: Response<Array<Product> | String>
+) => {
+    try {
+        let category = req.body.category;
+
+        if (typeof (category) !== "string") {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- category has type ${typeof(category)}`);
+            return;
+        }
+
+        const response = await productService.addCategoryMarked(category);
+        if(response){
+            res.status(200).send(response.toString());
+        }
+        else{
+            res.status(401).send("Could not remove category")
+        }
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+productRouter.put("/filterProducts/removeCat", async (
+    req: Request<{}, {}, {category:string}>,
+    res: Response<Array<Product> | String>
+) => {
+    try {
+        let category = req.body.category;
+
+
+        const response = await productService.removeCategoryMarked(category);
+        if(response){
+            res.status(200).send(response.toString());
+        }
+        else{
+            res.status(401).send("Could not remove category")
+        }
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
