@@ -110,7 +110,7 @@ export function SellForm(props: {handleSellClick : () => void}){
                                    placeholder="Price" value={price} onChange={(e) => 
                                 setprice(e.target.value)
                             }/>
-                            {buttonClicked && price.trim() === "" && (<div className="text-danger">Please enter a price</div>)}
+                            {buttonClicked && price.trim() === "" && (<div className="text-danger">Please enter valid a price</div>)}
                         </div>
                         <div>
                             <input className={"btn-primary"} type="submit" value="Sell" id="submitBtn" onClick={() => setButtonClicked(true)}></input>
