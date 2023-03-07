@@ -29,8 +29,7 @@ export type productCreationRequest = Request & {
         productName: string,
         productDescription: string,
         productCategory: string,
-        price: number,
-        sellerId : number
+        price: number
     }
     session: {
         user ?: User
@@ -42,3 +41,5 @@ export type get = Request & {
         user ?: User
     }
 }
+
+export type defaultRequest = get

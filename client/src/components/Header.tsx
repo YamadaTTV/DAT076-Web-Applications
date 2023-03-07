@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import React, {useEffect, useState} from "react";
 import {Pages} from "../App";
 import axios from "axios";
+import {response} from "msw";
 
 axios.defaults.withCredentials = true;
 
@@ -61,8 +62,12 @@ export function Header(props:{
                     <Nav.Link href="#profile" hidden={!loggedIn} onClick={
                         () => props.handlePages(Pages.PROFILE)
                     }> Profile </Nav.Link>
-                    <Nav.Link className="loginText" href="#loginpage" hidden={!loggedIn} onClick={
-                        () => props.handlePages(Pages.INDEX)
+                    <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
+                        async () => {
+                            const response = await axios.delete("http://localhost:8080/user/logout")
+                            console.log(response.data)
+                            props.handlePages(Pages.INDEX)
+                        }
                     }> Log out </Nav.Link>
                 </Nav>
             </Navbar.Collapse>

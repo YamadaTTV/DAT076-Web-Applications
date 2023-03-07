@@ -86,3 +86,23 @@ userRouter.post("/login", async(
     }
 });
 
+userRouter.delete("/logout", async(
+    req: requestTypes.defaultRequest,
+    res: Response<string>
+) => {
+    try{
+        if(req.session.user){
+            req.session.destroy(e => {
+                if (e) {
+                    res.status(400).send('Unable to log out')
+                } else {
+                    res.status(200).send('Logout successful')
+                }
+            });
+        }
+    } catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+

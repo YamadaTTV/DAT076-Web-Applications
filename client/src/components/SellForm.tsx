@@ -16,7 +16,7 @@ export function SellForm(props: {
     const[productDescription, setproductDescription] = useState("");
     const[productCategory, setproductCategory] = useState("");
     const[price, setprice] = useState("")
-    const[sellerId, setsellerId] = useState(1); //Change to automatically take the logged in users id.
+    //const[sellerId, setsellerId] = useState(1); //Change to automatically take the logged in users id.
 
     const [show, setShow] = useState(true);
 
@@ -42,7 +42,7 @@ export function SellForm(props: {
                         onSubmit={
                             async e => {
                                 e.preventDefault();
-                                await axios.post("http://localhost:8080/product",{ productName:productName, productDescription:productDescription, productCategory:productCategory, price:Number(price), sellerId:sellerId})
+                                await axios.post("http://localhost:8080/product",{ productName:productName, productDescription:productDescription, productCategory:productCategory, price:Number(price)})
                                 props.handlePage(Pages.PRODUCT)
                             }
                         }>

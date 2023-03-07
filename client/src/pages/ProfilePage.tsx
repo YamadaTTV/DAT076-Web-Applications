@@ -33,7 +33,7 @@ export function ProfilePage(props: {
 
     return <div>
         <Header handlePages={props.handlePages} page={props.page}/>
-        <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="productPage">
+        <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="ProfilePage">
             <Row xs={12}>
                 <Col xs={10}>
                     <div style={{marginRight: "10px"}}>
