@@ -21,6 +21,7 @@ export interface IProductService {
     //Check if a product exists, returns true if product exist
     productExist(key: number) : Promise<Boolean>;
 
+    //Get all products listed by a given user
     getUserListings(user: User) : Promise<Product[] | undefined>;
 }
 
