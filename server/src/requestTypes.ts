@@ -1,5 +1,6 @@
 import {Request} from "express";
 import {User} from "./model/User";
+import {Product} from "./model/Product";
 
 export type userLoginRequest = Request & {
     body: {
@@ -43,3 +44,16 @@ export type get = Request & {
 }
 
 export type defaultRequest = get
+
+export type addToCartRequest = Request & {
+    body: {
+        product: Product
+    }
+    session: {
+        user ?: User
+    }
+}
+
+export type emptyCartRequest = get
+
+export type removeFromCartRequest = addToCartRequest

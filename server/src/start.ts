@@ -4,6 +4,7 @@ import session from "express-session";
 import { userRouter } from "./router/User";
 import { productRouter } from "./router/Product";
 import {readFile} from "fs";
+import {cartRouter} from "./router/Cart";
 
 export const app = express();
 
@@ -21,5 +22,6 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use("/user", userRouter);
+app.use("/user", userRouter)
 app.use("/product", productRouter)
+app.use("/cart",cartRouter)
