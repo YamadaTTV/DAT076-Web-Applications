@@ -1,12 +1,13 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
 import React from "react";
+import axios from "axios";
 
 /**Product component, used to visualize data of a product
  * Take data of IProd as parameter and returns a component card.
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
  */
-export function Product (props:  {children : object, prod : IProduct, handleCart: (product : IProduct) => void}){
+export function Product (props:  {children : object, prod : IProduct}){
     //const icon = require();
     return (
         <Card style={{ width: '18rem'}} key={props.prod.key}>
@@ -22,7 +23,10 @@ export function Product (props:  {children : object, prod : IProduct, handleCart
                 </Card.Text>
                 <Row>
                     <Col xs={12}>
-                        <button className="btn-primary" onClick={() => props.handleCart(props.prod)}>Add to Cart</button>
+                        <button className="btn-primary" onClick={async () => {
+                            console.log(props.prod)
+                            await axios.post("http://localhost:8080/cart",{product:props.prod})
+                        }}>Add to Cart</button>
                     </Col>
 
                     <Col xs={12}>

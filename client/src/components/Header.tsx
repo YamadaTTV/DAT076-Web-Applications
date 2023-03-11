@@ -72,7 +72,9 @@ export function Header(props:{
                     <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
                         () => props.handlePages(Pages.INDEX)
                     }> Login </Nav.Link>
-                    <Nav.Link href="#cart" hidden={cart.length==0} >Cart</Nav.Link>
+                    <Nav.Link href="#cart" hidden={cart.length==0} onClick={
+                        () => props.handlePages(Pages.CART)
+                    }>Cart</Nav.Link>
                     <Nav.Link href="#profile" hidden={!loggedIn} onClick={
                         () => props.handlePages(Pages.PROFILE)
                     }> Profile </Nav.Link>
