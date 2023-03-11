@@ -3,7 +3,6 @@ import Nav from "react-bootstrap/Nav";
 import React, {useEffect, useState} from "react";
 import {Pages} from "../App";
 import axios from "axios";
-import {response} from "msw";
 import {IProduct} from "./Product";
 
 axios.defaults.withCredentials = true;
@@ -34,8 +33,15 @@ export function Header(props:{
     }
 
     const checkCart = async () => {
-        //TODO Setup cart in server and call server here to see if there are any products in cart.
-        setCart([])
+        let response = await axios.get("http://localhost:8080/cart")
+        if(response.status == 400 || response.status == 204){
+            setCart([])
+            console.log(response.data)
+        } else if(response.status == 200){
+            setCart(response.data)
+        } else {
+            props.handlePages(Pages.ERROR)
+        }
     }
 
     useEffect( () => {
@@ -66,7 +72,7 @@ export function Header(props:{
                     <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
                         () => props.handlePages(Pages.INDEX)
                     }> Login </Nav.Link>
-                    <Nav.Link href="#cart" hidden={true} >Cart</Nav.Link>
+                    <Nav.Link href="#cart" hidden={cart.length==0} >Cart</Nav.Link>
                     <Nav.Link href="#profile" hidden={!loggedIn} onClick={
                         () => props.handlePages(Pages.PROFILE)
                     }> Profile </Nav.Link>
