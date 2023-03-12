@@ -18,9 +18,15 @@ export function RegisterForm(props: {handleRegisterClick : () => void}){
         e.preventDefault();
         setRegisterError("");
 
+        // Check email format
         const emailRegex = /^\S+@\S+\.\S+$/;
         if(!emailRegex.test(email)){
             setRegisterError("Invalid email format");
+            return;
+        }
+
+        if(!password){
+            setRegisterError("Please enter a password");
             return;
         }
 
