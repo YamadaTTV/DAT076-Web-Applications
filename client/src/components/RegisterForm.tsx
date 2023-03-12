@@ -14,18 +14,15 @@ export function RegisterForm(props: {handleRegisterClick : () => void}){
     //const[repeatPassword, setrepeatPassword] = useState("");
     const [registerError, setRegisterError] = useState("");
 
-    const checkUsername = async() => {
-        const response = await axios.get("http://localhost:8080/user");
-    };
-
-    const checkEmail = async() => {
-        const response = await axios.get("http://localhost:8080/user");
-    };
-
     const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setRegisterError("");
 
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if(!emailRegex.test(email)){
+            setRegisterError("Invalid email format");
+            return;
+        }
 
         const response = await axios.post("http://localhost:8080/user", { username: username, password: password, email: email });
         if(response.status == 210){
