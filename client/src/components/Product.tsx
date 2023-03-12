@@ -16,8 +16,7 @@ export function Product (props:  {children : object, prod : IProduct, productHan
 
     const getLoggedInUser = async () => {
         const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        console.log("user logged in:"+response.data)
-        if(response.status == 200) setLoggedInUserId(response.data)
+        if(response.status == 200) setLoggedInUserId(response.data.id)
         else if(response.status == 210) setLoggedInUserId(undefined)
     }
 

@@ -146,7 +146,7 @@ code {
   border-width: 0px;
 }
 
-.btn-sell{
+.btn-delete{
   background-color: #888888;
   color: white;
   border-radius: 5px;
@@ -156,7 +156,7 @@ code {
   width:100%;
 }
 
-.btn-sell:enabled{
+.btn-delete:enabled{
   background-color: #b41414;
   border-width: 0px;
 }

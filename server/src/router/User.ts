@@ -107,14 +107,13 @@ userRouter.delete("/logout", async(
 
 userRouter.get("/loggedInUser", async (
     req: requestTypes.get,
-    res: Response<number | string>
+    res: Response<User | string>
 ) => {
     try{
         if(req.session.user == null){
-            res.status(210).send(0)
+            res.status(210).send("No user logged in.")
         } else {
-            console.log("Logged in user: "+req.session.user)
-            res.status(200).send(req.session.user.id)
+            res.status(200).send(req.session.user)
         }
         res.end();
     } catch (e: any){

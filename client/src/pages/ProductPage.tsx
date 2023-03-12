@@ -138,7 +138,6 @@ export function ProductPage(props:{
                     </Col>
                 </Row>
             </div>
-            <Footer/>
         </div>
     );
 }
