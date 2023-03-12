@@ -59,14 +59,16 @@ class UserService implements IUserService {
         return false;
     }
 
-    async loginUser(username: string, password: string) : Promise<boolean>{
-        let index = 0
-        for(const user of this.users){
-            if(user.username==username){ break }
-            index += 1
+    async loginUser(username?: string, password?: string) : Promise<boolean>{
+
+        let user = this.users.find(user => user.username===username);
+        if(user == undefined){
+            return false;
         }
-        if(this.users[index].username == username && this.users[index].password == password){
-            return true;
+        else{
+            if(user.username == username && user.password == password){
+                return true;
+            }
         }
         return false;
     }
