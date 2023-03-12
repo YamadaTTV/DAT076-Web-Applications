@@ -27,7 +27,7 @@ class UserService implements IUserService {
     }
 
     async addUser(username: string, email: string, password: string) : Promise<boolean>{
-        const findUser = this.users.find(user => user.email == email)
+        const findUser = this.users.find(user => user.email == email || user.username == username);
         if(findUser != null){
             return false;
         }
