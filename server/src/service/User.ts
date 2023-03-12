@@ -45,26 +45,29 @@ class UserService implements IUserService {
     }
 
     async deleteUser(username: string, password: string) : Promise<boolean>{
-        let index = 0
-        for(const user of this.users){
-            if(user.username==username){ break }
-            index += 1
+        let user = this.users.find(user => user.username === username);
+        let userIndex = this.users.findIndex(user => user.username===username);
+        if(user == undefined){
+            return false;
         }
-        if(this.users[index].username == username && this.users[index].password == password){
-            this.users.splice(index, 1);
-            return true;
+        else{
+            if(user.username == username && user.password == password){
+                this.users.splice(userIndex, 1);
+                return true;
+            }
         }
         return false;
     }
 
     async loginUser(username: string, password: string) : Promise<boolean>{
-        let index = 0
-        for(const user of this.users){
-            if(user.username==username){ break }
-            index += 1
+        let user = this.users.find(user => user.username===username);
+        if(user == undefined){
+            return false;
         }
-        if(this.users[index].username == username && this.users[index].password == password){
-            return true;
+        else{
+            if(user.username == username && user.password == password){
+                return true;
+            }
         }
         return false;
     }

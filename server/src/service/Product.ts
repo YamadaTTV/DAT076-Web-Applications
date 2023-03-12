@@ -23,11 +23,20 @@ export interface IProductService {
 
     //Get all products listed by a given user
     getUserListings(user: User) : Promise<Product[] | undefined>;
+
+    getFilteredProducts() : Promise<Array<Product>>;
+
+    addCategoryMarked(category: string): Promise<string[]>;
+
+    removeCategoryMarked(category: string): Promise<string[]>;
+
+    deleteProduct(key: number) : Promise<boolean>
 }
 
 class ProductService implements IProductService {
     products : Array<Product> = [];
     productIndex = 0;
+    categoryMarked : string[] = [];
 
     async getProducts() : Promise<Array<Product>>{
         return this.products;
@@ -69,6 +78,21 @@ class ProductService implements IProductService {
         return true;
     }
 
+    async deleteProduct(key: number) : Promise<boolean>{
+        let product = this.products.find(product => product.key === key);
+        let productIndex = this.products.findIndex(product => product.key === key);
+        if(product == undefined){
+            return false;
+        }
+        else{
+            if(product.key == key){
+                this.products.splice(productIndex, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
     async buyProduct(key : number, buyerId : number) : Promise<Product|undefined>{
         let prod = this.products.find(product => product.key===key);
         if(prod!=undefined){
@@ -85,6 +109,41 @@ class ProductService implements IProductService {
 
     async getUserListings(user: User) : Promise<Product[] | undefined> {
         return this.products.filter(product => product.sellerId == user.id)
+    }
+
+    async addCategoryMarked(category :string){
+        if(!this.categoryMarked.includes(category)){
+            this.categoryMarked.push(category);
+            return this.categoryMarked;
+        }
+        else{
+            return this.categoryMarked;
+        }
+    }
+
+    async removeCategoryMarked(category :string){
+        let index = this.categoryMarked.indexOf(category);
+        if(this.categoryMarked[index] == category ){
+            this.categoryMarked.splice(index, 1);
+            return this.categoryMarked;
+        }
+        return this.categoryMarked;
+    }
+
+    async getFilteredProducts() : Promise<Array<Product>>{
+        let allProducts : Array<Product> = await this.getAvailableProducts();
+        let tempArray : Array<Product> = [];
+        let filteredProducts : Array<Product> = [];
+        if(this.categoryMarked.length == 0){
+            return allProducts;
+        }
+        else{
+            for(let i = 0; i < this.categoryMarked.length; i++){
+                tempArray = allProducts.filter(product => product.productCategory === this.categoryMarked[i]);
+                filteredProducts = filteredProducts.concat(tempArray);
+            }
+            return filteredProducts;
+        }
     }
 }
 

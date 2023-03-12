@@ -68,18 +68,21 @@ function App() {
             />
     }
 
+    async function updateCategoryProducts(index : number){
+        if(category[index].marked){
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/addCat`, {category: category[index].category});
+        }
+        else{
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/removeCat`, {category: category[index].category});
+        }
+        const response  = await axios.get<IProduct[]>(`http://localhost:8080/product/filterProducts/`);
+        setproducts(response.data);
+    }
 
     async function handlePages(page: Pages){
         setPage(page)
     }
 
-    async function userLoggedIn(): Promise<boolean>{
-        const response = await axios.get("localhost:8080/")
-        if(response.status!=200){
-            return false
-        }
-        return true
-    }
 
     return <p>Error occurred</p>
 }

@@ -61,11 +61,15 @@ export function SellForm(props: {
                             </input>
                         </div>
                         <div className={"login-div"}>
-                            <input className={"login-form-input"} type="text" id="category" name="category"
-                                   placeholder="Category" onChange={e => {
+                            <select className={"sell-form-category-input"} defaultValue={""} onChange={e => {
                                 setproductCategory(e.target.value);
                             }}>
-                            </input>
+                                <option value="" disabled>Category</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Electronic">Electronic</option>
+                                <option value="Clothes">Clothes</option>
+
+                            </select>
                         </div>
                         <div className={"login-div"}>
                             <input className={"login-form-input"} type="text" id="price" name="price"
