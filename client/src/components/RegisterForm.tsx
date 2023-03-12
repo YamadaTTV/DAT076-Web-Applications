@@ -12,32 +12,50 @@ export function RegisterForm(props: {handleRegisterClick : () => void}){
     const[email, setemail] = useState("");
     const[password, setpassword] = useState("");
     //const[repeatPassword, setrepeatPassword] = useState("");
+    const [registerError, setRegisterError] = useState("");
+
+    const checkUsername = async() => {
+        const response = await axios.get("http://localhost:8080/user");
+    };
+
+    const checkEmail = async() => {
+        const response = await axios.get("http://localhost:8080/user");
+    };
+
+    const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setRegisterError("");
+
+
+        const response = await axios.post("http://localhost:8080/user", { username: username, password: password, email: email });
+        if(response.status == 210){
+            setRegisterError("Username or email already exists")
+            return;
+        } else if(response.status == 201){
+            props.handleRegisterClick();
+            setRegisterError("");
+        } else {
+            return;
+        }
+    }
     return(
         <div>
             <div className={"login-container"}>
                 <h1 className={"login-form"}>Register!</h1>
 
                 <form className={"login-form"}
-                      onSubmit={
-                          async e => {
-                              e.preventDefault();
-                              await axios.post("http://localhost:8080/user",{ username:username,password:password, email:email})
-                              props.handleRegisterClick()
-                          }
-                      }>
+                      onSubmit={handleRegisterSubmit}>
                     <div className={"login-div"}>
                         <input className={"login-form-input"} type="text" id="username" name="username"
-                               placeholder="Username" onChange={e => {
+                               placeholder="Username" value={username} onChange={e => {
                             setusername(e.target.value);
-                        }}>
-                        </input>
+                        }}/>
                     </div>
                     <div className={"login-div"}>
                         <input className={"login-form-input"} type="text" id="email" name="email"
-                               placeholder="Email" onChange={e => {
+                               placeholder="Email" value={email} onChange={e => {
                             setemail(e.target.value);
-                        }}>
-                        </input>
+                        }}/>
                     </div>
                     <div className={"login-div"}>
                         <input className={"login-form-input"} type="password" id="password" name="password"
@@ -46,6 +64,7 @@ export function RegisterForm(props: {handleRegisterClick : () => void}){
                         }}>
                         </input>
                     </div>
+                    {registerError && <p style={{color: "red"}}>{registerError}</p>}
                     <div>
                         <input className={"btn-primary"} type="submit" value="Register" id="submitBtn"></input>
                     </div>

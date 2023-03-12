@@ -102,7 +102,7 @@ function App() {
 
     useEffect(() => {
         updateProducts();
-    }, [category, products]);
+    }, []);
 
     if (sellAction) {
         return (

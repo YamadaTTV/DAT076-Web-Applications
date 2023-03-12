@@ -6,7 +6,7 @@ export interface IUserService {
     getUsers() : Promise<Array<User>>;
 
     //Add a new user to the system
-    addUser(username: string, email: string, password: string) : Promise<User>;
+    addUser(username: string, email: string, password: string) : Promise<boolean>;
 
     //check if user exist, if it does return true.
     userExists(id: number) : Promise<boolean>;
@@ -26,11 +26,16 @@ class UserService implements IUserService {
         return this.users;
     }
 
-    async addUser(username: string, email: string, password: string) : Promise<User>{
+    async addUser(username: string, email: string, password: string) : Promise<boolean>{
+        const findUser = this.users.find(user => user.email == email)
+        console.log(findUser);
+        if(findUser != null){
+            return false;
+        }
         const user = new User(this.userIndex+1,username,email,password);
         this.users.push(user);
         this.userIndex += 1;
-        return user;
+        return true;
     }
 
     async userExists(id: number) : Promise<boolean>{

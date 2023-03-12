@@ -19,7 +19,7 @@ userRouter.get("/", async (
 
 userRouter.post("/", async (
     req: Request<{}, {},{username: string, email: string, password: string}>,
-    res: Response<User | string>
+    res: Response<string>
 ) => {
     try {
         let username = req.body.username;
@@ -29,8 +29,12 @@ userRouter.post("/", async (
             res.status(400).send(`Bad PUT call to ${req.originalUrl} ---username has type ${typeof(username)}, email has type ${typeof(email)} and password has type ${typeof(password)}`);
             return;
         }
-        const newUser = await userService.addUser(username,email,password);
-        res.status(201).send(newUser);
+        const response = await userService.addUser(username,email,password);
+        if(response){
+            res.status(201).send("User created");
+        } else {
+            res.status(210).send("Failed to create user");
+        }
     } catch (e: any) {
         res.status(500).send(e.message);
     }
