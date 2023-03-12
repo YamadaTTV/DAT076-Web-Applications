@@ -25,6 +25,8 @@ export interface IProductService {
     addCategoryMarked(category: string): Promise<string[]>;
 
     removeCategoryMarked(category: string): Promise<string[]>;
+
+    deleteProduct(key: number) : Promise<boolean>
 }
 
 class ProductService implements IProductService {
@@ -70,6 +72,21 @@ class ProductService implements IProductService {
             product.sellerId = sellerId;
         }
         return true;
+    }
+
+    async deleteProduct(key: number) : Promise<boolean>{
+        let product = this.products.find(product => product.key === key);
+        let productIndex = this.products.findIndex(product => product.key === key);
+        if(product == undefined){
+            return false;
+        }
+        else{
+            if(product.key == key){
+                this.products.splice(productIndex, 1);
+                return true;
+            }
+        }
+        return false;
     }
 
     async buyProduct(key : number, buyerId : number) : Promise<Product|undefined>{

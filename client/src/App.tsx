@@ -13,50 +13,60 @@ import {CartPage} from "./pages/CartPage";
 function App() {
     const [formOpen, setformOpen] = useState(false);
     const [loggedIn, setloggedIn] = useState(false);
-    const [sellAction, setsellAction] = useState(false);
-    const [cartItems, setCartItems] = useState<IProduct[]>([]);
-    const [cartItem, setcartItem] = useState<IProduct>();
     const [cartState, setCartState] = useState(false);
-    const soffa: IProduct = {
-        key: 1,
-        productName: "soffa",
-        productDescription: "En fin soffa av hög kvalitet. Köpt på IKEA. Lite sliten men inte nersutten.",
-        productCategory: "möbel",
-        price: 123,
-        seller: 1
-    }
-    const [products, setproducts] = useState<IProduct[]>([]);
+    const [sellAction, setsellAction] = useState(false);
+
+    //CartPage(?)
+    const [cartItems, setCartItems] = useState<IProduct[]>([]);
+
+    const [products, setproducts] = useState<IProduct[]>([]); //ProductPage
+    //ProductPage
     const [category, setcategory] = useState<Category[]>([
         {id: 0, category: "Furniture", marked: false},
         {id: 1, category: "Electronic", marked: false},
         {id: 2, category: "Clothes", marked: false}
     ]);
+    //Register form
     const handleRegisterClick = () => {
         setformOpen(!formOpen);
     }
+    //Login form
     const handleLoginClick = () => {
         setloggedIn(!loggedIn);
     }
+
+    //ProductPage
+    const handleDeleteClick = () => {
+        updateProducts();
+    }
+
+    //ProductPage
     const handleSellClick = () => {
         setsellAction(!sellAction);
         updateProducts();
     }
+
+    //ProductPage
     const handleCart = (product: IProduct) => {
-        addToCart(product);
+        let tempCart = cartItems;
+        tempCart.push(product);
+        setCartItems(tempCart);
+        updateProducts();
     }
+
+    //Cart page
     const handleBuy = () => {
         setCartItems([]);
         updateProducts();
         setCartState(false);
     }
-    const removeFromCart = (product: IProduct) => {
-        removeFromCart(product);
-    }
+    //Header
     const toCartPage = () => {
         setCartState(!cartState);
         updateProducts();
     }
 
+    //ProductPage
     const handleCategory = (categoryId : number) => {
         const nextCategory = category.map((category,i) => {
             if(i === categoryId){
@@ -71,16 +81,12 @@ function App() {
         updateCategoryProducts(categoryId);
     }
 
-    async function addToCart(product: IProduct) {
-        let tempCart = cartItems;
-        tempCart.push(product);
-        setCartItems(tempCart);
-    }
-
-    async function removeCart(product: IProduct) {
+    //CartPage
+    async function removeCart() {
         let tempCart = cartItems;
         tempCart.pop();
         setCartItems(tempCart);
+        updateProducts();
     }
 
     async function updateCategoryProducts(index : number){
@@ -102,7 +108,7 @@ function App() {
 
     useEffect(() => {
         updateProducts();
-    }, [category, products]);
+    }, [category]);
 
     if (sellAction) {
         return (
@@ -110,7 +116,7 @@ function App() {
                 <SellForm handleSellClick={handleSellClick}></SellForm>
                 <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick}
                         handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
-                <ProductPage products={products} categories={category} handleCart={handleCart} handleCategory={handleCategory}/>
+                <ProductPage products={products} categories={category} handleCart={handleCart} handleCategory={handleCategory} handleDeleteClick = {handleDeleteClick}/>
             </div>
         );
     }
@@ -130,7 +136,7 @@ function App() {
             <div>
                 <Header loggedIn={loggedIn} inCartPage={cartState} handleLoginClick={handleLoginClick}
                         handleSellClick={handleSellClick} cartItems={cartItems} toCartPage={toCartPage}/>
-                <ProductPage products={products} categories={category} handleCart={handleCart} handleCategory={handleCategory}/>
+                <ProductPage products={products} categories={category} handleCart={handleCart} handleCategory={handleCategory} handleDeleteClick = {handleDeleteClick}/>
                 <Footer/>
             </div>
         );
