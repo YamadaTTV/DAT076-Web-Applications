@@ -41,10 +41,10 @@ export function CartPage(props:{
         let response = await axios.get("http://localhost:8080/cart")
         if(response.status == 200){
             setCartItems(response.data)
-        } else if (response.status == 204 || response.status == 400){
+        } else if (response.status == 204 || response.status == 210){
             setCartItems([])
             console.log(response.data)
-        } else props.handlePages(Pages.ERROR)
+        } //else props.handlePages(Pages.ERROR)
     }
 
     useEffect(() => {

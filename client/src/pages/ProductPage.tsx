@@ -34,6 +34,8 @@ function CategoryItem({marked, children, onMarked} : CategoryProps){
     )
 }
 
+
+
 /** Used to get all the products from the server and display them.
  *
  */
@@ -43,10 +45,44 @@ export function ProductPage(props:{
     handlePages : (page : Pages) => void
 }){
     const [products,setProducts] = useState<IProduct[]>([])
+    const [category, setCategory] = useState<Category[]>([
+        {id: 0, category: "Furniture", marked: false},
+        {id: 1, category: "Electronic", marked: false},
+        {id: 2, category: "Clothes", marked: false}
+    ]);
+
+    async function updateCategoryProducts(index : number){
+        if(category[index].marked){
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/addCat`, {category: category[index].category});
+        }
+        else{
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/removeCat`, {category: category[index].category});
+        }
+        const response  = await axios.get<IProduct[]>(`http://localhost:8080/product/filterProducts/`);
+        setProducts(response.data);
+    }
+
+    const handleCategory = (categoryId : number) => {
+        const nextCategory = category.map((category,i) => {
+            if(i === categoryId){
+                category.marked = !category.marked;
+                return category;
+            }
+            else{
+                return category;
+            }
+        });
+        setCategory(nextCategory);
+        updateCategoryProducts(categoryId);
+    }
+
+    const productHandler = () => {
+        updateProducts()
+    }
 
     const updateProducts = async () => {
         try{
-            const response = await axios.get<IProduct[] | string>("http://localhost:8080/product")
+            const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/filterProducts")
             if (response.status == 400){
                 console.log(response.data)
                 return
@@ -64,6 +100,7 @@ export function ProductPage(props:{
     }, [props.page]);
 
 
+
     return(
         <div>
             <Header handlePages={props.handlePages} page={props.page}/>
@@ -72,12 +109,12 @@ export function ProductPage(props:{
                     <Col xs={2}>
                         <div className={"category-div"}>
                             <h3 className={"login-text"}>Filter</h3>
-                            {props.categories.map((category) =>
+                            {category.map((category) =>
                                 <CategoryItem
                                     key={category.id}
                                     marked={category.marked}
                                     onMarked={async () => {
-                                        props.handleCategory(category.id);
+                                        handleCategory(category.id);
                                     }}>
                                     &emsp;{category.category}
                                 </CategoryItem>)}
@@ -91,7 +128,7 @@ export function ProductPage(props:{
                                     {products.map((product) =>
                                         <Col xs={4}>
                                             {/*<Product prod={product} key={product.key} handleCart={props.handleCart} handleDeleteClick={props.handleDeleteClick}> */}
-                                            <Product prod={product} key={product.key}>
+                                            <Product prod={product} key={product.key} productHandler={productHandler}>
                                             </Product>
                                         </Col>)
                                     }

@@ -22,10 +22,10 @@ export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}
                             const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
                             if(response !== undefined){
                                     if(response.status == 202){
-                                        console.log("Success");
+                                        console.log(response.data);
                                         props.handlePages(Pages.PRODUCT);
-                                    } else if(response.status == 403){
-                                        console.log("FAIL");
+                                    } else if(response.status == 203){
+                                        console.log(response.data);
                                     }
                                     console.log(response);
                             }

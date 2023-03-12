@@ -45,9 +45,10 @@ productRouter.post("/", async (
         let price = req.body.price;
 
 
-        if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number"){
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof(productName)}, productDescription has type ${typeof(productDescription)}, productCategory has type ${typeof(productCategory)}, price has type ${typeof(price)}`);
+        if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number") {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof (productName)}, productDescription has type ${typeof (productDescription)}, productCategory has type ${typeof (productCategory)}, price has type ${typeof (price)}`);
             return
+        }
         if(req.session.user == null){
             res.status(400).send("No user logged in.")
             return
@@ -57,6 +58,7 @@ productRouter.post("/", async (
         }
         const newProduct = await productService.addProduct(productName,productDescription,productCategory,price,req.session.user.id);
         res.status(201).send(newProduct);
+
     } catch (e: any) {
         res.status(500).send(e.message);
     }

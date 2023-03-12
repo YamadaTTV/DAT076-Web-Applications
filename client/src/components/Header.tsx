@@ -34,7 +34,7 @@ export function Header(props:{
 
     const checkCart = async () => {
         let response = await axios.get("http://localhost:8080/cart")
-        if(response.status == 400 || response.status == 204){
+        if(response.status == 210 || response.status == 204){
             setCart([])
             console.log(response.data)
         } else if(response.status == 200){

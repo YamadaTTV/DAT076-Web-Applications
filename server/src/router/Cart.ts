@@ -17,7 +17,7 @@ cartRouter.get("/", async (
 ) => {
     try {
         if(req.session.user == null){
-            res.status(400).send("User not logged in")
+            res.status(210).send("User not logged in")
             return
         }
         const cartItems = await cartService.getCartItems(req.session.user)
@@ -34,7 +34,7 @@ cartRouter.post("/", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(400).send("User not logged in")
+            res.status(210).send("User not logged in")
             return
         }
         const cart = await cartService.addCartItem(req.session.user,req.body.product)
@@ -51,7 +51,7 @@ cartRouter.delete("/", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(400).send("User not logged in")
+            res.status(210).send("User not logged in")
             return
         }
         const success : boolean = await cartService.removeCartItem(req.session.user,req.body.product)
@@ -68,7 +68,7 @@ cartRouter.delete("/empty", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(400).send("User not logged in")
+            res.status(210).send("User not logged in")
             return
         }
         const success : boolean = await cartService.emptyCart(req.session.user)

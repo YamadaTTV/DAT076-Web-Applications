@@ -2,14 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
 import './App.css';
 
-import {IndexPage} from './pages/IndexPage';
+import {IndexPage} from "./pages/IndexPage";
 import {RegisterPage} from "./pages/RegisterPage";
 import {AboutUsPage} from "./pages/AboutUsPage";
 import {ProductPage} from "./pages/ProductPage";
-import axios from "axios";
 import {SellPage} from "./pages/SellPage";
 import {ProfilePage} from "./pages/ProfilePage";
 import {CartPage} from "./pages/CartPage";
+import axios from "axios";
 
 
 
@@ -68,16 +68,7 @@ function App() {
             />
     }
 
-    async function updateCategoryProducts(index : number){
-        if(category[index].marked){
-            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/addCat`, {category: category[index].category});
-        }
-        else{
-            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/removeCat`, {category: category[index].category});
-        }
-        const response  = await axios.get<IProduct[]>(`http://localhost:8080/product/filterProducts/`);
-        setproducts(response.data);
-    }
+
 
     async function handlePages(page: Pages){
         setPage(page)

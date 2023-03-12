@@ -1,15 +1,30 @@
 import {Button, Card, Col, Row} from "react-bootstrap";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {User} from "../../../server/src/model/User";
+axios.defaults.withCredentials = true
 
 /**Product component, used to visualize data of a product
  * Take data of IProd as parameter and returns a component card.
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
  */
-export function Product (props:  {children : object, prod : IProduct}){
+export function Product (props:  {children : object, prod : IProduct, productHandler: ()=>void}){
     //TODO: handleDeleteClick: () => void
     //const icon = require();
+    const [loggedInUserId, setLoggedInUserId] = useState<number | undefined>(undefined)
+
+    const getLoggedInUser = async () => {
+        const response = await axios.get("http://localhost:8080/user/loggedInUser")
+        if(response.status == 200) setLoggedInUserId(response.data)
+        else if(response.status == 210) setLoggedInUserId(undefined)
+    }
+
+    useEffect(() => {
+        getLoggedInUser()
+        console.log("user logged in:"+loggedInUserId)
+    },[])
+
     return (
         <Card style={{ width: '18rem'}} key={props.prod.key}>
             <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
@@ -29,20 +44,18 @@ export function Product (props:  {children : object, prod : IProduct}){
                             await axios.post("http://localhost:8080/cart",{product:props.prod})
                         }}>Add to Cart</button>
                     </Col>
-                    {/* TODO: FIX SO WE CHECK IF THE PROD.SELLERID == THE LOGGED IN USERID */}
-                    {props.prod.sellerId == 1 && <Col xs={12}>
-                        <button className="btn-sell" style={{marginTop: "5px"}} onClick={
+                    {props.prod.sellerId == loggedInUserId && <Col xs={12}>
+                        <button className="btn-delete" style={{marginTop: "5px"}} onClick={
                             async e => {
                                 e.preventDefault();
                                 await axios.delete("http://localhost:8080/product/", {data: {key : props.prod.key}})
-                                //props.handleDeleteClick();
+                                props.productHandler()
                             }
                         }
 
                         >Delete listing</button>
                     </Col>}
-                    {/* TODO: FIX SO WE CHECK IF THE PROD.SELLERID != THE LOGGED IN USERID */}
-                    {props.prod.sellerId != 1 &&
+                    {props.prod.sellerId != loggedInUserId &&
                         <Col xs={12}>
                             <button className="btn-primary" style={{marginTop: "5px"}}>Contact seller</button>
                         </Col>

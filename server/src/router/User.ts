@@ -74,7 +74,7 @@ userRouter.post("/login", async(
         const loginUser = await userService.loginUser(username, password);
         if(loginUser){
             req.session.user = await userService.getLoggedInUser(username, password)
-            console.log(req.session.user)
+            console.log("Test: " +req.session.user)
             res.status(202).send("Successfully logged in " + loginUser.valueOf());
         }
         else{
@@ -104,5 +104,21 @@ userRouter.delete("/logout", async(
         res.status(500).send(e.message);
     }
 });
+
+userRouter.get("/loggedInUser", async (
+    req: requestTypes.get,
+    res: Response<number | string>
+) => {
+    try{
+        if(req.session.user == null){
+            res.status(210).send("No user logged in.")
+        } else {
+            console.log("Logged in user: "+req.session.user.id)
+            res.status(200).send(req.session.user.id)
+        }
+    } catch (e: any){
+        res.status(500).send(e.message)
+    }
+})
 
 
