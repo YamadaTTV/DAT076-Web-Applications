@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Modal} from "react-bootstrap";
 import axios from "axios";
 import {Pages} from "../App";
+axios.defaults.withCredentials = true;
 
 /**
  * The component for the SellForm, shows a sell menu

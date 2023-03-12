@@ -5,6 +5,7 @@ import axios from "axios";
 import {Header} from "../components/Header";
 import {Col, Row} from "react-bootstrap";
 import {Footer} from "../components/Footer";
+axios.defaults.withCredentials = true;
 
 export function ProfilePage(props: {
     handlePages: (page: Pages)=>void,
