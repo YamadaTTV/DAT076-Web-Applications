@@ -1,5 +1,6 @@
 import {Product} from "../model/Product";
 import {userService} from "../router/User";
+import {User} from "../model/User";
 
 export interface IProductService {
     //Get all products in system
@@ -19,6 +20,11 @@ export interface IProductService {
 
     //Check if a product exists, returns true if product exist
     productExist(key: number) : Promise<Boolean>;
+
+    //Get all products listed by a given user
+    getUserListings(user: User) : Promise<Product[]>;
+
+    getBoughtProducts(user: User) : Promise<Product[]>
 
     getFilteredProducts() : Promise<Array<Product>>;
 
@@ -103,6 +109,14 @@ class ProductService implements IProductService {
         else return true
     }
 
+    async getUserListings(user: User) : Promise<Product[]> {
+        return this.products.filter(product => product.sellerId == user.id)
+    }
+
+    async getBoughtProducts(user: User) : Promise<Product[]> {
+        return this.products.filter(product => product.buyerId == user.id)
+    }
+
     async addCategoryMarked(category :string){
         if(!this.categoryMarked.includes(category)){
             this.categoryMarked.push(category);
@@ -138,7 +152,6 @@ class ProductService implements IProductService {
         }
     }
 }
-
 
 export function makeProductService() : IProductService {
     return new ProductService();

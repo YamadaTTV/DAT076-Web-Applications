@@ -1,7 +1,9 @@
 import express, {Request, Response} from "express";
 import {makeProductService} from "../service/Product";
-import {userRouter, userService} from "./User";
+import {userService} from "./User";
 import {Product} from "../model/Product";
+import * as requestTypes from "../requestTypes"
+import * as responseTypes from "../responseTypes"
 
 const productService = makeProductService();
 
@@ -33,7 +35,7 @@ productRouter.get("/available/", async (
 });
 
 productRouter.post("/", async (
-    req: Request<{}, {},{productName: string, productDescription: string, productCategory: string, price: number, sellerId : number}>,
+    req: requestTypes.productCreationRequest,
     res: Response<Product | string>
 ) => {
     try {
@@ -41,19 +43,22 @@ productRouter.post("/", async (
         let productDescription = req.body.productDescription;
         let productCategory = req.body.productCategory;
         let price = req.body.price;
-        let sellerId = req.body.sellerId;
 
-        if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number" || typeof(sellerId) !== "number") {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof(productName)}, productDescription has type ${typeof(productDescription)}, productCategory has type ${typeof(productCategory)}, price has type ${typeof(price)},sellid has type ${typeof(sellerId)},  `);
-            return;
-        }
 
-        if(!await userService.userExists(sellerId)){
-            res.status(210).send(`User with sellerId ${sellerId} does not exist.`);
-            return;
+        if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number") {
+            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof (productName)}, productDescription has type ${typeof (productDescription)}, productCategory has type ${typeof (productCategory)}, price has type ${typeof (price)}`);
+            return
         }
-        const newProduct = await productService.addProduct(productName,productDescription,productCategory,price,sellerId);
+        if(req.session.user == null){
+            res.status(400).send("No user logged in.")
+            return
+        } else if (!await userService.userExists(req.session.user.id)){
+            res.status(400).send(`User with sellerId ${req.session.user.id} does not exist.`);
+            return
+        }
+        const newProduct = await productService.addProduct(productName,productDescription,productCategory,price,req.session.user.id);
         res.status(201).send(newProduct);
+
     } catch (e: any) {
         res.status(500).send(e.message);
     }
@@ -133,6 +138,38 @@ productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Res
         res.status(200).send("Product updated");
     } catch(e: any){
         res.status(500).send(e.message);
+    }
+})
+
+productRouter.get("/sellerListings", async (
+    req: requestTypes.get,
+    res: Response<Product[] | string>
+) => {
+    try{
+        if(req.session.user == null){
+            res.status(400).send("User not logged in")
+            return
+        }
+        const products = await productService.getUserListings(req.session.user)
+        res.status(200).send(products);
+    } catch(e: any) {
+        res.status(500).send(e.message)
+    }
+})
+
+productRouter.get("/boughtProducts", async (
+    req: requestTypes.get,
+    res: Response<Product[] | string>
+) => {
+    try{
+        if(req.session.user == null){
+            res.status(400).send("User not logged in")
+            return
+        }
+        const products = await productService.getBoughtProducts(req.session.user)
+        res.status(200).send(products);
+    } catch(e: any) {
+        res.status(500).send(e.message)
     }
 })
 

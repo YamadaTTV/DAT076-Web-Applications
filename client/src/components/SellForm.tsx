@@ -1,18 +1,22 @@
 import React, {useState} from "react";
 import {Modal} from "react-bootstrap";
 import axios from "axios";
+import {Pages} from "../App";
+axios.defaults.withCredentials = true;
 
 /**
  * The component for the SellForm, shows a sell menu
  * @param handleSellClick - handler for when sell button is pressed.
  * @return A sell menu.
  */
-export function SellForm(props: {handleSellClick : () => void}){
+export function SellForm(props: {
+    handlePage : (page: Pages) => void
+    page: Pages
+}){
     const[productName, setproductName] = useState("");
     const[productDescription, setproductDescription] = useState("");
     const[productCategory, setproductCategory] = useState("");
     const[price, setprice] = useState("")
-    const[sellerId, setsellerId] = useState(1); //Change to automatically take the logged in users id.
 
     const [show, setShow] = useState(true);
 
@@ -22,7 +26,7 @@ export function SellForm(props: {handleSellClick : () => void}){
 
     const handleClose = () => {
         setShow(false);
-        props.handleSellClick()
+        props.handlePage(Pages.PRODUCT)
     };
 
     const handleSellClick = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +62,6 @@ export function SellForm(props: {handleSellClick : () => void}){
             productDescription: productDescription,
             productCategory: productCategory,
             price: Number(price),
-            sellerId: sellerId,
         });
 
         handleClose();
@@ -68,7 +71,7 @@ export function SellForm(props: {handleSellClick : () => void}){
         <div>
             <Modal
                 show={show}
-                onHide={props.handleSellClick}
+                onHide={() => props.handlePage(Pages.PRODUCT)}
                 backdrop="static"
                 keyboard={false}
             >
@@ -77,8 +80,7 @@ export function SellForm(props: {handleSellClick : () => void}){
                     <button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={handleClose}></button>
                 </Modal.Header>
                 <Modal.Body>
-                    <form
-                        onSubmit={handleSellClick}>
+                    <form onSubmit={handleSellClick}>
                         <div className={"login-div"}>
                             <input className={"login-form-input"} type="text" id="productName" name="productName"
                                    placeholder="Title" value={productName} onChange={(e) =>
@@ -88,7 +90,7 @@ export function SellForm(props: {handleSellClick : () => void}){
                         </div>
                         <div className={"login-div"}>
                             <input className={"login-form-input"} type="text" id="description" name="email"
-                                   placeholder="Description" value={productDescription} onChange={(e) => 
+                                   placeholder="Description" value={productDescription} onChange={(e) =>
                                 setproductDescription(e.target.value)
                             }/>
                             {buttonClicked && productDescription.trim() === "" && (<div className="text-danger">Please enter a description</div>)}
@@ -107,7 +109,7 @@ export function SellForm(props: {handleSellClick : () => void}){
                         </div>
                         <div className={"login-div"}>
                             <input className={"login-form-input"} type="text" id="price" name="price"
-                                   placeholder="Price" value={price} onChange={(e) => 
+                                   placeholder="Price" value={price} onChange={(e) =>
                                 setprice(e.target.value)
                             }/>
                             {buttonClicked && price.trim() === "" && (<div className="text-danger">Please enter valid a price</div>)}

@@ -2,20 +2,20 @@ import {Col, Row} from "react-bootstrap";
 import React from "react";
 import {LoginForm} from '../components/LoginForm';
 import {RegisterForm} from '../components/RegisterForm';
-import {Header} from "../components/Header";
 import {Footer} from "../components/Footer";
+import {Header} from "../components/Header";
 import {Pages} from "../App";
 
-export function IndexPage(props: {
+export function RegisterPage(props:{
     page : Pages,
     handlePages : (page : Pages) => void
 })
 {
     const wallpaper = require("../img/wallpaperflare.com_wallpaper.jpg");
-    return(
+    return (
         <div>
             <Header handlePages={props.handlePages} page={props.page}/>
-            <div data-testid="indexPage">
+            <div data-testid="registerPage">
                 <Row>
                     <Col lg={9} xs={0}>
                         <div className={"img-container"}>
@@ -40,7 +40,7 @@ export function IndexPage(props: {
                     </Col>
                     <Col className={"login-container"} lg={3} xs={12}>
                         <div>
-                            <LoginForm handlePages={props.handlePages} page={props.page}/>
+                            <RegisterForm handlePages={props.handlePages} page={props.page}/>
                         </div>
                     </Col>
                 </Row>

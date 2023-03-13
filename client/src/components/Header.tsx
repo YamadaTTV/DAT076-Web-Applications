@@ -1,7 +1,12 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {Pages} from "../App";
+import axios from "axios";
 import {IProduct} from "./Product";
+
+axios.defaults.withCredentials = true;
+
 
 /**
  * Header component, used to show the header.
@@ -10,90 +15,78 @@ import {IProduct} from "./Product";
  * @return Header with different possible actions.
  * @param props
  */
-export function Header(props:{loggedIn:Boolean, inCartPage : Boolean, handleLoginClick : () => void, handleSellClick : () => void, cartItems: IProduct[], toCartPage: () => void}){
+export function Header(props:{
+    handlePages: (page: Pages)=>void,
+    page: Pages
+}){
     const logo = require("../img/murrayPog.png");
 
-    if(props.loggedIn){
-        if(props.inCartPage){
-            return(
-                <Navbar collapseOnSelect expand="lg" className="top">
-                    <img src={logo} width="4%"/>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home" onClick={props.toCartPage}>Home</Nav.Link>
-                            <Nav.Link href="#about_us">About Us</Nav.Link>
-                            <Nav.Link href="#browse">Browse</Nav.Link>
-                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                            <Nav.Link href="#cart">Cart</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            );
-        }
-        // If added to cart
-        else if(props.cartItems.length > 0){
-            return(
-                <Navbar collapseOnSelect expand="lg" className="top">
-                    <img src={logo} width="4%"/>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#about_us">About Us</Nav.Link>
-                            <Nav.Link href="#browse">Browse</Nav.Link>
-                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                            <Nav.Link href="#cart" onClick={props.toCartPage}>Cart</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            );
-        }
-        else {
-            return(
-                <Navbar collapseOnSelect expand="lg" className="top">
-                    <img src={logo} width="4%"/>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#about_us">About Us</Nav.Link>
-                            <Nav.Link href="#browse">Browse</Nav.Link>
-                            <Nav.Link href="#sell" onClick={props.handleSellClick}>Sell</Nav.Link>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link className="loginText" eventKey={2} href="#loginpage" onClick={props.handleLoginClick}>Log out
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            );
+    const [loggedIn, setLoggedIn] = useState<boolean>(false)
+    const [cart, setCart] = useState<IProduct[]>([])
+
+    const checkLoggedIn = async () => {
+        if(props.page != Pages.INDEX && props.page != Pages.REGISTER){
+            setLoggedIn(true)
+        } else {
+            setLoggedIn(false)
         }
     }
-    else {
-        return(
-            <Navbar collapseOnSelect expand="lg" className="top">
-                <img src={logo} width="4%"/>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#about_us">About Us</Nav.Link>
-                        <Nav.Link href="#browse">Browse</Nav.Link>
-                    </Nav>
-                    <Nav>
-                        <Nav.Link className="loginText" eventKey={2} href="#loginpage">Login</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        );
+
+    const checkCart = async () => {
+        let response = await axios.get("http://localhost:8080/cart")
+        if(response.status == 210 || response.status == 204){
+            setCart([])
+            console.log(response.data)
+        } else if(response.status == 200){
+            setCart(response.data)
+        } else {
+            props.handlePages(Pages.ERROR)
+        }
     }
+
+    useEffect( () => {
+        checkLoggedIn()
+        checkCart()
+    },[])
+
+
+    return(
+        <Navbar collapseOnSelect expand="lg" className="top">
+            <img src={logo} width="4%"/>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                    <Nav.Link href="#home" onClick={() => {
+                        if(loggedIn) props.handlePages(Pages.PRODUCT)
+                        else props.handlePages(Pages.INDEX)
+                    }}>Home</Nav.Link>
+                    <Nav.Link href="#about_us" onClick={
+                        () => props.handlePages(Pages.ABOUT)
+                    }>About Us</Nav.Link>
+                    <Nav.Link href="#browse">Browse</Nav.Link>
+                    <Nav.Link href="#sell" onClick={
+                        () => props.handlePages(Pages.SELL)
+                    } hidden={!loggedIn || props.page != Pages.PRODUCT}>Sell</Nav.Link>
+                </Nav>
+                <Nav>
+                    <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
+                        () => props.handlePages(Pages.INDEX)
+                    }> Login </Nav.Link>
+                    <Nav.Link href="#cart" hidden={cart.length==0} onClick={
+                        () => props.handlePages(Pages.CART)
+                    }>Cart</Nav.Link>
+                    <Nav.Link href="#profile" hidden={!loggedIn} onClick={
+                        () => props.handlePages(Pages.PROFILE)
+                    }> Profile </Nav.Link>
+                    <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
+                        async () => {
+                            const response = await axios.delete("http://localhost:8080/user/logout")
+                            console.log(response.data)
+                            props.handlePages(Pages.INDEX)
+                        }
+                    }> Log out </Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+    );
 }
