@@ -1,4 +1,4 @@
-import {Pages} from "../App";
+import App, {Pages} from "../App";
 import { CartPage } from "../pages/CartPage";
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
@@ -35,13 +35,14 @@ test("Call the getCartItems function", async () => {
 });
 */
 
-test("Test1", async () => {
+test("Test to see if CartPage exists", async () => {
     await mockedAxios.get.mockResolvedValue({data:[],status: 204,statusText: "Accepted"})
-   
-    await waitFor(() => {
-        
-    const cartPage = render(<CartPage page={Pages.CART} handlePages={() => {}} ></CartPage>)
-        expect(screen.findByText(/Your Cart/)).toBeInTheDocument()
-    })
-   
+    let cartPage;
+    await act(() => {
+        /* fire events that update state */
+        cartPage = render(<CartPage page={Pages.CART} handlePages={() => {}} ></CartPage>)
+    });
+    // @ts-ignore
+    const titleField = await cartPage.findByText(/Your Cart/i);
+    expect(titleField).toBeInTheDocument();
 })
