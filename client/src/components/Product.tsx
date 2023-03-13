@@ -69,7 +69,7 @@ export function Product (props:  {
                         <button className="btn-primary" onClick={async () => {
                             console.log(props.prod)
                             await axios.post("http://localhost:8080/cart",{product:props.prod})
-                            props.handlePage(props.page)
+                            props.handlePage(Pages.CART)
                         }}>Add to Cart</button>
                     </Col>
                     }

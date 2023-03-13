@@ -62,7 +62,9 @@ export function Header(props:{
                     <Nav.Link href="#about_us" onClick={
                         () => props.handlePages(Pages.ABOUT)
                     }>About Us</Nav.Link>
-                    <Nav.Link href="#browse">Browse</Nav.Link>
+                    <Nav.Link href="#browse" onClick={
+                        () => props.handlePages(Pages.PRODUCT)
+                    }>Browse</Nav.Link>
                     <Nav.Link href="#sell" onClick={
                         () => props.handlePages(Pages.SELL)
                     } hidden={!loggedIn || props.page != Pages.PRODUCT}>Sell</Nav.Link>
