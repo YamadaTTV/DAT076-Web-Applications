@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Pages} from "../App";
 import axios from "axios";
 import {IProduct} from "./Product";
-
+import logo from '../img/logo.svg';
 axios.defaults.withCredentials = true;
 
 
@@ -19,7 +19,6 @@ export function Header(props:{
     handlePages: (page: Pages)=>void,
     page: Pages
 }){
-    const logo = require("../img/murrayPog.png");
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
     const [cart, setCart] = useState<IProduct[]>([])
