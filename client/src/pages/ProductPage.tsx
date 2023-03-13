@@ -128,7 +128,7 @@ export function ProductPage(props:{
                                     {products.map((product) =>
                                         <Col xs={4}>
                                             {/*<Product prod={product} key={product.key} handleCart={props.handleCart} handleDeleteClick={props.handleDeleteClick}> */}
-                                            <Product prod={product} key={product.key} productHandler={productHandler}>
+                                            <Product prod={product} key={"p"+product.key} productHandler={productHandler}>
                                             </Product>
                                         </Col>)
                                     }

@@ -24,6 +24,8 @@ export interface IProductService {
     //Get all products listed by a given user
     getUserListings(user: User) : Promise<Product[] | undefined>;
 
+    getBoughtProducts(user: User) : Promise<Product[]>
+
     getFilteredProducts() : Promise<Array<Product>>;
 
     addCategoryMarked(category: string): Promise<string[]>;
@@ -109,6 +111,10 @@ class ProductService implements IProductService {
 
     async getUserListings(user: User) : Promise<Product[] | undefined> {
         return this.products.filter(product => product.sellerId == user.id)
+    }
+
+    async getBoughtProducts(user: User) : Promise<Product[]> {
+        return this.products.filter(product => product.buyerId == user.id)
     }
 
     async addCategoryMarked(category :string){

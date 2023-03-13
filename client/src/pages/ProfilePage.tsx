@@ -12,10 +12,26 @@ export function ProfilePage(props: {
     page: Pages
 }){
     const [sellerListings,setSellerListings] = useState<IProduct[]>([])
+    const [boughtItems,setBoughtItems] = useState<IProduct[]>([])
 
     const updateSellerListings = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/sellerListings")
+            if (response.status == 400){
+                console.log(response.data)
+                return
+            }
+            else if(response.status == 200 && !(typeof response.data == "string")){
+                setSellerListings(response.data)
+            }
+        } catch (e : any){
+            console.log(e)
+        }
+    }
+
+    const updateBoughtItems = async () => {
+        try{
+            const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/boughtProducts")
             if (response.status == 400){
                 console.log(response.data)
                 return
@@ -34,16 +50,17 @@ export function ProfilePage(props: {
 
     return <div>
         <Header handlePages={props.handlePages} page={props.page}/>
+        <h3>Profile</h3>
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="ProfilePage">
             <Row xs={12}>
                 <Col xs={10}>
                     <div style={{marginRight: "10px"}}>
-                        <h3>Profile</h3>
+                        <h4>Your listings:</h4>
                         <div style={{marginRight:"25px"}}>
                             <Row>
                                 {sellerListings.map((product) =>
                                     <Col xs={4}>
-                                        <Product prod={product} key={product.key} productHandler={updateSellerListings}>
+                                        <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings}>
                                         </Product>
                                     </Col>)
                                 }

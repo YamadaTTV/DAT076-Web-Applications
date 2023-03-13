@@ -157,6 +157,22 @@ productRouter.get("/sellerListings", async (
     }
 })
 
+productRouter.get("/boughtProducts", async (
+    req: requestTypes.get,
+    res: Response<Product[] | string>
+) => {
+    try{
+        if(req.session.user == null){
+            res.status(400).send("User not logged in")
+            return
+        }
+        const products = await productService.getBoughtProducts(req.session.user)
+        res.status(200).send(products);
+    } catch(e: any) {
+        res.status(500).send(e.message)
+    }
+})
+
 productRouter.get("/filterProducts/", async (
     req: Request<{categoriesArray:string[]}, {}, {}>,
     res: Response<Array<Product> | String>
