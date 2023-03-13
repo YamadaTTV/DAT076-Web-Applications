@@ -34,7 +34,10 @@ export function Product (props:  {
 
     return (
         <div>
-            {displayModal && <UpdateForm handlePage={props.handlePage} page={props.page} product={props.prod}/>}
+            {displayModal && <UpdateForm handlePage={props.handlePage} page={props.page} product={props.prod} updateHandler={() => {
+                props.productHandler();
+                setDisplayModal(false);
+            }}/>}
             <Card style={{ width: '18rem'}} key={props.prod.key}>
             <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
             <Card.Body>
@@ -66,6 +69,7 @@ export function Product (props:  {
                         <button className="btn-primary" onClick={async () => {
                             console.log(props.prod)
                             await axios.post("http://localhost:8080/cart",{product:props.prod})
+                            props.handlePage(props.page)
                         }}>Add to Cart</button>
                     </Col>
                     }

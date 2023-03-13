@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Button, Card, Col, Row} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import axios from "axios";
-import {Product, IProduct} from "../components/Product";
+import {IProduct} from "../components/Product";
 import {AddedProduct} from "../components/AddedProduct";
 import {Pages} from "../App";
 import {Header} from "../components/Header";
-import {F} from "msw/lib/glossary-de6278a9";
 import {Footer} from "../components/Footer";
+
 //import {set} from "msw";
 
 /** Used to get all the products from the server and display them.
@@ -26,12 +26,13 @@ export function CartPage(props:{
 
         for (const product of cartItems) {
             console.log(product);
-            let response = await axios.put("http://localhost:8080/product/buy", {key : product.key, buyerId: 1})
+            let response = await axios.put("http://localhost:8080/product/buy", {key : product.key})
             if(response.status == 400){
                 console.log("Buying failed");
             } else if(response.status == 200){
                 console.log("Buying succeeded");
-                //props.handleBuy();
+                await axios.delete("http://localhost:8080/cart/empty")
+                props.handlePages(Pages.PROFILE)
             }
         }
 
@@ -44,6 +45,7 @@ export function CartPage(props:{
         } else if (response.status == 204 || response.status == 210){
             setCartItems([])
             console.log(response.data)
+            props.handlePages(Pages.PRODUCT)
         } //else props.handlePages(Pages.ERROR)
     }
 
@@ -58,7 +60,7 @@ export function CartPage(props:{
             <Row>
                 {cartItems.map((product) => (
                     <Col xs={4}>
-                        <AddedProduct prod={product} key={product.key}>{}</AddedProduct>
+                        <AddedProduct prod={product} key={product.key} updateHandler={getCartItems}>{}</AddedProduct>
                     </Col>
                 ))}
             </Row>

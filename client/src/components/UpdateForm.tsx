@@ -12,7 +12,8 @@ axios.defaults.withCredentials = true;
 export function UpdateForm(props: {
     handlePage : (page: Pages) => void,
     page: Pages,
-    product: IProduct
+    product: IProduct,
+    updateHandler: () => void
 }){
     const[productName, setproductName] = useState(props.product.productName);
     const[productDescription, setproductDescription] = useState(props.product.productDescription);
@@ -65,7 +66,7 @@ export function UpdateForm(props: {
             productCategory: productCategory,
             price: Number(price),
         });
-
+        props.updateHandler()
         handleClose();
     }
 

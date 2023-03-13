@@ -37,7 +37,7 @@ export function ProfilePage(props: {
                 return
             }
             else if(response.status == 200 && !(typeof response.data == "string")){
-                setSellerListings(response.data)
+                setBoughtItems(response.data)
             }
         } catch (e : any){
             console.log(e)
@@ -46,6 +46,7 @@ export function ProfilePage(props: {
 
     useEffect(() =>{
         updateSellerListings();
+        updateBoughtItems();
     }, []);
 
     return <div>
@@ -69,7 +70,23 @@ export function ProfilePage(props: {
                     </div>
                 </Col>
             </Row>
+            <Row xs={12}>
+                <Col xs={10}>
+                    <div style={{marginRight: "10px"}}>
+                        <h4>Bought items:</h4>
+                        <div style={{marginRight:"25px"}}>
+                            <Row>
+                                {boughtItems.map((product) =>
+                                    <Col xs={4}>
+                                        <Product prod={product} key={"bi"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
+                                        </Product>
+                                    </Col>)
+                                }
+                            </Row>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </div>
-        <Footer/>
     </div>
 }

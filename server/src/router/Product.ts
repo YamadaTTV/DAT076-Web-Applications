@@ -84,12 +84,12 @@ productRouter.delete("/", async(
 });
 
 productRouter.put("/buy", async (
-    req: Request<{}, {},{key: number, buyerId : number}>,
+    req: requestTypes.buyProductRequest,
     res: Response<Product | string>
 ) => {
     try {
         let key = req.body.key;
-        let buyerId = req.body.buyerId;
+        let buyerId = req.session.user?.id;
 
         if (typeof (key) !== "number" || typeof (buyerId) !== "number") {
             res.status(400).send(`Bad PUT call to ${req.originalUrl} -- key has type ${typeof(key)}, buyerId has type ${typeof(buyerId)}`);
@@ -113,27 +113,6 @@ productRouter.put("/buy", async (
     }
 });
 
-/*
-PUT /update - Updates the fields of a product.
-	Body of request:
-		{
-			“productId” : number
-			“productName” : string | undefined
-			"productDescription: string | undefined
-			“productCategory” : string | undefined
-			“price” : number | undefined
-			“sellerId” : User.id : number | undefined
-		}
-	Status codes:
-		200: Successful request - Product updated
-		210: Successful request - Product does not exist
-		211: Successful request - User does not exist
-		212: Successful request - No data to update the product
-		213: Successful request - No product with id
-		500: Error occurred
-
-
- */
 
 productRouter.put("/update", async(
     req: requestTypes.productUpdateRequest,

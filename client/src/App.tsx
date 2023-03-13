@@ -9,7 +9,7 @@ import {ProductPage} from "./pages/ProductPage";
 import {SellPage} from "./pages/SellPage";
 import {ProfilePage} from "./pages/ProfilePage";
 import {CartPage} from "./pages/CartPage";
-import axios from "axios";
+
 
 export enum Pages {
     INDEX,
@@ -68,9 +68,6 @@ function App() {
     async function handlePages(page: Pages){
         setPage(page)
     }
-
-
-    return <p>Error occurred</p>
 }
 
 export default App;
