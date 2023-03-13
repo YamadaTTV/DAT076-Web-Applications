@@ -53,7 +53,7 @@ export function CartPage(props:{
 
     return(
         <div>
-            <Header handlePages={props.handlePages} page={props.page}/>
+            {/*<Header handlePages={props.handlePages} page={props.page}/>*/}
             <h1>Your Cart</h1>
             <Row>
                 {cartItems.map((product) => (
