@@ -11,9 +11,6 @@ import {ProfilePage} from "./pages/ProfilePage";
 import {CartPage} from "./pages/CartPage";
 import axios from "axios";
 
-
-
-
 export enum Pages {
     INDEX,
     REGISTER,
@@ -67,8 +64,6 @@ function App() {
                 page = {page}
             />
     }
-
-
 
     async function handlePages(page: Pages){
         setPage(page)

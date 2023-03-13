@@ -13,7 +13,8 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
     const[username, setusername] = useState("");
     const[email, setemail] = useState("");
     const[password, setpassword] = useState("");
-    //const[repeatPassword, setrepeatPassword] = useState("");
+    const [registerError, setRegisterError] = useState("");
+
     return(
         <div>
             <div className={"login-container"}>
@@ -23,23 +24,43 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                       onSubmit={
                           async e => {
                               e.preventDefault();
-                              await axios.post("http://localhost:8080/user",{ username:username,password:password, email:email})
-                              props.handlePages(Pages.INDEX)
+                              setRegisterError("");
+
+                              // Check email format
+                              const emailRegex = /^\S+@\S+\.\S+$/;
+                              if(!emailRegex.test(email)){
+                                  setRegisterError("Invalid email format");
+                                  return;
+                              }
+
+                              if(!password){
+                                  setRegisterError("Please enter a password");
+                                  return;
+                              }
+
+                              const response = await axios.post("http://localhost:8080/user", { username: username, password: password, email: email });
+                              if(response.status == 210){
+                                  setRegisterError("Username or email already exists")
+                                  return;
+                              } else if(response.status == 201){
+                                  props.handlePages(Pages.INDEX)
+                                  setRegisterError("")
+                              } else {
+                                  return;
+                              }
                           }
                       }>
                     <div className={"login-div"}>
                         <input className={"login-form-input"} type="text" id="username" name="username"
-                               placeholder="Username" onChange={e => {
+                               placeholder="Username" value={username} onChange={e => {
                             setusername(e.target.value);
-                        }}>
-                        </input>
+                        }}/>
                     </div>
                     <div className={"login-div"}>
                         <input className={"login-form-input"} type="text" id="email" name="email"
-                               placeholder="Email" onChange={e => {
+                               placeholder="Email" value={email} onChange={e => {
                             setemail(e.target.value);
-                        }}>
-                        </input>
+                        }}/>
                     </div>
                     <div className={"login-div"}>
                         <input className={"login-form-input"} type="password" id="password" name="password"
@@ -48,6 +69,7 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                         }}>
                         </input>
                     </div>
+                    {registerError && <p style={{color: "red"}}>{registerError}</p>}
                     <div>
                         <input className={"btn-primary"} type="submit" value="Register" id="submitBtn"></input>
                     </div>

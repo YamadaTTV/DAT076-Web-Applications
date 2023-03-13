@@ -11,6 +11,7 @@ axios.defaults.withCredentials = true;
 export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}) {
     const[username, setusername] = useState("");
     const[password, setpassword] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
     return (
         <div data-testid="loginForm">
             <div className={"login-container"}>
@@ -18,20 +19,19 @@ export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}
                 <form className={"login-form"} onSubmit={
                     async e => {
                         e.preventDefault();
-
-                            const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password})
-                            if(response !== undefined){
-                                    if(response.status == 202){
-                                        console.log(response.data);
-                                        props.handlePages(Pages.PRODUCT);
-                                    } else if(response.status == 203){
-                                        console.log(response.data);
-                                    }
-                                    console.log(response);
+                        try {
+                            const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password});
+                            console.log(response);
+                            if(response.status == 202){
+                                console.log("Success");
+                                props.handlePages(Pages.PRODUCT);
+                            } else if(response.status == 203){
+                                console.log("FAIL");
+                                setErrorMessage("Wrong username or password");
                             }
-                            else{
-                                console.log("No response received");
-                            }
+                        } catch (error){
+                            console.log(error);
+                        }
                     }
                 }>
                     <div className={"login-div"}>
@@ -45,6 +45,9 @@ export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}
                                placeholder="Password" onChange={e => {
                             setpassword(e.target.value);
                         }}></input>
+                    </div>
+                    <div>
+                        {errorMessage && <p style={{ color: "red"}}>{errorMessage}</p>}
                     </div>
                     <div>
                         <input className={"btn-primary"} type="submit" value="Login" id="submitBtn" data-testid="loginButton"></input>

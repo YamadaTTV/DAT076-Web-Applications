@@ -32,8 +32,12 @@ userRouter.post("/", async (
             res.status(400).send(`Bad PUT call to ${req.originalUrl} ---username has type ${typeof(username)}, email has type ${typeof(email)} and password has type ${typeof(password)}`);
             return;
         }
-        const newUser = await userService.addUser(username,email,password);
-        res.status(201).send(newUser);
+        const response = await userService.addUser(username,email,password);
+        if(response){
+            res.status(201).send("User created");
+        } else {
+            res.status(210).send("Failed to create user");
+        }
     } catch (e: any) {
         res.status(500).send(e.message);
     }
@@ -74,7 +78,6 @@ userRouter.post("/login", async(
         const loginUser = await userService.loginUser(username, password);
         if(loginUser){
             req.session.user = await userService.getLoggedInUser(username, password)
-            console.log("Test: " +req.session.user)
             res.status(202).send("Successfully logged in " + loginUser.valueOf());
         }
         else{
