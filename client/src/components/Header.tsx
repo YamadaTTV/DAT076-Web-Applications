@@ -24,11 +24,10 @@ export function Header(props:{
     const [cart, setCart] = useState<IProduct[]>([])
 
     const checkLoggedIn = async () => {
-        if(props.page != Pages.INDEX && props.page != Pages.REGISTER){
-            setLoggedIn(true)
-        } else {
-            setLoggedIn(false)
-        }
+        const response = await axios.get("http://localhost:8080/user/loggedInUser")
+        if(response.status == 210) setLoggedIn(false)
+        else if (response.status == 200) setLoggedIn(true)
+        else setLoggedIn(false)
     }
 
     const checkCart = async () => {
