@@ -46,7 +46,7 @@ productRouter.post("/", async (
 
 
         if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number") {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof (productName)}, productDescription has type ${typeof (productDescription)}, productCategory has type ${typeof (productCategory)}, price has type ${typeof (price)}`);
+            res.status(400).send(`Bad POST call to ${req.originalUrl} -- productName has type ${typeof (productName)}, productDescription has type ${typeof (productDescription)}, productCategory has type ${typeof (productCategory)}, price has type ${typeof (price)}`);
             return
         }
         if(req.session.user == null){
@@ -72,10 +72,11 @@ productRouter.delete("/", async(
         let key = req.body.key;
 
         if (typeof(key) !== "number") {
-            res.status(403).send(`Bad PUT call to ${req.originalUrl} ---key has type ${typeof(key)}`);
+            res.status(400).send(`Bad DELETE call to ${req.originalUrl} ---key has type ${typeof(key)}`);
             return;
         }
         const response = await productService.deleteProduct(key);
+        //Set to 200
         res.status(202).send("Successfully deleted product " + response.valueOf());
 
     }catch (e: any) {
@@ -97,11 +98,12 @@ productRouter.put("/buy", async (
         }
 
         if (!await productService.productExist(key)) {
-            res.status(401).send("Product does not exit");
+            res.status(400).send("Product does not exit");
             return
         }
         if (!await userService.userExists(buyerId)) {
-            res.status(402).send("User does not exit");
+            //Set to 400
+            res.status(401).send("User does not exit");
             return;
         }
 
@@ -112,6 +114,7 @@ productRouter.put("/buy", async (
         res.status(500).send(e.message);
     }
 });
+
 
 
 productRouter.put("/update", async(
@@ -138,6 +141,7 @@ productRouter.get("/sellerListings", async (
 ) => {
     try{
         if(req.session.user == null){
+            //Set to 401
             res.status(400).send("User not logged in")
             return
         }
@@ -154,6 +158,7 @@ productRouter.get("/boughtProducts", async (
 ) => {
     try{
         if(req.session.user == null){
+            //Set to 401
             res.status(400).send("User not logged in")
             return
         }
@@ -193,6 +198,7 @@ productRouter.put("/filterProducts/addCat", async (
             res.status(200).send(response.toString());
         }
         else{
+            //Set to 400
             res.status(210).send("Could not add category")
         }
     } catch (e: any) {
@@ -217,6 +223,7 @@ productRouter.put("/filterProducts/removeCat", async (
             res.status(200).send(response.toString());
         }
         else{
+            //Set to 400
             res.status(210).send("Could not remove category")
         }
     } catch (e: any) {
