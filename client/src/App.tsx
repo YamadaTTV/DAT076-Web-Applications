@@ -108,7 +108,7 @@ function App() {
 
     useEffect(() => {
         updateProducts();
-    }, [category]);
+    }, []);
 
     if (sellAction) {
         return (
