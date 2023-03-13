@@ -25,3 +25,17 @@ app.use(express.json());
 app.use("/user", userRouter)
 app.use("/product", productRouter)
 app.use("/cart",cartRouter)
+
+/*
+import * as path from "path";
+
+app.use(express.static(path.join(__dirname, '../../client/build')));
+
+
+app.get('/*', (req : express.Request, res : express.Response) => {
+
+    res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+
+});
+
+ */
