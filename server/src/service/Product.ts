@@ -22,7 +22,7 @@ export interface IProductService {
     productExist(key: number) : Promise<Boolean>;
 
     //Get all products listed by a given user
-    getUserListings(user: User) : Promise<Product[] | undefined>;
+    getUserListings(user: User) : Promise<Product[]>;
 
     getBoughtProducts(user: User) : Promise<Product[]>
 
@@ -109,7 +109,7 @@ class ProductService implements IProductService {
         else return true
     }
 
-    async getUserListings(user: User) : Promise<Product[] | undefined> {
+    async getUserListings(user: User) : Promise<Product[]> {
         return this.products.filter(product => product.sellerId == user.id)
     }
 
