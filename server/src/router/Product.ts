@@ -113,29 +113,41 @@ productRouter.put("/buy", async (
     }
 });
 
-productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Response<string>) => {
+/*
+PUT /update - Updates the fields of a product.
+	Body of request:
+		{
+			“productId” : number
+			“productName” : string | undefined
+			"productDescription: string | undefined
+			“productCategory” : string | undefined
+			“price” : number | undefined
+			“sellerId” : User.id : number | undefined
+		}
+	Status codes:
+		200: Successful request - Product updated
+		210: Successful request - Product does not exist
+		211: Successful request - User does not exist
+		212: Successful request - No data to update the product
+		213: Successful request - No product with id
+		500: Error occurred
+
+
+ */
+
+productRouter.put("/update", async(
+    req: requestTypes.productUpdateRequest,
+    res: Response<string>
+) => {
     try{
-        if(!req.params.id){
-            res.status(210).send(`Bad PUT call to ${req.originalUrl} --- Missing id param`);
-            return;
+        if(isNaN(req.body.key)){
+            res.status(401).send("Type error - key need to have type: number")
+            return
+        } else {
+            const response = await productService.updateProduct(req.body.key,req.body.productName,req.body.productDescription,req.body.productCategory,req.body.price,req.session.user?.id)
+            if(response) res.status(200).send("Product updated.")
+            else res.status(401).send(`Product with key: ${req.body.key} does not exist`)
         }
-        const id = parseInt(req.params.id, 10);
-        if(!id){
-            res.status(211).send(`Bad PUT call to ${req.originalUrl} --- id must be a number`);
-            return;
-        }
-        //???
-        const product: Product = req.body;
-        if(!product){
-            res.status(212).send(`Bad PUT call to ${req.originalUrl} --- No data to update the product with`);
-            return;
-        }
-        const completed = await productService.updateProduct(id, product.productName, product.productDescription, product.productCategory, product.price, product.sellerId);
-        if(!completed){
-            res.status(213).send(`Bad PUT call to ${req.originalUrl} --- No product with id ${id}`);
-            return;
-        }
-        res.status(200).send("Product updated");
     } catch(e: any){
         res.status(500).send(e.message);
     }

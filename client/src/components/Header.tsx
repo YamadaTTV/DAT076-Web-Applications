@@ -80,7 +80,7 @@ export function Header(props:{
                     }> Profile </Nav.Link>
                     <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
                         async () => {
-                            const response = await axios.delete("http://localhost:8080/user/logout")
+                            const response = await axios.post("http://localhost:8080/user/logout")
                             console.log(response.data)
                             props.handlePages(Pages.INDEX)
                         }
