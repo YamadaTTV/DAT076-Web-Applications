@@ -9,6 +9,7 @@ import {ProductPage} from "./pages/ProductPage";
 import {SellPage} from "./pages/SellPage";
 import {ProfilePage} from "./pages/ProfilePage";
 import {CartPage} from "./pages/CartPage";
+import {AddedToCartPage} from "./pages/AddedToCartPage";
 
 
 export enum Pages {
@@ -19,7 +20,8 @@ export enum Pages {
     PROFILE,
     ABOUT,
     ERROR,
-    CART
+    CART,
+    ADDED
 }
 
 
@@ -60,6 +62,11 @@ function App() {
             return <h1>An error has occurred</h1>
         case Pages.CART:
             return <CartPage
+                handlePages = {handlePages}
+                page = {page}
+            />
+        case Pages.ADDED:
+            return <AddedToCartPage
                 handlePages = {handlePages}
                 page = {page}
             />
