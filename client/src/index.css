@@ -146,6 +146,21 @@ code {
   border-width: 0px;
 }
 
+.btn-sell{
+  background-color: #888888;
+  color: white;
+  border-radius: 5px;
+  border-width: 10px;
+  border-color: #b41414;
+  height: 50px;
+  width:100%;
+}
+
+.btn-sell:enabled{
+  background-color: #b41414;
+  border-width: 0px;
+}
+
 .btn-secondary{
   background-color: #5d9667;
   color: white;
