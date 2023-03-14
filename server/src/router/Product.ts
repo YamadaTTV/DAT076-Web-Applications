@@ -10,9 +10,17 @@ const productService = makeProductService();
 
 export const productRouter = express.Router();
 
+/**
+ * GET call to /product to get a list of all products available. Mostly used for debugging reasons.
+ * req: requestTypes.get - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<Array<Product>> - Returns an array containing all products.
+ * Status codes:
+ *      200: Successful request - Returned array with all products.
+ *      500: Error - An error occurred
+ */
 productRouter.get("/", async (
     req: requestTypes.get,
-    res: Response<Array<Product> | String>
+    res: Response<Array<Product>>
 ) => {
     try {
         const tasks = await productService.getProducts();
@@ -22,6 +30,17 @@ productRouter.get("/", async (
     }
 });
 
+/**
+ * POST call to /product to add a product.
+ * req: requestTypes.productCreationRequest - An interface of requestType [see API configuration for the required arguments].
+ * res:  Response<Product | string>- Returns the product added or an error message explaining what went wrong.
+ * Status codes:
+ *      222: Successful request - Returned array with all products.
+ *      280: Error - No user logged in
+ *      281: Error - User with sellerId does not exist
+ *      400: Error - Bad POST Call - Type error
+ *      500: Error - An error occurred
+ */
 productRouter.post("/", async (
     req: requestTypes.productCreationRequest,
     res: Response<Product | string>
@@ -52,6 +71,15 @@ productRouter.post("/", async (
     }
 });
 
+/**
+ * DELETE call to /product to delete a product.
+ * req: key - The key (productID) of the product to be deleted.
+ * res: Response<String> - Returns a successful message or an error message explaining what went wrong.
+ * Status codes:
+ *      223: Successful request - Returned array with all products.
+ *      400: Error - Bad POST Call - Type error
+ *      500: Error - An error occurred
+ */
 productRouter.delete("/", async(
     req: Request<{}, {}, {key : number}>,
     res: Response<String>
@@ -71,6 +99,14 @@ productRouter.delete("/", async(
     }
 });
 
+/**
+ * GET call to /product/available to get all available product.
+ * req: requestTypes.get - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<Array<Product> | String> - Returns an array containing all available products or an error message explaining what went wrong.
+ * Status codes:
+ *      224: Successful request - Returned array with all products.
+ *      500: Error - An error occurred
+ */
 productRouter.get("/available/", async (
     req: requestTypes.get,
     res: Response<Array<Product> | String>
@@ -83,6 +119,17 @@ productRouter.get("/available/", async (
     }
 });
 
+/**
+ * PUT call to /product/buy to buy a product.
+ * req: requestTypes.buyProductRequest - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<Product | string> - Returns the product that was bought or an error message explaining what went wrong.
+ * Status codes:
+ *      225: Successful request - Returned the bought product object.
+ *      282: Error - User does not exist
+ *      283: Error - Product does not exist
+ *      400: Error - Type error
+ *      500: Error - An error occurred
+ */
 productRouter.put("/buy", async (
     req: requestTypes.buyProductRequest,
     res: Response<Product | string>
@@ -97,12 +144,12 @@ productRouter.put("/buy", async (
         }
 
         if (!await productService.productExist(key)) {
-            res.status(283).send("Product does not exit");
+            res.status(283).send("Product does not exist");
             return
         }
         if (!await userService.userExists(buyerId)) {
             //Set to 400
-            res.status(282).send("User does not exit");
+            res.status(282).send("User does not exist");
             return;
         }
 
@@ -114,8 +161,16 @@ productRouter.put("/buy", async (
     }
 });
 
-
-
+/**
+ * PUT call to /product/update to buy a product.
+ * req: requestTypes.productUpdateRequest - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<string> - Returns a successful message or an error message explaining what went wrong.
+ * Status codes:
+ *      226: Successful request - Product updated
+ *      283: Error - Product does not exist
+ *      400: Error - Type error
+ *      500: Error - An error occurred
+ */
 productRouter.put("/update", async(
     req: requestTypes.productUpdateRequest,
     res: Response<string>
@@ -134,6 +189,15 @@ productRouter.put("/update", async(
     }
 })
 
+/**
+ * GET call to /product/sellerListings to get all the users sold products.
+ * req: requestTypes.get - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<Product[] | string> - Returns an array with all of the users sold products or an error message explaining what went wrong.
+ * Status codes:
+ *      227: Successful request - Returned an array with all of the users sold products
+ *      280: Error - User not logged in
+ *      500: Error - An error occurred
+ */
 productRouter.get("/sellerListings", async (
     req: requestTypes.get,
     res: Response<Product[] | string>
@@ -150,6 +214,15 @@ productRouter.get("/sellerListings", async (
     }
 })
 
+/**
+ * GET call to /product/boughtProduct to get all the users bought products.
+ * req: requestTypes.get - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<Product[] | string> - Returns an array with all of the users bought products or an error message explaining what went wrong.
+ * Status codes:
+ *      228: Successful request - Returned an array with all of the users bought products
+ *      280: Error - User not logged in
+ *      500: Error - An error occurred
+ */
 productRouter.get("/boughtProducts", async (
     req: requestTypes.get,
     res: Response<Product[] | string>
@@ -166,9 +239,17 @@ productRouter.get("/boughtProducts", async (
     }
 })
 
+/**
+ * GET call to /product/filterProducts to get a list with all the filtered products
+ * req: None
+ * res: Response<Array<Product> | String> - Returns an array with all of the filtered products
+ * Status codes:
+ *      229: Successful request - Returned an array with all of the filtered products
+ *      500: Error - An error occurred
+ */
 productRouter.get("/filterProducts/", async (
-    req: Request<{categoriesArray:string[]}, {}, {}>,
-    res: Response<Array<Product> | String>
+    req: Request<{}, {}, {}>,
+    res: Response<Array<Product>>
 ) => {
     try {
         const products = await productService.getFilteredProducts();
@@ -178,6 +259,17 @@ productRouter.get("/filterProducts/", async (
     }
 });
 
+/**
+ * GET call to /product/filterProducts/addCat to add a category to the filter
+ * req: category - A string of the category name you want to add to the filter.
+ * res: Response<Array<Product> | String> - Returns an array with all categories that is currently filtered on
+ *                                          or an error message explaining the error
+ * Status codes:
+ *      230: Successful request - Returned an array with all categories that is currently filtered
+ *      284: Error - Could not add category
+ *      400: Error - Type error
+ *      500: Error - An error occurred
+ */
 productRouter.put("/filterProducts/addCat", async (
     req: Request<{}, {}, {category:string}>,
     res: Response<Array<Product> | String>
@@ -202,6 +294,17 @@ productRouter.put("/filterProducts/addCat", async (
     }
 });
 
+/**
+ * GET call to /product/filterProducts/removeCat to remove a category from the filter
+ * req: category - A string of the category name you want to add to the filter.
+ * res: Response<Array<Product> | String> - Returns an array with all categories that is currently filtered on
+ *                                          or an error message explaining the error
+ * Status codes:
+ *      231: Successful request - Returned an array with all categories that is currently filtered
+ *      285: Error - Could not add category
+ *      400: Error - Type error
+ *      500: Error - An error occurred
+ */
 productRouter.put("/filterProducts/removeCat", async (
     req: Request<{}, {}, {category:string}>,
     res: Response<Array<Product> | String>

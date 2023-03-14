@@ -7,6 +7,14 @@ import * as responseTypes from "../responseTypes"
 export const userService = makeUserService();
 export const userRouter = express.Router();
 
+/**
+ * GET call to /user to get a list of all users. Only used for debugging.
+ * req: requestTypes.get - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<Array<User>> - Returns an array with all users
+ * Status codes:
+ *      200: Successful request - Returned an array with all users
+ *      500: Error - An error occurred
+ */
 userRouter.get("/", async (
     req: requestTypes.get,
     res: Response<Array<User> | String>
@@ -19,6 +27,14 @@ userRouter.get("/", async (
     }
 });
 
+/**
+ * POST call to /user to add a user.
+ * req: requestTypes.userRegisterRequest - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<string> - Returns
+ * Status codes:
+ *      200: Successful request - Returned an array with all users
+ *      500: Error - An error occurred
+ */
 userRouter.post("/", async (
     req: requestTypes.userRegisterRequest,
     res: Response<User | string>
