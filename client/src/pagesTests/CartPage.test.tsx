@@ -11,112 +11,73 @@ let container: HTMLElement | null = null;
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const mockProducts: IProduct[] = [
-    {
-        key: 1,
-        productName: "Product 1",
-        productDescription: "Description 1",
-        productCategory: "Category 1",
-        price: 10,
-        sellerId: 1,
-    },
-    {
-        key: 2,
-        productName: "Product 1",
-        productDescription: "Description 2",
-        productCategory: "Category 2",
-        price: 20,
-        sellerId: 2,
-    },
-];
+test("Test to see if cart items are displayed", async () => {
+  const mockCartItems = [
+    { "key": 1, "productName": "Product 1", "productDescription" : "Description 1", "productCategory" : "Category 1", "price" : 10, "sellerId": 1},
+    { "key": 2, "productName": "Product 2", "productDescription" : "Description 2", "productCategory" : "Category 2", "price" : 20, "sellerId": 2},
+    { "key": 3, "productName": "Product 3", "productDescription" : "Description 3", "productCategory" : "Category 3", "price" : 30, "sellerId": 3},
+  ];
 
-test("handles buying success", async () => {
-    mockedAxios.get.mockResolvedValue({
-      data: mockProducts,
-      status: 200,
-      statusText: "OK",
-    });
-  
-    const putMock = jest.spyOn(mockedAxios, "put");
-  
-    putMock.mockImplementation((url, data) => {
-      return Promise.resolve({
-        data: null,
-        status: 200,
-        statusText: "OK",
-      });
-    });
-  
-    await act(async () => {
-      render(<CartPage page={Pages.CART} handlePages={() => {}} />);
-    });
-  
-    const buyButton = screen.getByText("Buy");
-    act(() => {
-      buyButton.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-    });
-  
-    expect(putMock).toHaveBeenCalledTimes(2);
-  
-    const product1 = mockProducts[0];
-    const product2 = mockProducts[1];
-  
-    expect(putMock).toHaveBeenCalledWith(
-      "http://localhost:8080/product/buy",
-      expect.objectContaining({
-        key: product1.key,
-        buyerId: 1,
-      })
-    );
-  
-    expect(putMock).toHaveBeenCalledWith(
-      "http://localhost:8080/product/buy",
-      expect.objectContaining({
-        key: product2.key,
-        buyerId: 1,
-      })
-    );
-  
-    const successLogs = screen.getAllByText("Buying succeeded");
-    expect(successLogs.length).toBe(2);
-  
-    const updatedProducts = [
-      { ...product1, buyer: 1 },
-      { ...product2, buyer: 1 },
-    ];
-  
-    const addedProducts = screen.getAllByTestId("added-product");
-    addedProducts.forEach((addedProduct, index) => {
-      const productName = updatedProducts[index].productName;
-      const buyerName = "You";
-      expect(addedProduct).toHaveTextContent(productName);
-      expect(addedProduct).toHaveTextContent(buyerName);
-    });
+  await mockedAxios.get.mockResolvedValue({data: mockCartItems, status: 200});
+
+  let cartPage;
+  await act(() => {
+    cartPage = render(<CartPage page={Pages.CART} handlePages={() => {}}/>);
   });
+  // @ts-ignore
+  const product = await cartPage.findByText(/Product 1/i);
+  expect(product).toBeInTheDocument();
+});
+
+test("Can't click buy button when already buying", async () => {
+  const mockCartItems = [
+    { "key": 1, "productName": "Product 1", "productDescription" : "Description 1", "productCategory" : "Category 1", "price" : 10, "sellerId": 1},
+    { "key": 2, "productName": "Product 2", "productDescription" : "Description 2", "productCategory" : "Category 2", "price" : 20, "sellerId": 2},
+    { "key": 3, "productName": "Product 3", "productDescription" : "Description 3", "productCategory" : "Category 3", "price" : 30, "sellerId": 3},
+  ];
+
+  await mockedAxios.get.mockResolvedValue({data: mockCartItems, status: 200});
+  await mockedAxios.put.mockResolvedValue({data: mockCartItems, status: 200});
+  // @ts-ignore
+  let cartPage;
+  await act(() => {
+    cartPage = render(<CartPage page={Pages.CART} handlePages={() => {}}/>);
+  });
+  // @ts-ignore
+  const button = cartPage.getByText("Buy");
+  expect(button.disabled).toBeFalsy();
   
+  await act(async() => {
+    // @ts-ignore
+    cartPage.getByText("Buy").click();
+  });
 
-/*
-beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
+  expect(button.disabled).toBeTruthy();
 });
 
-afterEach(() => {
-    if(container){
-        unmountComponentAtNode(container);
-        container.remove();
-        container = null;
-    }
-});
+test("Test if buyProducts get called when clicking the buy button", async() => {
+  const mockCartItems = [
+    { "key": 1, "productName": "Product 1", "productDescription" : "Description 1", "productCategory" : "Category 1", "price" : 10, "sellerId": 1},
+    { "key": 2, "productName": "Product 2", "productDescription" : "Description 2", "productCategory" : "Category 2", "price" : 20, "sellerId": 2},
+    { "key": 3, "productName": "Product 3", "productDescription" : "Description 3", "productCategory" : "Category 3", "price" : 30, "sellerId": 3},
+  ];
 
-test("Call the getCartItems function", async () => {
-    const getCartItems = jest.fn();
-    await act(async () => {
-        createRoot(container!).render(<CartPage page={Pages.CART} handlePages={() => {}}/>)
-    });
-    expect(getCartItems).toHaveBeenCalledTimes(1);
-});
+  await mockedAxios.get.mockResolvedValue({ data: mockCartItems, status: 200});
+  await mockedAxios.put.mockResolvedValue({ status: 200});
 
+  // @ts-ignore
+  let cartPage;
+  await act(() => {
+    cartPage = render(<CartPage page={Pages.CART} handlePages={() => {}}/>)
+  });
+
+  await act(async () => {
+    // @ts-ignore
+    cartPage.getByText("Buy").click();
+  });
+
+  expect(mockedAxios.put).toHaveBeenCalledTimes(3);
+})
 
 test("Test to see if CartPage exists", async () => {
     await mockedAxios.get.mockResolvedValue({data:[],status: 204,statusText: "Accepted"})
@@ -129,4 +90,3 @@ test("Test to see if CartPage exists", async () => {
     const titleField = await cartPage.findByText(/Your Cart/i);
     expect(titleField).toBeInTheDocument();
 });
-*/
