@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
+      <change afterPath="$PROJECT_DIR$/client/src/components/componentTests/RegisterForm.test.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CartPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CartPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pagesTests/CartPage.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pagesTests/CartPage.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/componentTests/LoginForm.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Product.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/componentTests/Product.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RegisterForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +62,7 @@
     "last_opened_file_path": "C:/Users/marcu/Documents/Git/DAT076-Web-Applications/client/src/components",
     "nodejs.jest.jest_package": "C:/Users/marcu/Documents/Git/DAT076-Web-Applications/client/node_modules/react-scripts",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\marcu\\Documents\\Git\\DAT076-Web-Applications\\client\\node_modules\\typescript\\lib"
+    "ts.external.directory.path": "C:\\Users\\marcu\\Documents\\Git\\DAT076-Web-Applications\\server\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -68,19 +71,59 @@
       <recent name="C:\Users\marcu\Documents\Git\DAT076-Web-Applications\client\src\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\marcu\Documents\Git\DAT076-Web-Applications\client\src\components\componentTests" />
       <recent name="C:\Users\rasmu\Documents\Datateknik_Chalmers\DAT076-Web-Applications\server\test\service" />
       <recent name="C:\Users\rasmu\Documents\Datateknik_Chalmers\DAT076-Web-Applications\server\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.Test to see if CartPage exists">
-    <configuration name="Product.test.ts (1)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.Test for &quot;Wrong username or password&quot; shows up when entering wrong credentials">
+    <configuration name="RegisterForm.test.tsx" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
       <envs />
       <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/server/test/service/Product.test.ts" />
+      <test-file value="$PROJECT_DIR$/client/src/components/componentTests/RegisterForm.test.tsx" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test for &quot;Invalid email format&quot; shows up when entering a invalid email" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/componentTests/RegisterForm.test.tsx" />
+      <test-names>
+        <test-name value="Test for &quot;Invalid email format&quot; shows up when entering a invalid email" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Test for &quot;Please enter an username&quot; shows up when not entering a password" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/componentTests/RegisterForm.test.tsx" />
+      <test-names>
+        <test-name value="Test for &quot;Please enter an username&quot; shows up when not entering a password" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Test for &quot;Wrong username or password&quot; shows up when entering wrong credentials" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$/client" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/client/src/components/componentTests/LoginForm.test.tsx" />
+      <test-names>
+        <test-name value="Test for &quot;Wrong username or password&quot; shows up when entering wrong credentials" />
+      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="Test if login function works" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
@@ -90,55 +133,19 @@
       <working-dir value="$PROJECT_DIR$/client" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/client/src/components/LoginForm.test.tsx" />
+      <test-file value="$PROJECT_DIR$/client/src/components/componentTests/LoginForm.test.tsx" />
       <test-names>
         <test-name value="Test if login function works" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="Test to see if CartPage exists" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$/client" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/client/src/pagesTests/CartPage.test.tsx" />
-      <test-names>
-        <test-name value="Test to see if CartPage exists" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="Test1" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/client/node_modules/react-scripts" />
-      <working-dir value="$PROJECT_DIR$/client" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/client/src/pagesTests/CartPage.test.tsx" />
-      <test-names>
-        <test-name value="Test1" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="User.test.ts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/server/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$/server" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/server/test/service/User.test.ts" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.Test to see if CartPage exists" />
-        <item itemvalue="Jest.Test1" />
-        <item itemvalue="Jest.User.test.ts" />
-        <item itemvalue="Jest.Product.test.ts (1)" />
+        <item itemvalue="Jest.Test for &quot;Wrong username or password&quot; shows up when entering wrong credentials" />
         <item itemvalue="Jest.Test if login function works" />
+        <item itemvalue="Jest.RegisterForm.test.tsx" />
+        <item itemvalue="Jest.Test for &quot;Invalid email format&quot; shows up when entering a invalid email" />
+        <item itemvalue="Jest.Test for &quot;Please enter an username&quot; shows up when not entering a password" />
       </list>
     </recent_temporary>
   </component>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import {IProduct, Product} from './Product';
+import {IProduct, Product} from '../Product';
 
 const handleTest = (product: IProduct) => {
     console.log("handleCart iahsdiashdjksas");

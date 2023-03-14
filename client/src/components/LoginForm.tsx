@@ -58,7 +58,7 @@ export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}
                         <hr></hr>
                     </div>
                     <div>
-                        <button className={"btn-primary"} type="button" onClick={() => props.handlePages(Pages.REGISTER)}>Register</button>
+                        <button className={"btn-primary"} type="button" onClick={() => props.handlePages(Pages.REGISTER)} data-testid="registerIndexButton">Register</button>
                     </div>
                 </form>
             </div>

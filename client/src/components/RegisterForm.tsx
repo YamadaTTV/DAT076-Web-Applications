@@ -26,6 +26,11 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                               e.preventDefault();
                               setRegisterError("");
 
+                              if(!username){
+                                  setRegisterError("Please enter an username");
+                                  return;
+                              }
+
                               // Check email format
                               const emailRegex = /^\S+@\S+\.\S+$/;
                               if(!emailRegex.test(email)){
@@ -71,7 +76,7 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                     </div>
                     {registerError && <p style={{color: "red"}}>{registerError}</p>}
                     <div>
-                        <input className={"btn-primary"} type="submit" value="Register" id="submitBtn"></input>
+                        <input className={"btn-primary"} type="submit" value="Register" id="submitBtn" data-testid="registerButton"></input>
                     </div>
                 </form>
             </div>
