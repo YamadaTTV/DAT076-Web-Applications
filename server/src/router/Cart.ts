@@ -17,13 +17,12 @@ cartRouter.get("/", async (
 ) => {
     try {
         if(req.session.user == null){
-            //Set to 401
-            res.status(210).send("User not logged in")
+            res.status(401).send("User not logged in")
             return
         }
         const cartItems = await cartService.getCartItems(req.session.user)
-        if(cartItems == undefined) res.status(204).send("User has no items in cart")
-        res.status(200).send(cartItems)
+        if(cartItems == undefined) res.status(400).send("User has no items in cart")
+        res.status(232).send(cartItems)
     } catch (e: any) {
         res.status(500).send(e.message);
     }
@@ -35,12 +34,11 @@ cartRouter.post("/", async (
 ) => {
     try{
         if(req.session.user == null){
-            //Set to 401
-            res.status(210).send("User not logged in")
+            res.status(401).send("User not logged in")
             return
         }
         const cart = await cartService.addCartItem(req.session.user,req.body.product)
-        res.status(200).send(cart)
+        res.status(233).send(cart)
 
     } catch (e: any){
         res.status(500).send(e.message);
@@ -53,14 +51,13 @@ cartRouter.delete("/", async (
 ) => {
     try{
         if(req.session.user == null){
-            //Set to 401
-            res.status(210).send("User not logged in")
+            res.status(401).send("User not logged in")
             return
         }
         const success : boolean = await cartService.removeCartItem(req.session.user,req.body.product)
-        if(success) res.status(200).send("Removed "+req.body.product.productName+" from cart.")
+        if(success) res.status(234).send("Removed "+req.body.product.productName+" from cart.")
         //Set to 204
-        else res.status(210).send("Could not remove "+req.body.product.productName+" from cart. Likely the product was not in cart.")
+        else res.status(400).send("Could not remove "+req.body.product.productName+" from cart. Likely the product was not in cart.")
     } catch(e: any){
         res.status(500).send(e.message);
     }
@@ -77,9 +74,8 @@ cartRouter.delete("/empty", async (
             return
         }
         const success : boolean = await cartService.emptyCart(req.session.user)
-        if(success) res.status(200).send("Cart emptied.")
-        //Set to 204
-        else res.status(210).send("Could not find cart to empty.")
+        if(success) res.status(235).send("Cart emptied.")
+        else res.status(400).send("Could not find cart to empty.")
     } catch(e: any){
         res.status(500).send(e.message);
     }

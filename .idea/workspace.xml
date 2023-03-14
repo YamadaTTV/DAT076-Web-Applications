@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="bd06639b-5912-45ff-b1b9-97a5f3defd9e" name="Changes" comment="Installed bootstrap">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Product.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Product.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/componentTests/Product.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/componentTests/Product.test.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ProductPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ProductPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/ProfilePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ProfilePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/router/Cart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/router/Cart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/router/Product.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/router/Product.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/router/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/router/User.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -35,7 +35,7 @@ userRouter.post("/", async (
         if(response){
             res.status(201).send("User created");
         } else {
-            res.status(210).send("Failed to create user");
+            res.status(400).send("Failed to create user");
         }
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -80,10 +80,10 @@ userRouter.post("/login", async(
         const loginUser = await userService.loginUser(username, password);
         if(loginUser){
             req.session.user = await userService.getLoggedInUser(username, password)
-            res.status(202).send("Successfully logged in " + loginUser.valueOf());
+            res.status(220).send("Successfully logged in " + loginUser.valueOf());
         }
         else{
-            res.status(203).send("Wrong username or password for user:" + loginUser.valueOf());
+            res.status(401).send("Wrong username or password for user:" + loginUser.valueOf());
         }
 
     }catch (e: any) {
@@ -101,7 +101,7 @@ userRouter.post("/logout", async(
                 if (e) {
                     res.status(400).send('Unable to log out')
                 } else {
-                    res.status(200).send('Logout successful')
+                    res.status(221).send('Logout successful')
                 }
             });
         }
@@ -116,9 +116,9 @@ userRouter.get("/loggedInUser", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(210).send("No user logged in.")
+            res.status(400).send("No user logged in.")
         } else {
-            res.status(200).send(req.session.user)
+            res.status(215).send(req.session.user)
         }
         res.end();
     } catch (e: any){

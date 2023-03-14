@@ -11,23 +11,11 @@ const productService = makeProductService();
 export const productRouter = express.Router();
 
 productRouter.get("/", async (
-    req: Request<{}, {}, {}>,
+    req: requestTypes.get,
     res: Response<Array<Product> | String>
 ) => {
     try {
         const tasks = await productService.getProducts();
-        res.status(200).send(tasks);
-    } catch (e: any) {
-        res.status(500).send(e.message);
-    }
-});
-
-productRouter.get("/available/", async (
-    req: Request<{}, {}, {}>,
-    res: Response<Array<Product> | String>
-) => {
-    try {
-        const tasks = await productService.getAvailableProducts();
         res.status(200).send(tasks);
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -57,7 +45,7 @@ productRouter.post("/", async (
             return
         }
         const newProduct = await productService.addProduct(productName,productDescription,productCategory,price,req.session.user.id);
-        res.status(201).send(newProduct);
+        res.status(222).send(newProduct);
 
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -76,10 +64,21 @@ productRouter.delete("/", async(
             return;
         }
         const response = await productService.deleteProduct(key);
-        //Set to 200
-        res.status(202).send("Successfully deleted product " + response.valueOf());
+        res.status(223).send("Successfully deleted product " + response.valueOf());
 
     }catch (e: any) {
+        res.status(500).send(e.message);
+    }
+});
+
+productRouter.get("/available/", async (
+    req: requestTypes.get,
+    res: Response<Array<Product> | String>
+) => {
+    try {
+        const tasks = await productService.getAvailableProducts();
+        res.status(224).send(tasks);
+    } catch (e: any) {
         res.status(500).send(e.message);
     }
 });
@@ -103,12 +102,12 @@ productRouter.put("/buy", async (
         }
         if (!await userService.userExists(buyerId)) {
             //Set to 400
-            res.status(401).send("User does not exit");
+            res.status(400).send("User does not exit");
             return;
         }
 
         let product =await productService.buyProduct(key, buyerId);
-        res.status(200).send(product)
+        res.status(225).send(product)
 
     }catch(e: any){
         res.status(500).send(e.message);
@@ -123,12 +122,12 @@ productRouter.put("/update", async(
 ) => {
     try{
         if(isNaN(req.body.key)){
-            res.status(401).send("Type error - key need to have type: number")
+            res.status(400).send("Type error - key need to have type: number")
             return
         } else {
             const response = await productService.updateProduct(req.body.key,req.body.productName,req.body.productDescription,req.body.productCategory,req.body.price,req.session.user?.id)
-            if(response) res.status(200).send("Product updated.")
-            else res.status(401).send(`Product with key: ${req.body.key} does not exist`)
+            if(response) res.status(226).send("Product updated.")
+            else res.status(400).send(`Product with key: ${req.body.key} does not exist`)
         }
     } catch(e: any){
         res.status(500).send(e.message);
@@ -141,12 +140,11 @@ productRouter.get("/sellerListings", async (
 ) => {
     try{
         if(req.session.user == null){
-            //Set to 401
-            res.status(400).send("User not logged in")
+            res.status(401).send("User not logged in")
             return
         }
         const products = await productService.getUserListings(req.session.user)
-        res.status(200).send(products);
+        res.status(227).send(products);
     } catch(e: any) {
         res.status(500).send(e.message)
     }
@@ -158,12 +156,11 @@ productRouter.get("/boughtProducts", async (
 ) => {
     try{
         if(req.session.user == null){
-            //Set to 401
-            res.status(400).send("User not logged in")
+            res.status(401).send("User not logged in")
             return
         }
         const products = await productService.getBoughtProducts(req.session.user)
-        res.status(200).send(products);
+        res.status(228).send(products);
     } catch(e: any) {
         res.status(500).send(e.message)
     }
@@ -175,7 +172,7 @@ productRouter.get("/filterProducts/", async (
 ) => {
     try {
         const products = await productService.getFilteredProducts();
-        res.status(200).send(products);
+        res.status(229).send(products);
     } catch (e: any) {
         res.status(500).send(e.message);
     }
@@ -195,11 +192,10 @@ productRouter.put("/filterProducts/addCat", async (
 
         const response = await productService.addCategoryMarked(category);
         if(response){
-            res.status(200).send(response.toString());
+            res.status(230).send(response.toString());
         }
         else{
-            //Set to 400
-            res.status(210).send("Could not add category")
+            res.status(400).send("Could not add category")
         }
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -220,11 +216,11 @@ productRouter.put("/filterProducts/removeCat", async (
 
         const response = await productService.removeCategoryMarked(category);
         if(response){
-            res.status(200).send(response.toString());
+            res.status(231).send(response.toString());
         }
         else{
             //Set to 400
-            res.status(210).send("Could not remove category")
+            res.status(400).send("Could not remove category")
         }
     } catch (e: any) {
         res.status(500).send(e.message);
