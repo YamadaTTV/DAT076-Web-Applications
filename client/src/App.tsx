@@ -10,6 +10,7 @@ import {SellPage} from "./pages/SellPage";
 import {ProfilePage} from "./pages/ProfilePage";
 import {CartPage} from "./pages/CartPage";
 import {AddedToCartPage} from "./pages/AddedToCartPage";
+import {LoginModalPage} from "./pages/LoginModalPage";
 
 
 export enum Pages {
@@ -21,7 +22,8 @@ export enum Pages {
     ABOUT,
     ERROR,
     CART,
-    ADDED
+    ADDED,
+    LOGINMODAL
 }
 
 
@@ -69,6 +71,11 @@ function App() {
             return <AddedToCartPage
                 handlePages = {handlePages}
                 page = {page}
+            />
+        case Pages.LOGINMODAL:
+            return <LoginModalPage
+                page={page}
+                handlePages={handlePages}
             />
     }
 

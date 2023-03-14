@@ -24,7 +24,7 @@ export function Product (props:  {
     const getLoggedInUser = async () => {
         const response = await axios.get("http://localhost:8080/user/loggedInUser")
         if(response.status == 200) setLoggedInUserId(response.data.id)
-        else if(response.status == 210) setLoggedInUserId(undefined)
+        else setLoggedInUserId(undefined)
     }
 
     useEffect(() => {
@@ -67,9 +67,12 @@ export function Product (props:  {
                     {props.prod.sellerId != loggedInUserId &&
                     <Col xs={12}>
                         <button className="btn-primary" onClick={async () => {
-                            console.log(props.prod)
-                            await axios.post("http://localhost:8080/cart",{product:props.prod})
-                            props.handlePage(Pages.ADDED)
+                            if(loggedInUserId != null) {
+                                await axios.post("http://localhost:8080/cart",{product:props.prod})
+                                props.handlePage(Pages.ADDED)
+                            } else {
+                                props.handlePage(Pages.LOGINMODAL)
+                            }
                         }}>Add to Cart</button>
                     </Col>
                     }
