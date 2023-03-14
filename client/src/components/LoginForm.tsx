@@ -21,13 +21,13 @@ export function LoginForm(props: {handlePages: (page: Pages)=>void, page: Pages}
                         e.preventDefault();
                         try {
                             const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password});
-                            console.log(response);
-                            if(response.status == 202){
-                                console.log("Success");
+                            if(response.status == 220){
                                 props.handlePages(Pages.PRODUCT);
-                            } else if(response.status == 203){
-                                console.log("FAIL");
+                            } else if(response.status == 401){
                                 setErrorMessage("Wrong username or password");
+                            }
+                            else if(response.status == 400){
+                                setErrorMessage("Type error - Bad put call")
                             }
                         } catch (error){
                             console.log(error);

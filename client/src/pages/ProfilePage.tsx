@@ -19,7 +19,7 @@ export function ProfilePage(props: {
 
     const getLoggedInUser = async () => {
         const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        if(response.status == 200) setLoggedInUser(response.data)
+        if(response.status == 215) setLoggedInUser(response.data)
         else setLoggedInUser(undefined)
     }
 
@@ -30,11 +30,11 @@ export function ProfilePage(props: {
     const updateSellerListings = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/sellerListings")
-            if (response.status == 400){
-                console.log(response.data)
+            if (response.status == 401){
+                //For future implementation to open loginModal
                 return
             }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            else if(response.status == 227 && !(typeof response.data == "string")){
                 setSellerListings(response.data)
             }
         } catch (e : any){
@@ -45,11 +45,11 @@ export function ProfilePage(props: {
     const updateBoughtItems = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/boughtProducts")
-            if (response.status == 400){
-                console.log(response.data)
+            if (response.status == 401){
+                //For future implementation to open loginModal
                 return
             }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            else if(response.status == 228 && !(typeof response.data == "string")){
                 setBoughtItems(response.data)
             }
         } catch (e : any){

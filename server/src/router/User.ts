@@ -35,7 +35,7 @@ userRouter.post("/", async (
         if(response){
             res.status(201).send("User created");
         } else {
-            res.status(400).send("Failed to create user");
+            res.status(400).send("User already exists");
         }
     } catch (e: any) {
         res.status(500).send(e.message);

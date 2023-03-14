@@ -26,16 +26,16 @@ export function Header(props:{
 
     const checkLoggedIn = async () => {
         const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        if(response.status == 210) setLoggedIn(false)
-        else if (response.status == 200) setLoggedIn(true)
+        if(response.status == 400) setLoggedIn(false)
+        else if (response.status == 215) setLoggedIn(true)
         else setLoggedIn(false)
     }
 
     const checkCart = async () => {
         let response = await axios.get("http://localhost:8080/cart")
-        if(response.status == 210 || response.status == 204){
+        if(response.status == 400 || response.status == 401){
             setCart([])
-        } else if(response.status == 200){
+        } else if(response.status == 232){
             setCart(response.data)
         } else {
             props.handlePages(Pages.ERROR)
