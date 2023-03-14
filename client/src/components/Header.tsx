@@ -84,10 +84,15 @@ export function Header(props:{
                         () => props.handlePages(Pages.PROFILE)
                     }> Profile </Nav.Link>
                     <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
-                        async () => {
-                            await axios.post("http://localhost:8080/user/logout")
-                            props.handlePages(Pages.INDEX)
-                        }
+                            async () => {
+                                try {
+                                await axios.post("http://localhost:8080/user/logout")
+                                props.handlePages(Pages.INDEX)
+                                } catch (e: any){
+                                    console.log(e.message)
+                                    props.handlePages(Pages.ERROR)
+                                }
+                            }
                     }> Log out </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
