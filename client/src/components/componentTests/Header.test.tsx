@@ -128,3 +128,40 @@ test("Navigation", async () => {
     expect(currentPage).toEqual(Pages.PROFILE)
 
 })
+
+test("Cart displayed", async () => {
+    mockedAxios.get.mockResolvedValue({
+        data: [{
+            key: 1,
+            productName: "Product 1",
+            productDescription: "Description",
+            productCategory: "Category 1",
+            price: 10,
+            sellerId: 1,
+        },
+            {
+                key: 2,
+                productName: "Product 1",
+                productDescription: "Description",
+                productCategory: "Category 2",
+                price: 20,
+                sellerId: 2,
+            }],
+        status: "232",
+        statusText: "OK"
+    });
+
+    let component;
+    let currentPage : Pages = Pages.INDEX
+    const handlePages = (page: Pages) => {currentPage = page }
+    await act(() => {
+        // fire events that update state
+        component = render(<Header handlePages={handlePages} page={currentPage}/>)
+    });
+
+    //@ts-ignore
+    const cart = await component.findByText(/Cart/i)
+
+
+    expect(cart).toBeInTheDocument()
+})
