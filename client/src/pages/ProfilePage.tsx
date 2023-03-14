@@ -78,7 +78,7 @@ export function ProfilePage(props: {
                             <Row>
                                 {boughtItems.map((product) =>
                                     <Col xs={4}>
-                                        <Product prod={product} key={"bi"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
+                                        <Product prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
                                         </Product>
                                     </Col>)
                                 }
