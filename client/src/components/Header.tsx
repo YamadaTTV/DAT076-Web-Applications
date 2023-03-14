@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Pages} from "../App";
 import axios from "axios";
 import {IProduct} from "./Product";
+import logo from '../img/logo.svg';
 
 axios.defaults.withCredentials = true;
 
@@ -19,24 +20,21 @@ export function Header(props:{
     handlePages: (page: Pages)=>void,
     page: Pages
 }){
-    const logo = require("../img/murrayPog.png");
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false)
     const [cart, setCart] = useState<IProduct[]>([])
 
     const checkLoggedIn = async () => {
-        if(props.page != Pages.INDEX && props.page != Pages.REGISTER){
-            setLoggedIn(true)
-        } else {
-            setLoggedIn(false)
-        }
+        const response = await axios.get("http://localhost:8080/user/loggedInUser")
+        if(response.status == 210) setLoggedIn(false)
+        else if (response.status == 200) setLoggedIn(true)
+        else setLoggedIn(false)
     }
 
     const checkCart = async () => {
         let response = await axios.get("http://localhost:8080/cart")
         if(response.status == 210 || response.status == 204){
             setCart([])
-            console.log(response.data)
         } else if(response.status == 200){
             setCart(response.data)
         } else {
@@ -63,14 +61,23 @@ export function Header(props:{
                     <Nav.Link href="#about_us" onClick={
                         () => props.handlePages(Pages.ABOUT)
                     }>About Us</Nav.Link>
-                    <Nav.Link href="#browse">Browse</Nav.Link>
+                    <Nav.Link href="#browse" onClick={
+                        () => props.handlePages(Pages.PRODUCT)
+                    }>Browse</Nav.Link>
                     <Nav.Link href="#sell" onClick={
                         () => props.handlePages(Pages.SELL)
                     } hidden={!loggedIn || props.page != Pages.PRODUCT}>Sell</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
-                        () => props.handlePages(Pages.INDEX)
+                        () => {
+                            if(props.page == Pages.PRODUCT){
+                                props.handlePages(Pages.LOGINMODAL);
+                            }
+                            else{
+                                props.handlePages(Pages.INDEX);
+                            }
+                        }
                     }> Login </Nav.Link>
                     <Nav.Link href="#cart" hidden={cart.length==0} onClick={
                         () => props.handlePages(Pages.CART)
@@ -80,8 +87,7 @@ export function Header(props:{
                     }> Profile </Nav.Link>
                     <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
                         async () => {
-                            const response = await axios.delete("http://localhost:8080/user/logout")
-                            console.log(response.data)
+                            await axios.post("http://localhost:8080/user/logout")
                             props.handlePages(Pages.INDEX)
                         }
                     }> Log out </Nav.Link>

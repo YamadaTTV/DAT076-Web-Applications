@@ -2,6 +2,8 @@ import {Button, Card, Col, Row} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {User} from "../../../server/src/model/User";
+import {UpdateForm} from "./UpdateForm";
+import {Pages} from "../App";
 axios.defaults.withCredentials = true
 
 /**Product component, used to visualize data of a product
@@ -9,24 +11,34 @@ axios.defaults.withCredentials = true
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
  */
-export function Product (props:  {children : object, prod : IProduct, productHandler: ()=>void}){
-    //TODO: handleDeleteClick: () => void
-    //const icon = require();
+export function Product (props:  {
+    children : object,
+    prod : IProduct,
+    productHandler: ()=>void,
+    handlePage : (page: Pages) => void,
+    page: Pages
+}){
     const [loggedInUserId, setLoggedInUserId] = useState<number | undefined>(undefined)
+    const [displayModal,setDisplayModal] = useState<boolean>(false)
 
     const getLoggedInUser = async () => {
         const response = await axios.get("http://localhost:8080/user/loggedInUser")
         if(response.status == 200) setLoggedInUserId(response.data.id)
-        else if(response.status == 210) setLoggedInUserId(undefined)
+        else setLoggedInUserId(undefined)
     }
 
     useEffect(() => {
         getLoggedInUser()
-
-    },[])
+        props.productHandler()
+    },[displayModal])
 
     return (
-        <Card style={{ width: '18rem'}} key={props.prod.key}>
+        <div>
+            {displayModal && <UpdateForm handlePage={props.handlePage} page={props.page} product={props.prod} updateHandler={() => {
+                props.productHandler();
+                setDisplayModal(false);
+            }}/>}
+            <Card style={{ width: '18rem'}} key={props.prod.key}>
             <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
             <Card.Body>
                 <Card.Title>{props.prod.productName}</Card.Title>
@@ -39,11 +51,31 @@ export function Product (props:  {children : object, prod : IProduct, productHan
                 </Card.Text>
                 <Row>
                     <Col xs={12}>
+
+                    </Col>
+                    {props.prod.sellerId == loggedInUserId &&
+                    <Col xs={12}>
+                        <button className="btn-primary" style={{marginTop: "5px"}} onClick={
+                            async e => {
+                                e.preventDefault();
+                                setDisplayModal(true)
+                            }
+                        }
+                        >Update product</button>
+                    </Col>}
+                    {props.prod.sellerId != loggedInUserId &&
+                    <Col xs={12}>
                         <button className="btn-primary" onClick={async () => {
-                            console.log(props.prod)
-                            await axios.post("http://localhost:8080/cart",{product:props.prod})
+                            if(loggedInUserId != null) {
+                                await axios.post("http://localhost:8080/cart",{product:props.prod})
+                                props.handlePage(Pages.ADDED)
+                            } else {
+                                props.handlePage(Pages.LOGINMODAL)
+                            }
                         }}>Add to Cart</button>
                     </Col>
+                    }
+
                     {props.prod.sellerId == loggedInUserId && <Col xs={12}>
                         <button className="btn-delete" style={{marginTop: "5px"}} onClick={
                             async e => {
@@ -63,6 +95,7 @@ export function Product (props:  {children : object, prod : IProduct, productHan
                 </Row>
             </Card.Body>
         </Card>
+        </div>
     );
 }
 
@@ -78,6 +111,5 @@ export interface IProduct {
     sellerId : number,
     buyer ?: number
     children? : React.ReactNode
-    //const soffa: IProduct = {productName:"soffa",productCategory:"möbel",price:123,seller:1}
 }
 

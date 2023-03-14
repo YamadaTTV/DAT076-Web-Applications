@@ -1,15 +1,14 @@
-import express, {query, Request, Response} from "express";
+import express, {Request, Response} from "express";
 import {makeUserService} from "../service/User";
 import {User} from "../model/User";
 import * as requestTypes from "../requestTypes"
 import * as responseTypes from "../responseTypes"
-import session from "express-session";
 
 export const userService = makeUserService();
 export const userRouter = express.Router();
 
 userRouter.get("/", async (
-    req: Request<{}, {}, {}>,
+    req: requestTypes.get,
     res: Response<Array<User> | String>
 ) => {
     try {
@@ -43,6 +42,8 @@ userRouter.post("/", async (
     }
 });
 
+
+/* not used
 userRouter.delete("/", async(
     req: Request<{}, {}, {username : string, password : string}>,
     res: Response<String>
@@ -62,6 +63,7 @@ userRouter.delete("/", async(
         res.status(500).send(e.message);
     }
 });
+*/
 
 userRouter.post("/login", async(
     req: requestTypes.userLoginRequest,
@@ -89,7 +91,7 @@ userRouter.post("/login", async(
     }
 });
 
-userRouter.delete("/logout", async(
+userRouter.post("/logout", async(
     req: requestTypes.defaultRequest,
     res: Response<string>
 ) => {

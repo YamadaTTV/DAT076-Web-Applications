@@ -72,8 +72,8 @@ cartRouter.delete("/empty", async (
 ) => {
     try{
         if(req.session.user == null){
-            //Set to 401
-            res.status(210).send("User not logged in")
+            res.status(401).send("User not logged in")
+
             return
         }
         const success : boolean = await cartService.emptyCart(req.session.user)

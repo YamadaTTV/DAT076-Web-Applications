@@ -5,6 +5,7 @@ import {Product, IProduct} from "../components/Product";
 import {Pages} from "../App";
 import {Header} from "../components/Header";
 import {Footer} from "../components/Footer";
+import {UpdateForm} from "../components/UpdateForm";
 axios.defaults.withCredentials = true;
 
 export interface Category{
@@ -127,8 +128,7 @@ export function ProductPage(props:{
                                 <Row>
                                     {products.map((product) =>
                                         <Col xs={4}>
-                                            {/*<Product prod={product} key={product.key} handleCart={props.handleCart} handleDeleteClick={props.handleDeleteClick}> */}
-                                            <Product prod={product} key={"p"+product.key} productHandler={productHandler}>
+                                            <Product prod={product} key={"p"+product.key} productHandler={productHandler} page={props.page} handlePage={props.handlePages}>
                                             </Product>
                                         </Col>)
                                     }

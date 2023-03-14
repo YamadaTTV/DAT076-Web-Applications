@@ -9,7 +9,11 @@ import axios from "axios";
  * @param props A props containing product information with all data of IProduct
  * @return Card With layout of a product.
  */
-export function AddedProduct(props: {children: object, prod: IProduct}){
+export function AddedProduct(props: {
+    children: object,
+    prod: IProduct,
+    updateHandler: () => void
+}){
     return(
         <Card style={{width: "18rem"}} key={props.prod.key}>
             <Card.Img variant="top" src={"https://wakefitdev.gumlet.io/img/sofa-sets/lifestyle/WSFABLZN3FVBL.jpg?w=732"}/>
@@ -27,8 +31,9 @@ export function AddedProduct(props: {children: object, prod: IProduct}){
                         <button className="btn-primary">Contact seller</button>
                     </Col>
                     <Col xs={12}>
-                        <button className="btn-primary" style={{marginTop: "5px"}} onClick={async () => {
+                        <button className="btn-delete" style={{marginTop: "5px"}} onClick={async () => {
                             await axios.delete("http://localhost:8080/cart",{data: {product:props.prod}})
+                            props.updateHandler()
                         }}>Remove</button>
                     </Col>
                 </Row>
