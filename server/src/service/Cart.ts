@@ -31,7 +31,7 @@ class CartService implements ICartService {
         }
         else {
             console.log("Entering add to existing cart")
-            await cart.addCartItem(cartItem)
+            if(cart.cartItems.find(item => item.key == cartItem.key) == undefined) await cart.addCartItem(cartItem)
             return cart
         }
     }
@@ -58,6 +58,10 @@ class CartService implements ICartService {
         if(cart == null) return false
         else {
             const success = cart.removeCartItem(cartItem)
+            if(cart.cartItems.length == 0) {
+                const index = this.carts.indexOf(cart)
+                this.carts.splice(index,1)
+            }
             return success
         }
     }

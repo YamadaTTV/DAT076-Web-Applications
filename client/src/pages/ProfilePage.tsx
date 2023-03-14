@@ -5,6 +5,7 @@ import axios from "axios";
 import {Header} from "../components/Header";
 import {Col, Row} from "react-bootstrap";
 import {Footer} from "../components/Footer";
+import {BoughtProduct} from "../components/BoughtProduct";
 axios.defaults.withCredentials = true;
 
 export function ProfilePage(props: {
@@ -37,7 +38,7 @@ export function ProfilePage(props: {
                 return
             }
             else if(response.status == 200 && !(typeof response.data == "string")){
-                setSellerListings(response.data)
+                setBoughtItems(response.data)
             }
         } catch (e : any){
             console.log(e)
@@ -46,6 +47,7 @@ export function ProfilePage(props: {
 
     useEffect(() =>{
         updateSellerListings();
+        updateBoughtItems();
     }, []);
 
     return <div>
@@ -60,7 +62,7 @@ export function ProfilePage(props: {
                             <Row>
                                 {sellerListings.map((product) =>
                                     <Col xs={4}>
-                                        <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings}>
+                                        <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
                                         </Product>
                                     </Col>)
                                 }
@@ -69,7 +71,23 @@ export function ProfilePage(props: {
                     </div>
                 </Col>
             </Row>
+            <Row xs={12}>
+                <Col xs={10}>
+                    <div style={{marginRight: "10px"}}>
+                        <h4>Bought items:</h4>
+                        <div style={{marginRight:"25px"}}>
+                            <Row>
+                                {boughtItems.map((product) =>
+                                    <Col xs={4}>
+                                        <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
+                                        </BoughtProduct>
+                                    </Col>)
+                                }
+                            </Row>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </div>
-        <Footer/>
     </div>
 }

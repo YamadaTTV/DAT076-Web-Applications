@@ -46,7 +46,7 @@ productRouter.post("/", async (
 
 
         if (typeof(productName) !== "string" || typeof(productDescription) !== "string" || typeof(productCategory) !== "string" || typeof(price) !== "number") {
-            res.status(400).send(`Bad PUT call to ${req.originalUrl} -- productName has type ${typeof (productName)}, productDescription has type ${typeof (productDescription)}, productCategory has type ${typeof (productCategory)}, price has type ${typeof (price)}`);
+            res.status(400).send(`Bad POST call to ${req.originalUrl} -- productName has type ${typeof (productName)}, productDescription has type ${typeof (productDescription)}, productCategory has type ${typeof (productCategory)}, price has type ${typeof (price)}`);
             return
         }
         if(req.session.user == null){
@@ -72,10 +72,11 @@ productRouter.delete("/", async(
         let key = req.body.key;
 
         if (typeof(key) !== "number") {
-            res.status(403).send(`Bad PUT call to ${req.originalUrl} ---key has type ${typeof(key)}`);
+            res.status(400).send(`Bad DELETE call to ${req.originalUrl} ---key has type ${typeof(key)}`);
             return;
         }
         const response = await productService.deleteProduct(key);
+        //Set to 200
         res.status(202).send("Successfully deleted product " + response.valueOf());
 
     }catch (e: any) {
@@ -84,12 +85,12 @@ productRouter.delete("/", async(
 });
 
 productRouter.put("/buy", async (
-    req: Request<{}, {},{key: number, buyerId : number}>,
+    req: requestTypes.buyProductRequest,
     res: Response<Product | string>
 ) => {
     try {
         let key = req.body.key;
-        let buyerId = req.body.buyerId;
+        let buyerId = req.session.user?.id;
 
         if (typeof (key) !== "number" || typeof (buyerId) !== "number") {
             res.status(400).send(`Bad PUT call to ${req.originalUrl} -- key has type ${typeof(key)}, buyerId has type ${typeof(buyerId)}`);
@@ -97,11 +98,12 @@ productRouter.put("/buy", async (
         }
 
         if (!await productService.productExist(key)) {
-            res.status(401).send("Product does not exit");
+            res.status(400).send("Product does not exit");
             return
         }
         if (!await userService.userExists(buyerId)) {
-            res.status(402).send("User does not exit");
+            //Set to 400
+            res.status(401).send("User does not exit");
             return;
         }
 
@@ -113,29 +115,21 @@ productRouter.put("/buy", async (
     }
 });
 
-productRouter.put(":/id", async(req: Request<{id: string},{}, Product>, res: Response<string>) => {
+
+
+productRouter.put("/update", async(
+    req: requestTypes.productUpdateRequest,
+    res: Response<string>
+) => {
     try{
-        if(!req.params.id){
-            res.status(210).send(`Bad PUT call to ${req.originalUrl} --- Missing id param`);
-            return;
+        if(isNaN(req.body.key)){
+            res.status(401).send("Type error - key need to have type: number")
+            return
+        } else {
+            const response = await productService.updateProduct(req.body.key,req.body.productName,req.body.productDescription,req.body.productCategory,req.body.price,req.session.user?.id)
+            if(response) res.status(200).send("Product updated.")
+            else res.status(401).send(`Product with key: ${req.body.key} does not exist`)
         }
-        const id = parseInt(req.params.id, 10);
-        if(!id){
-            res.status(211).send(`Bad PUT call to ${req.originalUrl} --- id must be a number`);
-            return;
-        }
-        //???
-        const product: Product = req.body;
-        if(!product){
-            res.status(212).send(`Bad PUT call to ${req.originalUrl} --- No data to update the product with`);
-            return;
-        }
-        const completed = await productService.updateProduct(id, product.productName, product.productDescription, product.productCategory, product.price, product.sellerId);
-        if(!completed){
-            res.status(213).send(`Bad PUT call to ${req.originalUrl} --- No product with id ${id}`);
-            return;
-        }
-        res.status(200).send("Product updated");
     } catch(e: any){
         res.status(500).send(e.message);
     }
@@ -147,6 +141,7 @@ productRouter.get("/sellerListings", async (
 ) => {
     try{
         if(req.session.user == null){
+            //Set to 401
             res.status(400).send("User not logged in")
             return
         }
@@ -163,6 +158,7 @@ productRouter.get("/boughtProducts", async (
 ) => {
     try{
         if(req.session.user == null){
+            //Set to 401
             res.status(400).send("User not logged in")
             return
         }
@@ -202,6 +198,7 @@ productRouter.put("/filterProducts/addCat", async (
             res.status(200).send(response.toString());
         }
         else{
+            //Set to 400
             res.status(210).send("Could not add category")
         }
     } catch (e: any) {
@@ -226,6 +223,7 @@ productRouter.put("/filterProducts/removeCat", async (
             res.status(200).send(response.toString());
         }
         else{
+            //Set to 400
             res.status(210).send("Could not remove category")
         }
     } catch (e: any) {

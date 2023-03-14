@@ -9,7 +9,9 @@ import {ProductPage} from "./pages/ProductPage";
 import {SellPage} from "./pages/SellPage";
 import {ProfilePage} from "./pages/ProfilePage";
 import {CartPage} from "./pages/CartPage";
-import axios from "axios";
+import {AddedToCartPage} from "./pages/AddedToCartPage";
+import {LoginModalPage} from "./pages/LoginModalPage";
+
 
 export enum Pages {
     INDEX,
@@ -19,7 +21,9 @@ export enum Pages {
     PROFILE,
     ABOUT,
     ERROR,
-    CART
+    CART,
+    ADDED,
+    LOGINMODAL
 }
 
 
@@ -63,14 +67,21 @@ function App() {
                 handlePages = {handlePages}
                 page = {page}
             />
+        case Pages.ADDED:
+            return <AddedToCartPage
+                handlePages = {handlePages}
+                page = {page}
+            />
+        case Pages.LOGINMODAL:
+            return <LoginModalPage
+                page={page}
+                handlePages={handlePages}
+            />
     }
 
     async function handlePages(page: Pages){
         setPage(page)
     }
-
-
-    return <p>Error occurred</p>
 }
 
 export default App;

@@ -37,6 +37,28 @@ export type productCreationRequest = Request & {
     }
 }
 
+export type buyProductRequest = Request & {
+    body: {
+        key: number
+    }
+    session: {
+        user ?: User
+    }
+}
+
+export type productUpdateRequest = Request & {
+    body: {
+        key: number,
+        productName?: string,
+        productDescription?: string,
+        productCategory?: string,
+        price?: number
+    }
+    session: {
+        user ?: User
+    }
+}
+
 export type get = Request & {
     session: {
         user ?: User
