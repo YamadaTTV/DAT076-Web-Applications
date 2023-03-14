@@ -3,7 +3,7 @@ import { CartPage } from "../pages/CartPage";
 import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { createRoot } from "react-dom/client";
-import { render, screen, waitFor } from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import axios, {AxiosResponse, AxiosStatic} from "axios";
 import { IProduct } from "../components/Product";
 
@@ -90,3 +90,65 @@ test("Test to see if CartPage exists", async () => {
     const titleField = await cartPage.findByText(/Your Cart/i);
     expect(titleField).toBeInTheDocument();
 });
+
+
+/*
+const mockProducts: IProduct[] = [
+    {
+        key: 1,
+        productName: "Product 1",
+        productDescription: "Description",
+        productCategory: "Category 1",
+        price: 10,
+        sellerId: 1,
+    },
+    {
+        key: 2,
+        productName: "Product 1",
+        productDescription: "Description",
+        productCategory: "Category 2",
+        price: 20,
+        sellerId: 2,
+    },
+];
+
+test("handles buying success", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: mockProducts,
+      status: 232,
+      statusText: "OK",
+    });
+
+    mockedAxios.put.mockResolvedValue({
+        data: null,
+        status: 225,
+        statusText: "OK",
+    });
+
+    let currentPage : Pages = Pages.CART;
+
+    let component;
+    await act(async () => {
+        component = render(<CartPage page={Pages.CART} handlePages={(page: Pages) => {
+            currentPage = page
+        }} />);
+    });
+
+    //@ts-ignore
+    const products = component.findAllByText(/Description/i)
+
+    expect((await products).length).toEqual(2)
+    //@ts-ignore
+    const buyButton = await  component.findByText(/buy/i)
+
+
+    await act(async () => {
+        // fire events that update state
+        fireEvent.click(buyButton);
+    });
+
+    expect(currentPage).toEqual(Pages.PROFILE)
+
+    //expect(mockedAxios.put).toHaveBeenCalledTimes(2)
+
+ */

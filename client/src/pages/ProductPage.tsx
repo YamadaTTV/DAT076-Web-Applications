@@ -84,11 +84,7 @@ export function ProductPage(props:{
     const updateProducts = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/filterProducts")
-            if (response.status == 400){
-                console.log(response.data)
-                return
-            }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            if(response.status == 229 && !(typeof response.data == "string")){
                 setProducts(response.data)
             }
         } catch (e : any){
@@ -127,9 +123,9 @@ export function ProductPage(props:{
                             <div style={{marginRight:"25px"}}>
                                 <Row>
                                     {products.map((product) =>
-                                        <Col xs={4}>
-                                            <Product prod={product} key={"p"+product.key} productHandler={productHandler} page={props.page} handlePage={props.handlePages}>
-                                            </Product>
+                                        <Col l={2} m={4}>
+                                                <Product prod={product} key={"p"+product.key} productHandler={productHandler} page={props.page} handlePages={props.handlePages}>
+                                                </Product>
                                         </Col>)
                                     }
                                 </Row>

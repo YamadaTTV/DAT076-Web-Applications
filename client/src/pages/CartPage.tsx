@@ -22,31 +22,29 @@ export function CartPage(props:{
 
     const buyProducts = async () => {
         setBuying(true);
-
+        let success = false;
 
         for (const product of cartItems) {
-            console.log(product);
             let response = await axios.put("http://localhost:8080/product/buy", {key : product.key})
-            if(response.status == 400){
-                console.log("Buying failed");
-            } else if(response.status == 200){
-                console.log("Buying succeeded");
-                await axios.delete("http://localhost:8080/cart/empty")
-                props.handlePages(Pages.PROFILE)
+            if(response.status == 225){
+                success = true;
             }
+        }
+        if(success) {
+            await axios.delete("http://localhost:8080/cart/empty")
+            props.handlePages(Pages.PROFILE)
         }
 
     };
 
     const getCartItems = async () => {
         let response = await axios.get("http://localhost:8080/cart")
-        if(response.status == 200){
+        if(response.status == 232){
             setCartItems(response.data)
-        } else if (response.status == 204 || response.status == 210){
+        } else if (response.status == 283 || response.status == 280){
             setCartItems([])
-            console.log(response.data)
             props.handlePages(Pages.PRODUCT)
-        } //else props.handlePages(Pages.ERROR)
+        } else props.handlePages(Pages.ERROR)
     }
 
     useEffect(() => {
@@ -59,7 +57,7 @@ export function CartPage(props:{
             <h1>Your Cart</h1>
             <Row>
                 {cartItems.map((product) => (
-                    <Col xs={4}>
+                    <Col l={2} m={4}>
                         <AddedProduct prod={product} key={product.key} updateHandler={getCartItems}>{}</AddedProduct>
                     </Col>
                 ))}
@@ -69,7 +67,6 @@ export function CartPage(props:{
                     <Button onClick={buyProducts} disabled={buying}>Buy</Button>
                 </Col>
             </Row>
-            <Footer/>
         </div>
     );
 }

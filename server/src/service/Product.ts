@@ -3,35 +3,76 @@ import {userService} from "../router/User";
 import {User} from "../model/User";
 
 export interface IProductService {
-    //Get all products in system
+    /** Get all the products from the server, not used to be used in production
+     * @param n/a
+     * @return Product[] -  returns all the products stored in the server
+     * */
     getProducts() : Promise<Array<Product>>;
-    
-    //Get all available products in system
+
+    /** Get all the products from the server, not used to be used in production
+     * @param n/a
+     * @return Product[] -  returns all the products that has no buyers.
+     * */
     getAvailableProducts() : Promise<Array<Product>>;
 
-    //Add a new product to the system
+    /** Adds a new product to the server and returns the created product
+     * @param productName,productDescription,productCategory,price,sellerId - All the parameters are used to set data-fields for creating a new product.
+     * @return Product -  returns the product that was created.
+     * */
     addProduct(productName: string, productDescription: string, productCategory: string, price: number, sellerId : number) : Promise<Product>;
 
-    //Updates an existing product with new information
+    /** Updates a product and sends confirmation of update
+     * @param productKey,?productName,?productDescription,?productCategory,?price,?sellerId - The productKey is the only mandatory parameter used to identify the product. The other optional parameter describes attributes in the product that the user wants to update.
+     * @return boolean -  returns true if the product was updated and false the product was not found and therefor could not be updated .
+     * */
     updateProduct(key: number, productName?: string, productDescription?: string, productCategory?: string, price?: number, sellerId?: number) : Promise<boolean>;
 
-    //Add a buyer to a product and marking is as bought
+    /** Marks a product as bought by setting the buyer to a user id.
+     * @param productKey,buyerId - The productKey is used to find the product which is to be bought. The buyerId is used to set the correct buyer for the product.
+     * @return Product -  returns the product that was bought.
+     * */
     buyProduct(key: number, buyerId: number) : Promise<Product|undefined>;
 
-    //Check if a product exists, returns true if product exist
+    /** Checks if a product with given id exists.
+     * @param key - The key is used to find the product.
+     * @return boolean -  returns true if a product with the key exists, false otherwise.
+     * */
     productExist(key: number) : Promise<Boolean>;
 
-    //Get all products listed by a given user
+    /** Get all products that are listed by a single user.
+     * @param user - The user that all posted listings should be returned for.
+     * @return product[] -  returns all the products that the user has listed as a product array. If the user has no listed products an empty array will be returned.
+     * */
     getUserListings(user: User) : Promise<Product[]>;
 
+    /** Get all products that are bought by a single user.
+     * @param user - The user that all bought products should be returned for.
+     * @return product[] -  returns all the products that the user has bought as a product array. If the user has not bought any products an empty array will be returned.
+     * */
     getBoughtProducts(user: User) : Promise<Product[]>
 
+    /** Get all products that match current product filter.
+     * @param n/a
+     * @return product[] -  returns all the products that are available and match the category currently selected. (Correlate to addCategoryMarked and removeCategoryMarked)
+     * */
     getFilteredProducts() : Promise<Array<Product>>;
 
+    /** Add additional category to the filter.
+     * @param category - a category that should be added into the current filter
+     * @return string[] -  returns all the categories that are currently filtered as a array of strings.
+     * */
     addCategoryMarked(category: string): Promise<string[]>;
 
+    /** Remove one category of the filter.
+     * @param category - a category that should be removed from the current filter
+     * @return string[] -  returns all the categories that are currently filtered as a array of strings.
+     * */
     removeCategoryMarked(category: string): Promise<string[]>;
 
+    /** Remove a product.
+     * @param key - the key of the product to be removed
+     * @return boolean -  returns true if the product was successfully removed and false if the product could not be removed
+     * */
     deleteProduct(key: number) : Promise<boolean>
 }
 

@@ -3,16 +3,29 @@ import {User} from "../model/User";
 import {Cart} from "../model/Cart";
 
 export interface ICartService {
-    //Get all items in users cart.
+    /**Get items from a users cart.
+     * @param user - takes a user as a parameter.
+     * @return Promise<Product[]|undefined> - if the user has a cart this method will return its items as an array, if the user don't have a cart undefined will be returned.
+     * */
     getCartItems(user: User) : Promise<Product[] | undefined>
 
-    //Add item to cart.
+    /** Add item to cart
+     * @param user,cartItem -  A user and a cartItem of type Product. The cartItem is the item the user wants to add to its cart.
+     * @return cart - This method returns the users cart. If the user had no cart before, then this method will create a cart for the user and return the new cart.
+     *                If user already had a cart the existing cart should be updated.
+     * */
     addCartItem(user: User, cartItem: Product) : Promise<Cart>
 
-    //remove item from cart
+    /** Remove item to cart
+     * @param user,cartItem -  A user and a cartItem of type Product. The cartItem is the item the user wants to remove from its cart.
+     * @return boolean - If the cartItem was successfully removed from the cart this method returns false, if the cartItem is removed from cart true will be retured.
+     * */
     removeCartItem(user: User, cartItem: Product) : Promise<boolean>
 
-    //empty cart
+    /** Remove item to cart
+     * @param user -  The user which cart is to be emptied
+     * @return boolean - If the users cart is emptied this method will return true, if the cart can't be emptied this method will return false.
+     * */
     emptyCart(user: User) : Promise<boolean>
 
 }
@@ -23,14 +36,12 @@ class CartService implements ICartService {
     async addCartItem(user: User, cartItem: Product): Promise<Cart> {
         let cart = this.carts.find(cart => cart.user.id == user.id)
         if (cart == null) {
-            console.log("Entering create new cart")
             const newCart = new Cart(user,cartItem)
             this.carts.push(newCart)
             console.log(this.carts)
             return newCart
         }
         else {
-            console.log("Entering add to existing cart")
             if(cart.cartItems.find(item => item.key == cartItem.key) == undefined) await cart.addCartItem(cartItem)
             return cart
         }

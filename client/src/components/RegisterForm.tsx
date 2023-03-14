@@ -26,6 +26,11 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                               e.preventDefault();
                               setRegisterError("");
 
+                              if(!username){
+                                  setRegisterError("Please enter an username");
+                                  return;
+                              }
+
                               // Check email format
                               const emailRegex = /^\S+@\S+\.\S+$/;
                               if(!emailRegex.test(email)){
@@ -39,7 +44,7 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                               }
 
                               const response = await axios.post("http://localhost:8080/user", { username: username, password: password, email: email });
-                              if(response.status == 210){
+                              if(response.status == 281){
                                   setRegisterError("Username or email already exists")
                                   return;
                               } else if(response.status == 201){
@@ -71,7 +76,7 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                     </div>
                     {registerError && <p style={{color: "red"}}>{registerError}</p>}
                     <div>
-                        <input className={"btn-primary"} type="submit" value="Register" id="submitBtn"></input>
+                        <input className={"btn-primary"} type="submit" value="Register" id="submitBtn" data-testid="registerButton"></input>
                     </div>
                 </form>
             </div>

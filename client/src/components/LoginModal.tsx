@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
  * @return A sell menu.
  */
 export function LoginModal(props: {
-    handlePage : (page: Pages) => void
+    handlePages : (page: Pages) => void
     page: Pages
 }){
     const [show, setShow] = useState(true);
@@ -22,7 +22,7 @@ export function LoginModal(props: {
 
     const handleClose = () => {
         setShow(false);
-        props.handlePage(Pages.INDEX)
+        props.handlePages(Pages.INDEX)
     };
 
     const handleGoToLoginClick = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +34,7 @@ export function LoginModal(props: {
         <div>
             <Modal
                 show={show}
-                onHide={() => props.handlePage(Pages.PRODUCT)}
+                onHide={() => props.handlePages(Pages.PRODUCT)}
                 backdrop="static"
                 keyboard={false}
             >
@@ -48,12 +48,9 @@ export function LoginModal(props: {
                                 e.preventDefault();
                                 try {
                                     const response = await axios.post("http://localhost:8080/user/login",{ username:username,password:password});
-                                    console.log(response);
-                                    if(response.status == 202){
-                                        console.log("Success");
-                                        props.handlePage(Pages.PRODUCT);
-                                    } else if(response.status == 203){
-                                        console.log("FAIL");
+                                    if(response.status == 220){
+                                        props.handlePages(Pages.PRODUCT);
+                                    } else if(response.status == 280){
                                         setErrorMessage("Wrong username or password");
                                     }
                                 } catch (error){
@@ -85,7 +82,7 @@ export function LoginModal(props: {
                                 <hr></hr>
                             </div>
                             <div>
-                                <button className={"btn-primary"} type="button" onClick={() => props.handlePage(Pages.REGISTER)}>Register</button>
+                                <button className={"btn-primary"} type="button" onClick={() => props.handlePages(Pages.REGISTER)}>Register</button>
                             </div>
                         </form>
                 </Modal.Body>

@@ -26,19 +26,17 @@ export function Header(props:{
 
     const checkLoggedIn = async () => {
         const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        if(response.status == 210) setLoggedIn(false)
-        else if (response.status == 200) setLoggedIn(true)
+        if(response.status == 282) setLoggedIn(false)
+        else if (response.status == 215) setLoggedIn(true)
         else setLoggedIn(false)
     }
 
     const checkCart = async () => {
         let response = await axios.get("http://localhost:8080/cart")
-        if(response.status == 210 || response.status == 204){
+        if(response.status == 280 || response.status == 283){
             setCart([])
-        } else if(response.status == 200){
+        } else if(response.status == 232){
             setCart(response.data)
-        } else {
-            props.handlePages(Pages.ERROR)
         }
     }
 
@@ -66,7 +64,7 @@ export function Header(props:{
                     }>Browse</Nav.Link>
                     <Nav.Link href="#sell" onClick={
                         () => props.handlePages(Pages.SELL)
-                    } hidden={!loggedIn || props.page != Pages.PRODUCT}>Sell</Nav.Link>
+                    } hidden={!loggedIn}>Sell</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
@@ -86,10 +84,15 @@ export function Header(props:{
                         () => props.handlePages(Pages.PROFILE)
                     }> Profile </Nav.Link>
                     <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
-                        async () => {
-                            await axios.post("http://localhost:8080/user/logout")
-                            props.handlePages(Pages.INDEX)
-                        }
+                            async () => {
+                                try {
+                                await axios.post("http://localhost:8080/user/logout")
+                                props.handlePages(Pages.INDEX)
+                                } catch (e: any){
+                                    console.log(e.message)
+                                    props.handlePages(Pages.ERROR)
+                                }
+                            }
                     }> Log out </Nav.Link>
                 </Nav>
             </Navbar.Collapse>

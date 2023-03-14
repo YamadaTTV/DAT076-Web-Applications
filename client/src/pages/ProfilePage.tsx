@@ -1,4 +1,5 @@
 import {Pages} from "../App";
+
 import React, {useEffect, useState} from "react";
 import {IProduct, Product} from "../components/Product";
 import axios from "axios";
@@ -14,15 +15,30 @@ export function ProfilePage(props: {
 }){
     const [sellerListings,setSellerListings] = useState<IProduct[]>([])
     const [boughtItems,setBoughtItems] = useState<IProduct[]>([])
+    const [loggedInUser, setLoggedInUser] = useState<IUser | undefined>(undefined)
+
+    const getLoggedInUser = async () => {
+        try{
+            const response = await axios.get<IUser>("http://localhost:8080/user/loggedInUser")
+            if(response.status == 215) {
+                setLoggedInUser(response.data)
+            }
+            else {
+                setLoggedInUser(undefined)
+            }
+        } catch (e: any){
+            props.handlePages(Pages.ERROR)
+        }
+    }
 
     const updateSellerListings = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/sellerListings")
-            if (response.status == 400){
-                console.log(response.data)
+            if (response.status == 280){
+                //For future implementation to open loginModal
                 return
             }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            else if(response.status == 227 && !(typeof response.data == "string")){
                 setSellerListings(response.data)
             }
         } catch (e : any){
@@ -33,11 +49,11 @@ export function ProfilePage(props: {
     const updateBoughtItems = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/boughtProducts")
-            if (response.status == 400){
-                console.log(response.data)
+            if (response.status == 280){
+                //For future implementation to open loginModal
                 return
             }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            else if(response.status == 228 && !(typeof response.data == "string")){
                 setBoughtItems(response.data)
             }
         } catch (e : any){
@@ -48,22 +64,25 @@ export function ProfilePage(props: {
     useEffect(() =>{
         updateSellerListings();
         updateBoughtItems();
+        getLoggedInUser();
     }, []);
 
     return <div>
         <Header handlePages={props.handlePages} page={props.page}/>
-        <h3>Profile</h3>
+        <h3>Profile <br></br>Username: {loggedInUser?.username} <br></br>Email: {loggedInUser?.email}</h3>
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="ProfilePage">
             <Row xs={12}>
-                <Col xs={10}>
+                <Col xs={12}>
                     <div style={{marginRight: "10px"}}>
                         <h4>Your listings:</h4>
                         <div style={{marginRight:"25px"}}>
                             <Row>
                                 {sellerListings.map((product) =>
-                                    <Col xs={4}>
-                                        <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
-                                        </Product>
+                                    <Col l={2} m={4}>
+                                        <div data-testid="SellerListingCard">
+                                            <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePages={props.handlePages}>
+                                            </Product>
+                                        </div>
                                     </Col>)
                                 }
                             </Row>
@@ -72,15 +91,17 @@ export function ProfilePage(props: {
                 </Col>
             </Row>
             <Row xs={12}>
-                <Col xs={10}>
+                <Col xs={12}>
                     <div style={{marginRight: "10px"}}>
                         <h4>Bought items:</h4>
                         <div style={{marginRight:"25px"}}>
                             <Row>
                                 {boughtItems.map((product) =>
-                                    <Col xs={4}>
-                                        <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
-                                        </BoughtProduct>
+                                    <Col l={2} m={4} >
+                                        <div data-testid="BoughtProductCard">
+                                            <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
+                                            </BoughtProduct>
+                                        </div>
                                     </Col>)
                                 }
                             </Row>
@@ -90,4 +111,17 @@ export function ProfilePage(props: {
             </Row>
         </div>
     </div>
+
+
+    }
+
+/**
+* Interface for describing what data a product is expected to have
+*/
+export interface IUser {
+    id: number
+    username: string
+    email: string
+    password: string
 }
+

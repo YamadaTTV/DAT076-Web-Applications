@@ -7,7 +7,7 @@ export function SellPage (props:{
     handlePages : (page : Pages) => void
 }){
     return <div>
-        <SellForm page={props.page} handlePage={props.handlePages}/>
+        <SellForm page={props.page} handlePages={props.handlePages}/>
         <ProductPage page={props.page} handlePages={props.handlePages}/>
     </div>
 }
