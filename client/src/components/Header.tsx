@@ -5,6 +5,7 @@ import {Pages} from "../App";
 import axios from "axios";
 import {IProduct} from "./Product";
 import logo from '../img/logo.svg';
+
 axios.defaults.withCredentials = true;
 
 
@@ -69,7 +70,14 @@ export function Header(props:{
                 </Nav>
                 <Nav>
                     <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
-                        () => props.handlePages(Pages.INDEX)
+                        () => {
+                            if(props.page == Pages.PRODUCT){
+                                props.handlePages(Pages.LOGINMODAL);
+                            }
+                            else{
+                                props.handlePages(Pages.INDEX);
+                            }
+                        }
                     }> Login </Nav.Link>
                     <Nav.Link href="#cart" hidden={cart.length==0} onClick={
                         () => props.handlePages(Pages.CART)
