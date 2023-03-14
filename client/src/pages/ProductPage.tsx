@@ -127,9 +127,9 @@ export function ProductPage(props:{
                             <div style={{marginRight:"25px"}}>
                                 <Row>
                                     {products.map((product) =>
-                                        <Col xs={4}>
-                                            <Product prod={product} key={"p"+product.key} productHandler={productHandler} page={props.page} handlePage={props.handlePages}>
-                                            </Product>
+                                        <Col l={2} m={4}>
+                                                <Product prod={product} key={"p"+product.key} productHandler={productHandler} page={props.page} handlePage={props.handlePages}>
+                                                </Product>
                                         </Col>)
                                     }
                                 </Row>

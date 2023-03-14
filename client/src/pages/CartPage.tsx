@@ -22,18 +22,21 @@ export function CartPage(props:{
 
     const buyProducts = async () => {
         setBuying(true);
-
+        let success = false;
 
         for (const product of cartItems) {
             console.log(product);
             let response = await axios.put("http://localhost:8080/product/buy", {key : product.key})
             if(response.status == 400){
-                console.log("Buying failed");
+                console.log(`Buying of product ${product.productName} failed.`);
             } else if(response.status == 200){
-                console.log("Buying succeeded");
-                await axios.delete("http://localhost:8080/cart/empty")
-                props.handlePages(Pages.PROFILE)
+                console.log(`Successfully bought: ${product.productName}`);
+                success = true;
             }
+        }
+        if(success) {
+            await axios.delete("http://localhost:8080/cart/empty")
+            props.handlePages(Pages.PROFILE)
         }
 
     };
@@ -59,7 +62,7 @@ export function CartPage(props:{
             <h1>Your Cart</h1>
             <Row>
                 {cartItems.map((product) => (
-                    <Col xs={4}>
+                    <Col l={2} m={4}>
                         <AddedProduct prod={product} key={product.key} updateHandler={getCartItems}>{}</AddedProduct>
                     </Col>
                 ))}
@@ -69,7 +72,6 @@ export function CartPage(props:{
                     <Button onClick={buyProducts} disabled={buying}>Buy</Button>
                 </Col>
             </Row>
-            <Footer/>
         </div>
     );
 }
