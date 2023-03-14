@@ -34,7 +34,6 @@ export function Header(props:{
         let response = await axios.get("http://localhost:8080/cart")
         if(response.status == 210 || response.status == 204){
             setCart([])
-            console.log(response.data)
         } else if(response.status == 200){
             setCart(response.data)
         } else {
@@ -80,8 +79,7 @@ export function Header(props:{
                     }> Profile </Nav.Link>
                     <Nav.Link className="logoutText" href="#loginpage" hidden={!loggedIn} onClick={
                         async () => {
-                            const response = await axios.post("http://localhost:8080/user/logout")
-                            console.log(response.data)
+                            await axios.post("http://localhost:8080/user/logout")
                             props.handlePages(Pages.INDEX)
                         }
                     }> Log out </Nav.Link>

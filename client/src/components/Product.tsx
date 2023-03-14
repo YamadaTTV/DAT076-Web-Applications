@@ -58,7 +58,6 @@ export function Product (props:  {
                         <button className="btn-primary" style={{marginTop: "5px"}} onClick={
                             async e => {
                                 e.preventDefault();
-                                console.log("Updating product")
                                 setDisplayModal(true)
                             }
                         }
