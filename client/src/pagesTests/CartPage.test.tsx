@@ -92,7 +92,7 @@ test("Test to see if CartPage exists", async () => {
 });
 
 
-/*
+
 const mockProducts: IProduct[] = [
     {
         key: 1,
@@ -150,5 +150,5 @@ test("handles buying success", async () => {
     expect(currentPage).toEqual(Pages.PROFILE)
 
     //expect(mockedAxios.put).toHaveBeenCalledTimes(2)
-
- */
+  })
+ 
