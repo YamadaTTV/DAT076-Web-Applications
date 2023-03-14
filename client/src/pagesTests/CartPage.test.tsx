@@ -18,7 +18,7 @@ test("Test to see if cart items are displayed", async () => {
     { "key": 3, "productName": "Product 3", "productDescription" : "Description 3", "productCategory" : "Category 3", "price" : 30, "sellerId": 3},
   ];
 
-  await mockedAxios.get.mockResolvedValue({data: mockCartItems, status: 200});
+  await mockedAxios.get.mockResolvedValue({data: mockCartItems, status: 232});
 
   let cartPage;
   await act(() => {
@@ -62,7 +62,7 @@ test("Test if buyProducts get called when clicking the buy button", async() => {
     { "key": 3, "productName": "Product 3", "productDescription" : "Description 3", "productCategory" : "Category 3", "price" : 30, "sellerId": 3},
   ];
 
-  await mockedAxios.get.mockResolvedValue({ data: mockCartItems, status: 200});
+  await mockedAxios.get.mockResolvedValue({ data: mockCartItems, status: 232});
   await mockedAxios.put.mockResolvedValue({ status: 200});
 
   // @ts-ignore
