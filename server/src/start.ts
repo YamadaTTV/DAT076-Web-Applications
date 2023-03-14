@@ -26,7 +26,7 @@ app.use("/user", userRouter)
 app.use("/product", productRouter)
 app.use("/cart",cartRouter)
 
-/* uncomment to be create build version using command "npm run build"
+
 import * as path from "path";
 
 app.use(express.static(path.join(__dirname, '../../client/build')));
@@ -38,4 +38,3 @@ app.get('/*', (req : express.Request, res : express.Response) => {
 
 });
 
- */
