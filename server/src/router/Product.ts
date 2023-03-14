@@ -38,10 +38,10 @@ productRouter.post("/", async (
             return
         }
         if(req.session.user == null){
-            res.status(400).send("No user logged in.")
+            res.status(280).send("No user logged in.")
             return
         } else if (!await userService.userExists(req.session.user.id)){
-            res.status(400).send(`User with sellerId ${req.session.user.id} does not exist.`);
+            res.status(281).send(`User with sellerId ${req.session.user.id} does not exist.`);
             return
         }
         const newProduct = await productService.addProduct(productName,productDescription,productCategory,price,req.session.user.id);
@@ -97,12 +97,12 @@ productRouter.put("/buy", async (
         }
 
         if (!await productService.productExist(key)) {
-            res.status(400).send("Product does not exit");
+            res.status(283).send("Product does not exit");
             return
         }
         if (!await userService.userExists(buyerId)) {
             //Set to 400
-            res.status(400).send("User does not exit");
+            res.status(282).send("User does not exit");
             return;
         }
 
@@ -127,7 +127,7 @@ productRouter.put("/update", async(
         } else {
             const response = await productService.updateProduct(req.body.key,req.body.productName,req.body.productDescription,req.body.productCategory,req.body.price,req.session.user?.id)
             if(response) res.status(226).send("Product updated.")
-            else res.status(400).send(`Product with key: ${req.body.key} does not exist`)
+            else res.status(283).send(`Product with key: ${req.body.key} does not exist`)
         }
     } catch(e: any){
         res.status(500).send(e.message);
@@ -140,7 +140,7 @@ productRouter.get("/sellerListings", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(401).send("User not logged in")
+            res.status(280).send("User not logged in")
             return
         }
         const products = await productService.getUserListings(req.session.user)
@@ -156,7 +156,7 @@ productRouter.get("/boughtProducts", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(401).send("User not logged in")
+            res.status(280).send("User not logged in")
             return
         }
         const products = await productService.getBoughtProducts(req.session.user)
@@ -195,7 +195,7 @@ productRouter.put("/filterProducts/addCat", async (
             res.status(230).send(response.toString());
         }
         else{
-            res.status(400).send("Could not add category")
+            res.status(284).send("Could not add category")
         }
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -219,8 +219,7 @@ productRouter.put("/filterProducts/removeCat", async (
             res.status(231).send(response.toString());
         }
         else{
-            //Set to 400
-            res.status(400).send("Could not remove category")
+            res.status(285).send("Could not remove category")
         }
     } catch (e: any) {
         res.status(500).send(e.message);

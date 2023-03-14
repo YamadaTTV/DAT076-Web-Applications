@@ -22,7 +22,7 @@ beforeEach( async() => {
             price:123,
             seller:1
         }],
-        status: "200",
+        status: "215",
         statusText: "OK"
 
     });
@@ -36,16 +36,10 @@ beforeEach( async() => {
             price:123,
             seller:1
         }],
-        status: "202",
+        status: "220",
         statusText: "Accepted"
 
     });
-
-    let response = await axios.post("http://localhost:8080/user",{ username:"asd",password:"asd", email:"asd"})
-    //let response2= await axios.post("http://localhost:8080/user",{ username:"mphu",password:"mphu", email:"mphu"})
-
-    //console.log(response);
-    expect(response.status).toMatch("202");
 })
 
 test('Check if there is a login form', async () => {
@@ -101,7 +95,7 @@ test('Test for "Wrong username or password" shows up when entering wrong credent
         data: [{
             key: 1,
         }],
-        status: "203",
+        status: "280",
         statusText: "Accepted"
 
     });

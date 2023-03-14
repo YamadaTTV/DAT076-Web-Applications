@@ -37,8 +37,6 @@ export function Header(props:{
             setCart([])
         } else if(response.status == 232){
             setCart(response.data)
-        } else {
-            props.handlePages(Pages.ERROR)
         }
     }
 

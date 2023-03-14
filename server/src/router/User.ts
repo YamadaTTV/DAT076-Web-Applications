@@ -35,7 +35,7 @@ userRouter.post("/", async (
         if(response){
             res.status(201).send("User created");
         } else {
-            res.status(400).send("User already exists");
+            res.status(281).send("User already exists");
         }
     } catch (e: any) {
         res.status(500).send(e.message);
@@ -83,7 +83,7 @@ userRouter.post("/login", async(
             res.status(220).send("Successfully logged in " + loginUser.valueOf());
         }
         else{
-            res.status(401).send("Wrong username or password for user:" + loginUser.valueOf());
+            res.status(280).send("Wrong username or password for user:" + loginUser.valueOf());
         }
 
     }catch (e: any) {
@@ -99,7 +99,7 @@ userRouter.post("/logout", async(
         if(req.session.user){
             req.session.destroy(e => {
                 if (e) {
-                    res.status(400).send('Unable to log out')
+                    res.status(287).send('Unable to log out')
                 } else {
                     res.status(221).send('Logout successful')
                 }
@@ -116,7 +116,7 @@ userRouter.get("/loggedInUser", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(400).send("No user logged in.")
+            res.status(282).send("No user logged in.")
         } else {
             res.status(215).send(req.session.user)
         }
