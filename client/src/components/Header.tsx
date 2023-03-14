@@ -66,7 +66,7 @@ export function Header(props:{
                     }>Browse</Nav.Link>
                     <Nav.Link href="#sell" onClick={
                         () => props.handlePages(Pages.SELL)
-                    } hidden={!loggedIn || props.page != Pages.PRODUCT}>Sell</Nav.Link>
+                    } hidden={!loggedIn}>Sell</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link className="loginText" href="#loginpage" hidden={loggedIn} onClick={
