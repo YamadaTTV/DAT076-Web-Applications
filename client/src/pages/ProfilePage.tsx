@@ -18,23 +18,27 @@ export function ProfilePage(props: {
     const [loggedInUser, setLoggedInUser] = useState<IUser | undefined>(undefined)
 
     const getLoggedInUser = async () => {
-        const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        if(response.status == 200) setLoggedInUser(response.data)
-        else setLoggedInUser(undefined)
+        try{
+            const response = await axios.get<IUser>("http://localhost:8080/user/loggedInUser")
+            if(response.status == 215) {
+                setLoggedInUser(response.data)
+            }
+            else {
+                setLoggedInUser(undefined)
+            }
+        } catch (e: any){
+            props.handlePages(Pages.ERROR)
+        }
     }
-
-    useEffect(() => {
-        getLoggedInUser()
-    },[])
 
     const updateSellerListings = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/sellerListings")
-            if (response.status == 400){
-                console.log(response.data)
+            if (response.status == 280){
+                //For future implementation to open loginModal
                 return
             }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            else if(response.status == 227 && !(typeof response.data == "string")){
                 setSellerListings(response.data)
             }
         } catch (e : any){
@@ -45,11 +49,11 @@ export function ProfilePage(props: {
     const updateBoughtItems = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/boughtProducts")
-            if (response.status == 400){
-                console.log(response.data)
+            if (response.status == 280){
+                //For future implementation to open loginModal
                 return
             }
-            else if(response.status == 200 && !(typeof response.data == "string")){
+            else if(response.status == 228 && !(typeof response.data == "string")){
                 setBoughtItems(response.data)
             }
         } catch (e : any){
@@ -60,6 +64,7 @@ export function ProfilePage(props: {
     useEffect(() =>{
         updateSellerListings();
         updateBoughtItems();
+        getLoggedInUser();
     }, []);
 
     return <div>
@@ -73,9 +78,11 @@ export function ProfilePage(props: {
                         <div style={{marginRight:"25px"}}>
                             <Row>
                                 {sellerListings.map((product) =>
-                                    <Col l={2} m={4} >
-                                        <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
-                                        </Product>
+                                    <Col l={2} m={4}>
+                                        <div data-testid="SellerListingCard">
+                                            <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePages={props.handlePages}>
+                                            </Product>
+                                        </div>
                                     </Col>)
                                 }
                             </Row>
@@ -91,8 +98,10 @@ export function ProfilePage(props: {
                             <Row>
                                 {boughtItems.map((product) =>
                                     <Col l={2} m={4} >
-                                        <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
-                                        </BoughtProduct>
+                                        <div data-testid="BoughtProductCard">
+                                            <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
+                                            </BoughtProduct>
+                                        </div>
                                     </Col>)
                                 }
                             </Row>

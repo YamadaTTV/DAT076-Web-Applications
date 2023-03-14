@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
  * @return A sell menu.
  */
 export function SellForm(props: {
-    handlePage : (page: Pages) => void
+    handlePages : (page: Pages) => void
     page: Pages
 }){
     const[productName, setproductName] = useState("");
@@ -26,7 +26,7 @@ export function SellForm(props: {
 
     const handleClose = () => {
         setShow(false);
-        props.handlePage(Pages.PRODUCT)
+        props.handlePages(Pages.PRODUCT)
     };
 
     const handleSellClick = async(e: React.FormEvent<HTMLFormElement>) => {
@@ -71,7 +71,7 @@ export function SellForm(props: {
         <div>
             <Modal
                 show={show}
-                onHide={() => props.handlePage(Pages.PRODUCT)}
+                onHide={() => props.handlePages(Pages.PRODUCT)}
                 backdrop="static"
                 keyboard={false}
             >
@@ -115,7 +115,12 @@ export function SellForm(props: {
                             {buttonClicked && price.trim() === "" && (<div className="text-danger">Please enter valid a price</div>)}
                         </div>
                         <div>
-                            <input className={"btn-primary"} type="submit" value="Sell" id="submitBtn" onClick={() => setButtonClicked(true)}></input>
+                            <input className={"btn-primary"}
+                                   type="submit"
+                                   value="Sell"
+                                   id="submitBtn"
+                                   data-testid="sellFormButton"
+                                   onClick={() => setButtonClicked(true)}></input>
                         </div>
                     </form>
                 </Modal.Body>

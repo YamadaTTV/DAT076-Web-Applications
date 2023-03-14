@@ -4,6 +4,7 @@ import axios from "axios";
 import {User} from "../../../server/src/model/User";
 import {UpdateForm} from "./UpdateForm";
 import {Pages} from "../App";
+import {IUser} from "../pages/ProfilePage";
 axios.defaults.withCredentials = true
 
 /**Product component, used to visualize data of a product
@@ -15,16 +16,24 @@ export function Product (props:  {
     children : object,
     prod : IProduct,
     productHandler: ()=>void,
-    handlePage : (page: Pages) => void,
+    handlePages : (page: Pages) => void,
     page: Pages
 }){
     const [loggedInUserId, setLoggedInUserId] = useState<number | undefined>(undefined)
     const [displayModal,setDisplayModal] = useState<boolean>(false)
 
     const getLoggedInUser = async () => {
-        const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        if(response.status == 200) setLoggedInUserId(response.data.id)
-        else setLoggedInUserId(undefined)
+        try{
+            const response = await axios.get<IUser>("http://localhost:8080/user/loggedInUser")
+            if(response.status == 215) {
+                setLoggedInUserId(response.data.id)
+            }
+            else {
+                setLoggedInUserId(undefined)
+            }
+        } catch (e: any){
+            props.handlePages(Pages.ERROR)
+        }
     }
 
     useEffect(() => {
@@ -33,8 +42,8 @@ export function Product (props:  {
     },[displayModal])
 
     return (
-        <div>
-            {displayModal && <UpdateForm handlePage={props.handlePage} page={props.page} product={props.prod} updateHandler={() => {
+        <div data-testid="productObject">
+            {displayModal && <UpdateForm handlePage={props.handlePages} page={props.page} product={props.prod} updateHandler={() => {
                 props.productHandler();
                 setDisplayModal(false);
             }}/>}
@@ -68,9 +77,9 @@ export function Product (props:  {
                         <button className="btn-primary" onClick={async () => {
                             if(loggedInUserId != null) {
                                 await axios.post("http://localhost:8080/cart",{product:props.prod})
-                                props.handlePage(Pages.ADDED)
+                                props.handlePages(Pages.ADDED)
                             } else {
-                                props.handlePage(Pages.LOGINMODAL)
+                                props.handlePages(Pages.LOGINMODAL)
                             }
                         }}>Add to Cart</button>
                     </Col>

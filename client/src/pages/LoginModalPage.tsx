@@ -9,7 +9,7 @@ export function LoginModalPage (props:{
     handlePages : (page : Pages) => void
 }){
     return <div>
-        <LoginModal page={props.page} handlePage={props.handlePages}/>
+        <LoginModal page={props.page} handlePages={props.handlePages}/>
         <ProductPage page={props.page} handlePages={props.handlePages}/>
     </div>
 }

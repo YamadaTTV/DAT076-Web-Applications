@@ -7,7 +7,7 @@ export function AddedToCartPage (props:{
     page : Pages,
     handlePages : (page : Pages) => void
 }){
-    return <div>
+    return <div data-testid="AddedToCartPage">
         <AddedToCartForm page={props.page} handlePage={props.handlePages}/>
         <ProductPage page={props.page} handlePages={props.handlePages}/>
     </div>
