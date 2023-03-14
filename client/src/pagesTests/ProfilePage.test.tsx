@@ -70,40 +70,39 @@ test("See that seller listing and bought items is displayed", async () => {
 })
 
 test("See that username and email is displayed", async () => {
-    mockedAxiosUser.mockResolvedValue({
-        data: [{
+    mockedAxios.get.mockResolvedValue({
+        data: {
             id: 2,
-            username: "2",
-            "email": "2@2.com",
-            "password": "2"
-        }],
-        status: 200,
+            username: "rassta",
+            email: "email@chalmers.se",
+            password: "2"
+        },
+        status: 215,
         statusText: "OK",
-        headers: {},
-        config: {}
+
     });
 
     let component;
     await act(() => {
-        // fire events that update state
+        //@ts-ignore
         component = render(<ProfilePage page={Pages.PROFILE} handlePages={() => {}}></ProfilePage>)
     });
 
 
 
-    expect(mockedAxiosUser.get).toHaveBeenCalledWith("http://localhost:8080/user/loggedInUser")
-    //expect(mockedAxiosUser.get).toHaveBeenCalledWith("http://localhost:8080/product/sellerListings")
-    //expect(mockedAxiosUser.get).toHaveBeenCalledWith("http://localhost:8080/product/boughtProducts")
 
-    /*
-    // @ts-ignore
-    const username = await component.findByText("rassta")
-    // @ts-ignore
-    const email = await component.findByText("email@chalmers.se")
+    await expect(mockedAxiosUser.get).toHaveBeenCalledWith("http://localhost:8080/user/loggedInUser")
 
-    expect(username).toBeInTheDocument()
+
+
+    // @ts-ignore
+    const username = await component.findByText(/rassta/i)
+    // @ts-ignore
+    const email = await component.findByText(/email@chalmers.se/i)
+
+    await expect(username).toBeInTheDocument()
     expect(email).toBeInTheDocument()
-    */
+
 
 
 })

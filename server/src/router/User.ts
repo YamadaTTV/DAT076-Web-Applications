@@ -116,9 +116,9 @@ userRouter.get("/loggedInUser", async (
 ) => {
     try{
         if(req.session.user == null){
-            res.status(210).send("No user logged in.")
+            res.status(400).send("No user logged in.")
         } else {
-            res.status(200).send(req.session.user)
+            res.status(215).send(req.session.user)
         }
         res.end();
     } catch (e: any){

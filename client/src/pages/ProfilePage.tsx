@@ -20,8 +20,7 @@ export function ProfilePage(props: {
     const getLoggedInUser = async () => {
         try{
             const response = await axios.get<IUser>("http://localhost:8080/user/loggedInUser")
-            console.log("loggedin"+response.data.username +"status: " +response.status)
-            if(response.status == 200) {
+            if(response.status == 215) {
                 setLoggedInUser(response.data)
             }
             else {
@@ -71,7 +70,7 @@ export function ProfilePage(props: {
     }, []);
 
     return <div>
-        {/*<Header handlePages={props.handlePages} page={props.page}/> */}
+        <Header handlePages={props.handlePages} page={props.page}/>
         <h3>Profile <br></br>Username: {loggedInUser?.username} <br></br>Email: {loggedInUser?.email}</h3>
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="ProfilePage">
             <Row xs={12}>
