@@ -33,7 +33,7 @@ export interface IProductService {
      * */
     buyProduct(key: number, buyerId: number) : Promise<Product|undefined>;
 
-    /** Marks a product as bought by setting the buyer to a user id.
+    /** Checks if a product with given id exists.
      * @param key - The key is used to find the product.
      * @return boolean -  returns true if a product with the key exists, false otherwise.
      * */
