@@ -80,7 +80,7 @@ export function ProfilePage(props: {
                                 {sellerListings.map((product) =>
                                     <Col l={2} m={4}>
                                         <div data-testid="SellerListingCard">
-                                            <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
+                                            <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePages={props.handlePages}>
                                             </Product>
                                         </div>
                                     </Col>)

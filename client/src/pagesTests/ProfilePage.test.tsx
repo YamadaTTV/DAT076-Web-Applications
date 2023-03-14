@@ -13,7 +13,7 @@ const mockedAxiosUser = axios as jest.MockedFunction<typeof axios>;
     beforeEach(() => {
     mockedAxios.get.mockResolvedValue({
         data: [],
-        status: 200,
+        status: 227,
         statusText: "OK",
     });
 })
@@ -43,28 +43,45 @@ test("Profile-page basics test", async () => {
     expect(UsernameText).toBeInTheDocument()
 });
 
-test("See that seller listing and bought items is displayed", async () => {
+test("See that seller listing is displayed", async () => {
     mockedAxios.get.mockResolvedValue({
         data: [{"key":1,"productName":"Soffa","productDescription":"Finare soffa","productCategory":"Furniture","price":100,"sellerId":1,"buyerId":2}],
-        status: 200,
+        status: 227,
         statusText: "OK",
     });
 
     let component;
     await act(() => {
-        // fire events that update state
         component = render(<ProfilePage page={Pages.PROFILE} handlePages={() => {}}></ProfilePage>)
     });
 
     // @ts-ignore
     const cardSellerListing = await component.findByTestId("SellerListingCard")
+    //@ts-ignore
+    const prodDesc = await component.findAllByText("Finare soffa")
+
+    expect(prodDesc).toBeTruthy()
+    expect(cardSellerListing).toBeInTheDocument()
+})
+
+test("See that bought items is displayed", async () => {
+    mockedAxios.get.mockResolvedValue({
+        data: [{"key":1,"productName":"Soffa","productDescription":"Finare soffa","productCategory":"Furniture","price":100,"sellerId":1,"buyerId":2}],
+        status: 228,
+        statusText: "OK",
+    });
+
+    let component;
+    await act(() => {
+        component = render(<ProfilePage page={Pages.PROFILE} handlePages={() => {}}></ProfilePage>)
+    });
+
     // @ts-ignore
     const cardBoughtProduct = await component.findByTestId("BoughtProductCard")
     //@ts-ignore
     const prodDesc = await component.findAllByText("Finare soffa")
 
     expect(prodDesc).toBeTruthy()
-    expect(cardSellerListing).toBeInTheDocument()
     expect(cardBoughtProduct).toBeInTheDocument()
 
 })

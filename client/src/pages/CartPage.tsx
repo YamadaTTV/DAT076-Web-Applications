@@ -25,7 +25,6 @@ export function CartPage(props:{
         let success = false;
 
         for (const product of cartItems) {
-            console.log(product);
             let response = await axios.put("http://localhost:8080/product/buy", {key : product.key})
             if(response.status == 225){
                 success = true;
