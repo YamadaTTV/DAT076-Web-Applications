@@ -18,18 +18,24 @@ export function ProfilePage(props: {
     const [loggedInUser, setLoggedInUser] = useState<IUser | undefined>(undefined)
 
     const getLoggedInUser = async () => {
-        const response = await axios.get("http://localhost:8080/user/loggedInUser")
-        if(response.status == 200) setLoggedInUser(response.data)
-        else setLoggedInUser(undefined)
+        try{
+            const response = await axios.get<IUser>("http://localhost:8080/user/loggedInUser")
+            console.log("loggedin"+response.data.username +"status: " +response.status)
+            if(response.status == 200) {
+                setLoggedInUser(response.data)
+            }
+            else {
+                setLoggedInUser(undefined)
+            }
+        } catch (e: any){
+            props.handlePages(Pages.ERROR)
+        }
     }
-
-    useEffect(() => {
-        getLoggedInUser()
-    },[])
 
     const updateSellerListings = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/sellerListings")
+            console.log("US" +response.data)
             if (response.status == 400){
                 console.log(response.data)
                 return
@@ -45,6 +51,7 @@ export function ProfilePage(props: {
     const updateBoughtItems = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/boughtProducts")
+            console.log("UB" +response.data)
             if (response.status == 400){
                 console.log(response.data)
                 return
@@ -60,10 +67,11 @@ export function ProfilePage(props: {
     useEffect(() =>{
         updateSellerListings();
         updateBoughtItems();
+        getLoggedInUser();
     }, []);
 
     return <div>
-        <Header handlePages={props.handlePages} page={props.page}/>
+        {/*<Header handlePages={props.handlePages} page={props.page}/> */}
         <h3>Profile <br></br>Username: {loggedInUser?.username} <br></br>Email: {loggedInUser?.email}</h3>
         <div style={{marginTop: "25px", marginLeft: "10px"}} data-testid="ProfilePage">
             <Row xs={12}>
@@ -73,9 +81,11 @@ export function ProfilePage(props: {
                         <div style={{marginRight:"25px"}}>
                             <Row>
                                 {sellerListings.map((product) =>
-                                    <Col l={2} m={4} >
-                                        <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
-                                        </Product>
+                                    <Col l={2} m={4}>
+                                        <div data-testid="SellerListingCard">
+                                            <Product prod={product} key={"sl"+product.key} productHandler={updateSellerListings} page={props.page} handlePage={props.handlePages}>
+                                            </Product>
+                                        </div>
                                     </Col>)
                                 }
                             </Row>
@@ -91,8 +101,10 @@ export function ProfilePage(props: {
                             <Row>
                                 {boughtItems.map((product) =>
                                     <Col l={2} m={4} >
-                                        <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
-                                        </BoughtProduct>
+                                        <div data-testid="BoughtProductCard">
+                                            <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
+                                            </BoughtProduct>
+                                        </div>
                                     </Col>)
                                 }
                             </Row>
