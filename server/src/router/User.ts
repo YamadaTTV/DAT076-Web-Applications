@@ -30,9 +30,11 @@ userRouter.get("/", async (
 /**
  * POST call to /user to add a user.
  * req: requestTypes.userRegisterRequest - An interface of requestType [see API configuration for the required arguments].
- * res: Response<string> - Returns
+ * res: Response<string> - Returned a response with a successful message or an error message explaining what went wrong
  * Status codes:
- *      200: Successful request - Returned an array with all users
+ *      201: Successful request - User created
+ *      281: Error - User already exists
+ *      400: Error - Type error
  *      500: Error - An error occurred
  */
 userRouter.post("/", async (
@@ -81,6 +83,16 @@ userRouter.delete("/", async(
 });
 */
 
+/**
+ * POST call to /user/login to login.
+ * req: requestTypes.userLoginRequest - An interface of requestType [see API configuration for the required arguments].
+ * res: responseTypes.defaultResponse - Returned a response with a successful message or an error message explaining what went wrong
+ * Status codes:
+ *      201: Successful request - Successfully logged in
+ *      280: Error - Wrong username or password
+ *      400: Error - Type error
+ *      500: Error - An error occurred
+ */
 userRouter.post("/login", async(
     req: requestTypes.userLoginRequest,
     res: responseTypes.defaultResponse
@@ -107,6 +119,15 @@ userRouter.post("/login", async(
     }
 });
 
+/**
+ * POST call to /user/logout to logout.
+ * req: requestTypes.userLoginRequest - An interface of requestType [see API configuration for the required arguments].
+ * res: responseTypes.defaultResponse - Returned a response with a successful message or an error message explaining what went wrong
+ * Status codes:
+ *      201: Successful request - Successfully logged out
+ *      287: Error - Unable to log out
+ *      500: Error - An error occurred
+ */
 userRouter.post("/logout", async(
     req: requestTypes.defaultRequest,
     res: Response<string>
@@ -126,6 +147,15 @@ userRouter.post("/logout", async(
     }
 });
 
+/**
+ * GET call to /user/loggedInUser to get the User currently logged in.
+ * req: requestTypes.userLoginRequest - An interface of requestType [see API configuration for the required arguments].
+ * res: Response<User | string> - Returned the user currently logged in an error message explaining what went wrong
+ * Status codes:
+ *      215: Successful request - Returned user object of the currently logged in user
+ *      282: Error - No user logged in
+ *      500: Error - An error occurred
+ */
 userRouter.get("/loggedInUser", async (
     req: requestTypes.get,
     res: Response<User | string>
