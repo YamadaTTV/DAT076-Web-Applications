@@ -30,7 +30,7 @@ export function ProfilePage(props: {
     const updateSellerListings = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/sellerListings")
-            if (response.status == 401){
+            if (response.status == 280){
                 //For future implementation to open loginModal
                 return
             }
@@ -45,7 +45,7 @@ export function ProfilePage(props: {
     const updateBoughtItems = async () => {
         try{
             const response = await axios.get<IProduct[] | string>("http://localhost:8080/product/boughtProducts")
-            if (response.status == 401){
+            if (response.status == 280){
                 //For future implementation to open loginModal
                 return
             }

@@ -27,8 +27,7 @@ export function CartPage(props:{
         for (const product of cartItems) {
             console.log(product);
             let response = await axios.put("http://localhost:8080/product/buy", {key : product.key})
-            if(response.status == 400){
-            } else if(response.status == 225){
+            if(response.status == 225){
                 success = true;
             }
         }
@@ -43,7 +42,7 @@ export function CartPage(props:{
         let response = await axios.get("http://localhost:8080/cart")
         if(response.status == 232){
             setCartItems(response.data)
-        } else if (response.status == 400 || response.status == 401){
+        } else if (response.status == 283 || response.status == 280){
             setCartItems([])
             props.handlePages(Pages.PRODUCT)
         } else props.handlePages(Pages.ERROR)

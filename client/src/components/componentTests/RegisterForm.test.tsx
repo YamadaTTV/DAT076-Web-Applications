@@ -129,7 +129,7 @@ test('Test when registering that it sends an axios call. But it fails and stays 
             price:123,
             seller:1
         }],
-        status: "210",
+        status: "281",
         statusText: "User already exists"
 
     });

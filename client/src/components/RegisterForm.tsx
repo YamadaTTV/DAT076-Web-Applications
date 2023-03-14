@@ -44,7 +44,7 @@ export function RegisterForm(props: {handlePages : (page: Pages) => void, page: 
                               }
 
                               const response = await axios.post("http://localhost:8080/user", { username: username, password: password, email: email });
-                              if(response.status == 400){
+                              if(response.status == 281){
                                   setRegisterError("Username or email already exists")
                                   return;
                               } else if(response.status == 201){
