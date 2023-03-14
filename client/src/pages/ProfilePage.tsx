@@ -5,6 +5,7 @@ import axios from "axios";
 import {Header} from "../components/Header";
 import {Col, Row} from "react-bootstrap";
 import {Footer} from "../components/Footer";
+import {BoughtProduct} from "../components/BoughtProduct";
 axios.defaults.withCredentials = true;
 
 export function ProfilePage(props: {
@@ -78,8 +79,8 @@ export function ProfilePage(props: {
                             <Row>
                                 {boughtItems.map((product) =>
                                     <Col xs={4}>
-                                        <Product prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
-                                        </Product>
+                                        <BoughtProduct prod={product} key={"bi"+product.key} productHandler={updateBoughtItems} page={props.page} handlePage={props.handlePages}>
+                                        </BoughtProduct>
                                     </Col>)
                                 }
                             </Row>
