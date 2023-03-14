@@ -17,6 +17,7 @@ cartRouter.get("/", async (
 ) => {
     try {
         if(req.session.user == null){
+            //Set to 401
             res.status(210).send("User not logged in")
             return
         }
@@ -34,6 +35,7 @@ cartRouter.post("/", async (
 ) => {
     try{
         if(req.session.user == null){
+            //Set to 401
             res.status(210).send("User not logged in")
             return
         }
@@ -51,11 +53,13 @@ cartRouter.delete("/", async (
 ) => {
     try{
         if(req.session.user == null){
+            //Set to 401
             res.status(210).send("User not logged in")
             return
         }
         const success : boolean = await cartService.removeCartItem(req.session.user,req.body.product)
         if(success) res.status(200).send("Removed "+req.body.product.productName+" from cart.")
+        //Set to 204
         else res.status(210).send("Could not remove "+req.body.product.productName+" from cart. Likely the product was not in cart.")
     } catch(e: any){
         res.status(500).send(e.message);
@@ -69,10 +73,12 @@ cartRouter.delete("/empty", async (
     try{
         if(req.session.user == null){
             res.status(401).send("User not logged in")
+
             return
         }
         const success : boolean = await cartService.emptyCart(req.session.user)
         if(success) res.status(200).send("Cart emptied.")
+        //Set to 204
         else res.status(210).send("Could not find cart to empty.")
     } catch(e: any){
         res.status(500).send(e.message);
