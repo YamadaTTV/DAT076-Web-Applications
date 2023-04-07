@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ElectricityChecker.iml" filepath="$PROJECT_DIR$/.idea/ElectricityChecker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/DAT076-Web-Applications.iml" filepath="$PROJECT_DIR$/.idea/DAT076-Web-Applications.iml" />
     </modules>
   </component>
 </project>
