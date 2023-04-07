@@ -54,7 +54,7 @@ export function ProductPage(props:{
 
     async function updateCategoryProducts(index : number){
         if(category[index].marked){
-            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/addCat`, {category: category[index].category});
+            await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/addCat`, {category: category[index]});
         }
         else{
             await axios.put<IProduct[]>(`http://localhost:8080/product/filterProducts/removeCat`, {category: category[index].category});

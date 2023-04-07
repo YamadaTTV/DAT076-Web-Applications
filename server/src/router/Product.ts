@@ -248,7 +248,7 @@ productRouter.get("/boughtProducts", async (
  *      500: Error - An error occurred
  */
 productRouter.get("/filterProducts/", async (
-    req: Request<{}, {}, {}>,
+    req: Request<{categories : string[]}, {}, {}>,
     res: Response<Array<Product>>
 ) => {
     try {
